@@ -9,30 +9,30 @@ const DefaultLayout = () => {
   const api = useApi();
   const navigate = useNavigate();
 
-  // const DefaultLayout = () =>{
+  const DefaultLayout = () =>{
 
-  //   const [loading,setLoading] = useState(true);
+    const [loading,setLoading] = useState(true);
 
-  //   useEffect( ()=>{
-  //     const  checkLogin = async() => {
-  //       if(api.getToken()){
-  //         const result = await api.validateToken();
-  //         if(result.error ===''){
-  //           setLoading(false);
-  //         }
-  //         else{
-  //           alert(result.error);
-  //           navigate('/login');
-  //         }
-  //       } 
-  //       else{
-  //         navigate('/login');
-  //       }
-  //     }
-  //     checkLogin();
-  //   },[])
+    useEffect( ()=>{
+      const  checkLogin = async() => {
+        if(api.getToken()){
+          const result = await api.validateToken();
+          if(result.error ===''){
+            setLoading(false);
+          }
+          else{
+            alert(result.error);
+            navigate('/login');
+          }
+        } 
+        else{
+          navigate('/login');
+        }
+      }
+      checkLogin();
+    },[])
     
-  // }
+  }
 
   return (
     <div>

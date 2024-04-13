@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import {useNavigate} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {
+  CAlert,
   CButton,
   CCard,
   CCardBody,
@@ -29,19 +30,19 @@ const Login = () => {
   const [error,setError] = useState('');
  
 
-  // const handleLoginButton = async() =>{
-  //   if (email && password) {
-  //     const result = await api.login(email,password);
-  //     if (result.error ==='') {
-  //       localStorage.setItem('token', result.token);
-  //       navigate('/')
-  //     } else {
-  //       setError(result.error);
-  //     }
-  //   } else {
-  //     alert("Digite os dados");
-  //   }
-  // }
+  const handleLoginButton = async () => {
+    if (email && password) {
+      const result = await api.login(email,password);
+      if (result.error === '') {
+        localStorage.setItem('token', result.token);
+        navigate('/');
+      } else {
+        setError(result.error);
+      }
+    } else {
+      alert("Complete os campos abaixo");
+    }
+  }
 
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
@@ -54,7 +55,11 @@ const Login = () => {
                   <CForm>
                     <h1>Login</h1>
                     <p className="text-body-secondary">Digite seus dados de acesso</p>
+                    {error !== '' &&
                     
+                    <CAlert color="danger">{error}</CAlert>
+
+                    }
                   
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
