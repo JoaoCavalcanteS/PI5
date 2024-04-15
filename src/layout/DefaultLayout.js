@@ -24,14 +24,14 @@ const DefaultLayout = () => {
             alert(result.error);
             navigate('/login');
           }
-        } 
+        }
         else{
           navigate('/login');
         }
       }
       checkLogin();
     },[])
-    
+
   }
 
   return (
