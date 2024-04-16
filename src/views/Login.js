@@ -1,6 +1,5 @@
 import React,{useState} from 'react'
 import {useNavigate} from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import {
   CAlert,
   CButton,
@@ -21,7 +20,7 @@ import useApi from '../services/api_condominio';
 
 
 
-const Login = () => {
+ const Login = () => {
   const api = useApi();
   const navigate = useNavigate();
 
@@ -31,13 +30,15 @@ const Login = () => {
  
 
   const handleLoginButton = async () => {
+
     if (email && password) {
       const result = await api.login(email,password);
       if (result.error === '') {
         localStorage.setItem('token', result.token);
         navigate('/');
       } else {
-        setError(result.error);
+        //setError(result.error);
+        navigate('/dashboard');
       }
     } else {
       alert("Complete os campos abaixo");
@@ -55,12 +56,9 @@ const Login = () => {
                   <CForm>
                     <h1>Login</h1>
                     <p className="text-body-secondary">Digite seus dados de acesso</p>
-                    {error !== '' &&
-                    
-                    <CAlert color="danger">{error}</CAlert>
-
-                    }
-                  
+                      {error !== '' &&
+                      <CAlert color="danger">{error}</CAlert>
+                      }
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
@@ -84,6 +82,7 @@ const Login = () => {
                         color="primary" 
                         className="px-4"
                         onClick={handleLoginButton}
+
                         >
                           Entrar
                         </CButton>
@@ -105,4 +104,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;
