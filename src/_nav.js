@@ -27,7 +27,7 @@ import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 const _nav = [
   {
     component: CNavItem,
-    name: 'Dashboard',
+    name: 'Mural',
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
   },
@@ -35,58 +35,58 @@ const _nav = [
     component: CNavTitle,
     name: 'GESTÃO',
   },
+  // {
+  //   component: CNavItem,
+  //   name: 'Avisos',
+  //   to: '/avisos',
+  //   icon: <CIcon icon={cilWarning} customClassName="nav-icon" />,
+  // },
   {
     component: CNavItem,
-    name: 'Avisos',
-    to: '/avisos',
-    icon: <CIcon icon={cilWarning} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Documentos',
-    to: '/documentos',
+    name: 'Financeiro',
+    to: '/financeiro',
     icon: <CIcon icon={cilFile} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Reservas',
-    to: '/reservas',
+    to: '/reserva',
     icon: <CIcon icon={cilCalendar} customClassName="nav-icon" />,
   },
-  {
-    component: CNavItem,
-    name: 'Ocorrências',
-    to: '/ocorrencias',
-    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: 'Achados e Perdidos',
-    to: '/achados_e_perdidos',
-    icon: <CIcon icon={cilLockLocked} customClassName="nav-icon" />,
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'Ocorrências',
+  //   to: '/ocorrencias',
+  //   icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
+  // },
+  // {
+  //   component: CNavItem,
+  //   name: 'Achados e Perdidos',
+  //   to: '/achados_e_perdidos',
+  //   icon: <CIcon icon={cilLockLocked} customClassName="nav-icon" />,
+  // },
   {
     component: CNavTitle,
     name: 'DADOS',
   },
   {
     component: CNavItem,
-    name: 'Usuários',
-    to: '/usuarios',
+    name: 'Funcionários',
+    to: '/funcionario',
     icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Unidades',
-    to: '/unidades',
+    to: '/unidade',
     icon: <CIcon icon={cilHome} customClassName="nav-icon" />,
   },
-  {
-    component: CNavItem,
-    name: 'Áreas Comuns',
-    to: '/areas_comuns',
-    icon: <CIcon icon={cilPaperclip} customClassName="nav-icon" />,
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'Áreas Comuns',
+  //   to: '/areas_comuns',
+  //   icon: <CIcon icon={cilPaperclip} customClassName="nav-icon" />,
+  // },
   {
     component: CNavTitle,
     name: 'CONFIGURAÇÕES',
@@ -100,7 +100,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Sair',
-    to: '/sair',
+    to: '/logout',
     icon: <CIcon icon={cilRunning} customClassName="nav-icon" />,
   },
 
