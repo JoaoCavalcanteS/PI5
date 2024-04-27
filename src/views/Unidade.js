@@ -38,7 +38,7 @@ const Funcionarios = () => {
 
   const handleDelete = (id) => {
     // Lógica para exclusão
-    console.log(`Excluir funcionário com ID ${id}`);
+    console.log(`Excluir funcionário com  ID ${id}`);
   };
 
   return (
