@@ -178,7 +178,6 @@ const Morador = () => {
       <Button variant="primary" onClick={handleShow}>
         Cadastrar Morador
       </Button>
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Preencha os dados</Modal.Title>
@@ -226,7 +225,6 @@ const Morador = () => {
           fixedHeader
         />
       </div>
-
     </div>
   );
 

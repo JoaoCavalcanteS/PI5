@@ -75,3 +75,74 @@ const Sidebar = ({ children }) => {
 };
 
 export default Sidebar;
+
+
+// import React, { useState } from "react";
+// import { NavLink } from "react-router-dom";
+
+// //https://www.devwares.com/docs/contrast/react/navigation/ Nav retirada desse site
+
+// import {
+//   CDBSidebar,
+//   CDBSidebarContent,
+//   CDBSidebarFooter,
+//   CDBSidebarHeader,
+//   CDBSidebarMenu,
+//   CDBSidebarMenuItem,
+// } from 'cdbreact';
+
+// const Sidebar = () => {
+//     return (
+//       <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
+//         <CDBSidebar textColor="#fff" backgroundColor="#333">
+//           <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
+//             <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
+//               Condomínio
+//             </a>
+//           </CDBSidebarHeader>
+  
+//           <CDBSidebarContent className="sidebar-content">
+//             <CDBSidebarMenu>
+//               <NavLink exact to="/" activeClassName="activeClicked">
+//                 <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
+//               </NavLink>
+//               <NavLink exact to="/alerta" activeClassName="activeClicked">
+//                 <CDBSidebarMenuItem icon="table">Alertas</CDBSidebarMenuItem>
+//               </NavLink>
+//               <NavLink exact to="/bloco" activeClassName="activeClicked">
+//                 <CDBSidebarMenuItem icon="user">Bloco</CDBSidebarMenuItem>
+//               </NavLink>
+//               <NavLink exact to="/casa" activeClassName="activeClicked">
+//                 <CDBSidebarMenuItem icon="envelope">Casas</CDBSidebarMenuItem>
+//               </NavLink>
+//               <NavLink exact to="/estacionamento" activeClassName="activeClicked">
+//                 <CDBSidebarMenuItem icon="sticky-note">Estacionamento</CDBSidebarMenuItem>
+//               </NavLink>
+//               <NavLink exact to="/morador" activeClassName="activeClicked">
+//                 <CDBSidebarMenuItem icon="chart-line">Morador</CDBSidebarMenuItem>
+//               </NavLink>
+//               <NavLink exact to="/salao" activeClassName="activeClicked">
+//                 <CDBSidebarMenuItem icon="shopping-bag">Salão</CDBSidebarMenuItem>
+//               </NavLink>
+//               <NavLink exact to="/visita" activeClassName="activeClicked">
+//                 <CDBSidebarMenuItem icon="sticky-note">Visita</CDBSidebarMenuItem>
+//               </NavLink>
+//             </CDBSidebarMenu>
+//           </CDBSidebarContent>
+  
+//           <CDBSidebarFooter style={{ textAlign: 'center' }}>
+//             <div
+//               style={{
+//                 padding: '20px 5px',
+//               }}
+//             >
+//               Logout
+//             </div>
+//           </CDBSidebarFooter>
+//         </CDBSidebar>
+//       </div>
+//     );
+//   };
+  
+
+// export default Sidebar;
