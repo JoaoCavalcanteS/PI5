@@ -1,41 +1,63 @@
 import React, { useState } from "react";
 import DataTable from "react-data-table-component";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Morador = () => {
+
   const columns = [
     {
       name: 'Id',
       selector: row => row.id,
+      sortable: true
     },
     {
       name: 'Nome',
       selector: row => row.nome,
+      sortable: true
     },
     {
       name: 'Email',
       selector: row => row.email,
+      sortable: true
     },
     {
       name: 'Senha',
       selector: row => row.senha,
+      sortable: true
     },
     {
       name: 'Data de Nascimento',
       selector: row => row.dataNascimento,
+      sortable: true
     },
     {
       name: 'Casa',
       selector: row => row.casa,
+      sortable: true
     },
     {
       name: 'Possui Estacionamneto',
       selector: row => row.estacionamento,
+      sortable: true
     },
     {
       name: 'Vaga',
       selector: row => row.vaga,
+      sortable: true
     },
-
+    {
+      name: 'Ações',
+      cell: row => (
+        <div>
+          <Button variant="primary" onClick={() => handleEdit(row)}>Editar</Button>{' '}
+          <Button variant="danger" onClick={() => handleDelete(row.id)}>Excluir</Button>
+        </div>
+      )
+    }
 
   ];
 
@@ -60,13 +82,151 @@ const Morador = () => {
       estacionamento: 'Sim',
       vaga: '155'
     },
+    {
+      id: 3,
+      nome: "Ana",
+      email: "ana@example.com",
+      senha: "p@ssw0rd",
+      dataNascimento: "05-12-1995",
+      casa: "Casa 22B",
+      estacionamento: "Sim",
+      vaga: "A32"
+    },
+    {
+      id: 4,
+      nome: 'luciana',
+      email: 'luciana@gmail.com',
+      senha: 'lulu789',
+      dataNascimento: '02-03-1980',
+      casa: 'Casa 11',
+      estacionamento: 'Sim',
+      vaga: 'C18'
+    },
+    {
+      id: 5,
+      nome: 'pedro',
+      email: 'pedro@example.com',
+      senha: 'pedro123',
+      dataNascimento: '08-12-1992',
+      casa: 'Casa 32',
+      estacionamento: 'Sim',
+      vaga: 'D67'
+    },
+    {
+
+      id: 6,
+      nome: 'ana',
+      email: 'ana@gmail.com',
+      senha: 'ana456',
+      dataNascimento: '11-11-1985',
+      casa: 'Apartamento 7A',
+      estacionamento: 'Sim',
+      vaga: 'D11'
+
+    },
+    {
+      id: 7,
+      nome: 'marcela',
+      email: 'marcela@hotmail.com',
+      senha: 'marchotmail',
+      dataNascimento: '07-07-1983',
+      casa: 'Casa 29',
+      estacionamento: 'Não',
+      vaga: ''
+    },
+    {
+      id: 8,
+      nome: 'gabriel',
+      email: 'gabriel@gmail.com',
+      senha: 'gabi456',
+      dataNascimento: '03-04-1991',
+      casa: 'Apartamento 15C',
+      estacionamento: 'Sim',
+      vaga: 'F21'
+    }
+
+
   ]
+  const [records, setRecords] = useState(data);
+  function handleFilter(event) {
+    const newData = data.filter(row => {
+      return row.nome.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase())
+
+    })
+    setRecords(newData)
+  }
+  function handleEdit(row) {
+    // Lógica para editar o registro
+    console.log("Editando", row);
+  }
+  function handleDelete(id) {
+    // Lógica para excluir o registro
+    console.log("Excluindo", id);
+  }
+  function handleNovoMorador() {
+    // Lógica para adicionar um novo morador
+    console.log("Cadastrar novo morador");
+  }
+  // Modal de cadastro
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <div>
-      <DataTable
-        columns={columns}
-        data={data}
-      />
+      <Button variant="primary" onClick={handleShow}>
+        Cadastrar Morador
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Preencha os dados</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Nome</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="josé"
+                autoFocus
+              />
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="jose@example.com"
+                autoFocus
+              />
+              <Form.Label>Senha</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="jose123"
+                autoFocus
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Cadastrar
+          </Button>
+        </Modal.Footer>
+      </Modal> {' '}
+
+      <input type="text" placeholder="Pesquisar..." onChange={handleFilter} />
+      <div className="mt-3">
+        <DataTable
+          columns={columns}
+          data={records}
+          selectableRows
+          fixedHeader
+        />
+      </div>
+
     </div>
   );
 

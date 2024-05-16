@@ -43,12 +43,14 @@ main {
   padding: 10px 15px;
   gap: 15px;
   transition: all 0.5s;
+  text-decoration: none;
 }
 
 .link:hover {
   background: rgb(255, 255, 255);
   color: #000;
   transition: all 0.5s;
+
 }
 
 .active {
