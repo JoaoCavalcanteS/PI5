@@ -5,6 +5,7 @@ import { IoIosAlert } from "react-icons/io";
 import { LuPartyPopper } from "react-icons/lu";
 import { SiHiveBlockchain } from "react-icons/si";
 import { NavLink } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,7 +53,7 @@ const Sidebar = ({ children }) => {
     }
   ]
   return (
-    <div className="container">
+    <div className="d-flex">
       <div style={{ width: isOpen ? "200px" : "50px" }} className="sidebar">
         <div className="top_section">
           <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">Logo</h1>
@@ -100,7 +101,7 @@ export default Sidebar;
 //               Condomínio
 //             </a>
 //           </CDBSidebarHeader>
-  
+
 //           <CDBSidebarContent className="sidebar-content">
 //             <CDBSidebarMenu>
 //               <NavLink exact to="/" activeClassName="activeClicked">
@@ -129,7 +130,7 @@ export default Sidebar;
 //               </NavLink>
 //             </CDBSidebarMenu>
 //           </CDBSidebarContent>
-  
+
 //           <CDBSidebarFooter style={{ textAlign: 'center' }}>
 //             <div
 //               style={{
@@ -143,6 +144,16 @@ export default Sidebar;
 //       </div>
 //     );
 //   };
-  
 
+
+// export default Sidebar;
+
+// const Sidebar = () => {
+
+//   return (
+//     <div className="">
+
+//     </div>
+//   );
+// }
 // export default Sidebar;

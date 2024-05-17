@@ -5,6 +5,8 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+//tabela feita desse
+//https://react-data-table-component.netlify.app/?path=/story/columns-omit-dynamically--omit-dynamically
 
 const Morador = () => {
 
@@ -113,39 +115,65 @@ const Morador = () => {
       vaga: 'D67'
     },
     {
-
       id: 6,
-      nome: 'ana',
-      email: 'ana@gmail.com',
-      senha: 'ana456',
-      dataNascimento: '11-11-1985',
-      casa: 'Apartamento 7A',
+      nome: 'romario',
+      email: 'romario@gmail.com',
+      senha: '12345',
+      dataNascimento: '10-1-2010',
+      casa: 'Apartamento 161',
       estacionamento: 'Sim',
-      vaga: 'D11'
-
+      vaga: '155'
     },
     {
       id: 7,
-      nome: 'marcela',
-      email: 'marcela@hotmail.com',
-      senha: 'marchotmail',
-      dataNascimento: '07-07-1983',
-      casa: 'Casa 29',
-      estacionamento: 'Não',
-      vaga: ''
+      nome: "Ana",
+      email: "ana@example.com",
+      senha: "p@ssw0rd",
+      dataNascimento: "05-12-1995",
+      casa: "Casa 22B",
+      estacionamento: "Sim",
+      vaga: "A32"
     },
     {
       id: 8,
-      nome: 'gabriel',
-      email: 'gabriel@gmail.com',
-      senha: 'gabi456',
-      dataNascimento: '03-04-1991',
-      casa: 'Apartamento 15C',
+      nome: 'luciana',
+      email: 'luciana@gmail.com',
+      senha: 'lulu789',
+      dataNascimento: '02-03-1980',
+      casa: 'Casa 11',
       estacionamento: 'Sim',
-      vaga: 'F21'
+      vaga: 'C18'
+    },
+    {
+      id: 9,
+      nome: 'pedro',
+      email: 'pedro@example.com',
+      senha: 'pedro123',
+      dataNascimento: '08-12-1992',
+      casa: 'Casa 32',
+      estacionamento: 'Sim',
+      vaga: 'D67'
+    },
+    {
+      id: 10,
+      nome: 'luciana',
+      email: 'luciana@gmail.com',
+      senha: 'lulu789',
+      dataNascimento: '02-03-1980',
+      casa: 'Casa 11',
+      estacionamento: 'Sim',
+      vaga: 'C18'
+    },
+    {
+      id: 11,
+      nome: 'pedro',
+      email: 'pedro@example.com',
+      senha: 'pedro123',
+      dataNascimento: '08-12-1992',
+      casa: 'Casa 32',
+      estacionamento: 'Sim',
+      vaga: 'D67'
     }
-
-
   ]
   const [records, setRecords] = useState(data);
   function handleFilter(event) {
@@ -172,6 +200,13 @@ const Morador = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const paginationComponentOptions = {
+    rowsPerPageText: 'Filas por página',
+    rangeSeparatorText: 'de',
+    selectAllRowsItem: true,
+    selectAllRowsItemText: 'Todos',
+  };
 
   return (
     <div>
@@ -217,12 +252,14 @@ const Morador = () => {
       </Modal> {' '}
 
       <input type="text" placeholder="Pesquisar..." onChange={handleFilter} />
-      <div className="mt-3">
+      <div className="mt-1">
         <DataTable
           columns={columns}
           data={records}
           selectableRows
           fixedHeader
+          pagination
+          paginationComponentOptions={paginationComponentOptions}
         />
       </div>
     </div>
