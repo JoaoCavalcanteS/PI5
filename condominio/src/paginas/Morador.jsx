@@ -3,7 +3,10 @@ import DataTable from "react-data-table-component";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Col from "react-bootstrap/esm/Col";
+import Row from "react-bootstrap/esm/Col";
 
 //tabela feita desse
 //https://react-data-table-component.netlify.app/?path=/story/columns-omit-dynamically--omit-dynamically
@@ -55,8 +58,26 @@ const Morador = () => {
       name: 'Ações',
       cell: row => (
         <div>
-          <Button variant="primary" onClick={() => handleEdit(row)}>Editar</Button>{' '}
-          <Button variant="danger" onClick={() => handleDelete(row.id)}>Excluir</Button>
+          <Button variant="primary" size="sm" onClick={() => handleEdit(row)}>Editar</Button>{' '}
+          <Button variant="danger" size="sm" onClick={handleShowDelete}>
+            Apagar
+          </Button>
+
+          {/* modal button delete */}
+          <Modal show={showDelete} onHide={handleCloseDelete}>
+            <Modal.Header closeButton>
+              <Modal.Title>Aviso</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Tem certeza que deseja excluir?</Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseDelete}>
+                Sim
+              </Button>
+              <Button variant="primary" onClick={handleCloseDelete}>
+                Não
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       )
     }
@@ -201,6 +222,14 @@ const Morador = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //modal button delete
+  const [showDelete, setShowDelete] = useState(false);
+
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleShowDelete = () => setShowDelete(true);
+
+
+
   const paginationComponentOptions = {
     rowsPerPageText: 'Filas por página',
     rangeSeparatorText: 'de',
@@ -213,6 +242,7 @@ const Morador = () => {
       <Button variant="primary" onClick={handleShow}>
         Cadastrar Morador
       </Button>
+      {/* Modal de abrir o campo de cadastro */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Preencha os dados</Modal.Title>
@@ -238,6 +268,40 @@ const Morador = () => {
                 placeholder="jose123"
                 autoFocus
               />
+              <Form.Label>Data de Nascimento</Form.Label>
+              <Form.Control
+                type="date"
+                autoFocus
+              />
+              <Form.Label>Apartamento</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="C30"
+                autoFocus
+              />
+              <Form.Group as={Row} className="mb-3">
+                <Form.Label>Possui estacionamento?</Form.Label>
+                <Col sm={10}>
+                  <Form.Check
+                    type="radio"
+                    label="Sim"
+                    name="formHorizontalRadios"
+                    id="formHorizontalRadios1"
+                  />
+                  <Form.Check
+                    type="radio"
+                    label="Não"
+                    name="formHorizontalRadios"
+                    id="formHorizontalRadios2"
+                  />
+                </Col>
+              </Form.Group>
+              <Form.Label>Vaga</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="123"
+                autoFocus
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -250,7 +314,7 @@ const Morador = () => {
           </Button>
         </Modal.Footer>
       </Modal> {' '}
-
+      {/*Fim do Modal*/}
       <input type="text" placeholder="Pesquisar..." onChange={handleFilter} />
       <div className="mt-1">
         <DataTable
@@ -262,7 +326,7 @@ const Morador = () => {
           paginationComponentOptions={paginationComponentOptions}
         />
       </div>
-    </div>
+    </div >
   );
 
 };

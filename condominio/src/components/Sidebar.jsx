@@ -3,9 +3,13 @@ import { FaBars, FaParking, FaTh } from "react-icons/fa";
 import { FaHouse, FaPeoplePulling, FaPeopleRoof } from "react-icons/fa6";
 import { IoIosAlert } from "react-icons/io";
 import { LuPartyPopper } from "react-icons/lu";
+import { GrUserManager } from "react-icons/gr";
 import { SiHiveBlockchain } from "react-icons/si";
 import { NavLink } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BsFillHousesFill } from "react-icons/bs";
+
+//icons https://react-icons.github.io/react-icons/
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +54,18 @@ const Sidebar = ({ children }) => {
       path: "/visita",
       name: "Visitas",
       icon: <FaPeoplePulling />
-    }
+    },
+    {
+      path: "/funcionario",
+      name: "Funcionário",
+      icon: <GrUserManager />
+    },
+    {
+      path: "/condominio",
+      name: "Condomínio",
+      icon: <BsFillHousesFill />
+    },
+
   ]
   return (
     <div className="d-flex">

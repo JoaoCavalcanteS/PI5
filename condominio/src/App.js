@@ -11,6 +11,8 @@ import Funcao from "./paginas/Funcao";
 import Morador from "./paginas/Morador";
 import SalaoDeFestas from "./paginas/SalaoDeFestas";
 import Visitas from "./paginas/Visitas";
+import Funcionario from "./paginas/Funcionario";
+import Condominio from "./paginas/Condominio"
 
 const App = () => {
   return (
@@ -26,6 +28,8 @@ const App = () => {
           <Route path="/morador" element={<Morador />} />
           <Route path="/salao" element={<SalaoDeFestas />} />
           <Route path="/visita" element={<Visitas />} />
+          <Route path="/funcionario" element={<Funcionario />} />
+          <Route path="/condominio" element={<Condominio />} />
         </Routes>
       </Sidebar>
     </BrowserRouter >
