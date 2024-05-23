@@ -176,11 +176,10 @@ const Blocos = () => {
   };
 
   return (
-    <div>
+    <div className="container-fluid">
       <Button variant="primary" onClick={handleShow}>
         Cadastrar Bloco
       </Button>
-      {/* Modal de abrir o campo de cadastro */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Preencha os dados</Modal.Title>
@@ -189,34 +188,17 @@ const Blocos = () => {
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Id condomínio</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="1"
-                autoFocus
-              />
-              <Form.Label></Form.Label>
-              <InputGroup>
+              <Form.Control type="text" placeholder="1" autoFocus />
+              <InputGroup className="mt-3">
                 <InputGroup.Text>Descrição</InputGroup.Text>
                 <Form.Control as="textarea" aria-label="With textarea" placeholder="O Bloco C do Condomínio..." />
               </InputGroup>
-              <Form.Label>Quantas Casas</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="10"
-                autoFocus
-              />
-              <Form.Label>Quantos Andares</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="5"
-                autoFocus
-              />
-              <Form.Label>Divisão</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Primeira divisão"
-                autoFocus
-              />
+              <Form.Label className="mt-1">Quantas Casas</Form.Label>
+              <Form.Control type="text" placeholder="10" />
+              <Form.Label className="mt-1">Quantos Andares</Form.Label>
+              <Form.Control type="text" placeholder="5" />
+              <Form.Label className="mt-1">Divisão</Form.Label>
+              <Form.Control type="text" placeholder="Primeira divisão" />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -228,10 +210,9 @@ const Blocos = () => {
             Cadastrar
           </Button>
         </Modal.Footer>
-      </Modal> {' '}
-      {/*Fim do Modal*/}
-      <input type="text" placeholder="Pesquisar..." onChange={handleFilter} />
-      <div className="mt-1">
+      </Modal>
+      <input type="text" placeholder="Pesquisar..." onChange={handleFilter} className="mt-3" />
+      <div className="mt-3">
         <DataTable
           columns={columns}
           data={records}
@@ -239,9 +220,10 @@ const Blocos = () => {
           fixedHeader
           pagination
           paginationComponentOptions={paginationComponentOptions}
+          responsive
         />
       </div>
-    </div >
+    </div>
   );
 };
 
