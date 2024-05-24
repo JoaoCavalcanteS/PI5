@@ -30,7 +30,9 @@ const Casa = () => {
     <Container className="main_content__2j9lU mt-5">
       <Row className="justify-content-center">
         <Col lg={6} md={8} sm={10}>
-          <div className="check-cpf_page_title__y_Oqz mt-3" style={{ fontWeight: 600 }}>
+          <div className="check-cpf_page_title__y_Oqz mt-3" style={{ fontWeight: 800 }}>
+          <h1 style={{ color: 'blue' }}>Cadastrar</h1>
+
             Vamos lá, você já tem o que é preciso para começar.
           </div>
           <Form onSubmit={handleSubmit} className="mt-5">
