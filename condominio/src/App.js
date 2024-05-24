@@ -13,6 +13,7 @@ import SalaoDeFestas from "./paginas/SalaoDeFestas";
 import Visitas from "./paginas/Visitas";
 import Funcionario from "./paginas/Funcionario";
 import Condominio from "./paginas/Condominio"
+import Login from "./paginas/Login"
 
 const App = () => {
   return (
