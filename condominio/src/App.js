@@ -14,6 +14,9 @@ import Visitas from "./paginas/Visitas";
 import Funcionario from "./paginas/Funcionario";
 import Condominio from "./paginas/Condominio"
 import Login from "./paginas/Login"
+import CadastrarProp from "./paginas/CadastrarProp"
+import EnderecoProp from "./paginas/EnderecoCondo";
+import EnderecoCondo from "./paginas/EnderecoCondo";
 
 const App = () => {
   return (
@@ -31,6 +34,9 @@ const App = () => {
           <Route path="/visita" element={<Visitas />} />
           <Route path="/funcionario" element={<Funcionario />} />
           <Route path="/condominio" element={<Condominio />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cadastrarProp" element={<CadastrarProp />} />
+          <Route path="/enderecoCondo" element={<EnderecoCondo />} />
         </Routes>
       </Sidebar>
     </BrowserRouter >
