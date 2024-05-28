@@ -16,7 +16,7 @@ main {
 .sidebar {
   background: #000;
   color: #fff;
-  height: auto;
+  height: 100vh;
   width: 200px;
   transition: all 0.5s;
 }
@@ -64,3 +64,8 @@ main {
 }
 
 /* Estilização de login temporaria */
+.login-form {
+  flex: 1;
+  padding: 20px;
+  /* Estilize o formulário de login aqui */
+}

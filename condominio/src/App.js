@@ -34,11 +34,13 @@ const App = () => {
           <Route path="/visita" element={<Visitas />} />
           <Route path="/funcionario" element={<Funcionario />} />
           <Route path="/condominio" element={<Condominio />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/cadastrarProp" element={<CadastrarProp />} />
           <Route path="/enderecoCondo" element={<EnderecoCondo />} />
         </Routes>
       </Sidebar>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/cadastrarProp" element={<CadastrarProp />} />
+        </Routes>
     </BrowserRouter >
   );
 };
