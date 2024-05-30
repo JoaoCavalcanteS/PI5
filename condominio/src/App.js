@@ -14,6 +14,7 @@ import Funcionario from "./paginas/Funcionario";
 import Condominio from "./paginas/Condominio"
 import AreaDeLazer from "./paginas/AreaDeLazer";
 import ReservaAreaDeLazer from "./paginas/ReservaAreaDeLazer";
+import Login from "./paginas/Login";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/funcionario" element={<Funcionario />} />
           <Route path="/condominio" element={<Condominio />} />
           <Route path="/entregas" element={<Condominio />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Sidebar>
     </BrowserRouter >
