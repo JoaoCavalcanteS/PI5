@@ -1,4 +1,4 @@
-const baseUrl = 'https://api.b7web.com.br/devcond/api/admin';
+const baseUrl = "https://api.b7web.com.br/devcond/api/admin/auth";
 
 const request = async(method,endpoint,params,token = null)=>{
     method = method.toLowerCase();
@@ -34,8 +34,14 @@ export default ()=>{
             return json;
         },
 
-        login:async(email,password)=>{
-            let json = await request('post','auth/login', {email,password});
+        login: async (email, password) => {
+            try {
+                const json = await request('post', '/auth', { email, password });
+                return json;
+            } catch (error) {
+                console.error('Erro ao fazer login:', error.message);
+                return { error: 'Erro ao fazer login' };
+            }
         }
     };
 

@@ -8,6 +8,7 @@ import { SiHiveBlockchain } from "react-icons/si";
 import { NavLink } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BsFillHousesFill } from "react-icons/bs";
+import { TbPackages } from "react-icons/tb";
 
 //icons https://react-icons.github.io/react-icons/
 
@@ -46,7 +47,7 @@ const Sidebar = ({ children }) => {
       icon: <FaPeopleRoof />
     },
     {
-      path: "/salao",
+      path: "/areaDeLazer",
       name: "Salão",
       icon: <LuPartyPopper />
     },
@@ -64,6 +65,11 @@ const Sidebar = ({ children }) => {
       path: "/condominio",
       name: "Condomínio",
       icon: <BsFillHousesFill />
+    },
+    {
+      path: "/entregas",
+      name: "Entrega",
+      icon: <TbPackages />
     },
 
   ]

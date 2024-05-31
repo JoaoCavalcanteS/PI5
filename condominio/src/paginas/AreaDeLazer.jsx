@@ -6,16 +6,16 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Funcao = () => {
+const AreaDeLazer = () => {
   const [records, setRecords] = useState([]);
   const [showCadastrar, setShowCadastrar] = useState(false);
   const [showAlterar, setShowAlterar] = useState(false);
 
-  const [newFuncao, setNewFuncao] = useState({
+  const [newAreaDeLazer, setNewAreaDeLazer] = useState({
     nome:'',
     condominioId:'',
   });
-  const [editFuncao, setEditFuncao] = useState({
+  const [editAreaDeLazer, setEditAreaDeLazer] = useState({
     id:'',
     nome:'',
     condominioId:'',
@@ -25,6 +25,9 @@ const Funcao = () => {
   const [alertVariant, setAlertVariant] = useState('success');
   const [showAlert, setShowAlert] = useState(false);
 
+  const [areas, setAreas] = useState([]);
+
+  const [blocos, setBlocos] = useState([]);
 
 
   useEffect(() => {
@@ -39,11 +42,11 @@ const Funcao = () => {
   }, [alertMessage]);
 
   useEffect(() => {
-    buscarFuncoes();
+    buscarAreas();
   }, []);
 
-  const buscarFuncoes = () => {
-    fetch("http://localhost:8080/funcao/buscarFuncoes")
+  const buscarAreas = () => {
+    fetch("http://localhost:8080/areaDeLazer/buscarAreas")
       .then(response => response.json())
       .then(data => setRecords(data))
       .catch(error => console.error('Erro ao buscar áreas:', error));
@@ -61,14 +64,14 @@ const Funcao = () => {
   }
 
   const handleEdit = (row) => {
-    setEditFuncao(row);
+    setEditAreaDeLazer(row);
     setShowAlterar(true);
   }
 
 
   const handleClose = () => {
     setShowCadastrar(false);
-    setNewFuncao({
+    setNewAreaDeLazer({
       nome:'',
       condominioId:'',
     });
@@ -77,7 +80,7 @@ const Funcao = () => {
 
   const handleCloseAlterar = () => {
     setShowAlterar(false);
-    setNewFuncao({
+    setNewAreaDeLazer({
       nome:'',
       condominioId:'',
     });
@@ -86,7 +89,7 @@ const Funcao = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewFuncao(prevState => ({
+    setNewAreaDeLazer(prevState => ({
       ...prevState,
       [name]: value
     }));
@@ -95,7 +98,7 @@ const Funcao = () => {
 
   const handleChangeEdit = (e) => {
     const { name, value } = e.target;
-    setEditFuncao(prevState => ({
+    setEditAreaDeLazer(prevState => ({
       ...prevState,
       [name]: value
     }));
@@ -109,52 +112,52 @@ const Funcao = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(newFuncao)
+      body: JSON.stringify(newAreaDeLazer)
     })
       .then(response => {
         if (response.ok) {
           setAlertVariant('success');
-          setAlertMessage('Função cadastrada com sucesso!');
-          buscarFuncoes();
+          setAlertMessage('Área de lazer cadastrada com sucesso!');
+          buscarAreas();
           setShowCadastrar(false); // Fechar modal após o cadastro
         } else {
           setAlertVariant('danger');
-          setAlertMessage('Erro ao cadastrar função. Por favor, tente novamente.');
-          console.error('Erro ao salvar função. Status:', response.status);
+          setAlertMessage('Erro ao cadastrar área de lazer. Por favor, tente novamente.');
+          console.error('Erro ao salvar área de lazer. Status:', response.status);
         }
       })
       .catch(error => {
         setAlertVariant('danger');
-        setAlertMessage('Erro ao cadastrar função. Por favor, tente novamente.');
-        console.error('Erro ao salvar função:', error);
+        setAlertMessage('Erro ao cadastrar área de lazer. Por favor, tente novamente.');
+        console.error('Erro ao salvar área de lazer:', error);
         setShowCadastrar(false); // Fechar modal após o erro
       });
   }
 
   const alterar = () => {
-    fetch(`http://localhost:8080/funcao/salvar?isAlterar=true`, {
+    fetch(`http://localhost:8080/areaDeLazer/salvar?isAlterar=true`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(editFuncao)
+      body: JSON.stringify(editAreaDeLazer)
     })
       .then(response => {
         if (response.ok) {
           setAlertVariant('success');
-          setAlertMessage('Função alterada com sucesso!');
-          buscarFuncoes();
+          setAlertMessage('Área de lazer alterada com sucesso!');
+          buscarAreas();
           setShowAlterar(false); // Fechar modal após o cadastro
         } else {
           setAlertVariant('danger');
-          setAlertMessage('Erro ao alterar função. Por favor, tente novamente.');
-          console.error('Erro ao alterar  função. Status:', response.status);
+          setAlertMessage('Erro ao alterar área de lazer. Por favor, tente novamente.');
+          console.error('Erro ao alterar  área de lazer. Status:', response.status);
         }
       })
       .catch(error => {
         setAlertVariant('danger');
-        setAlertMessage('Erro ao alterar função. Por favor, tente novamente.');
-        console.error('Erro ao alterar o função:', error);
+        setAlertMessage('Erro ao alterar área de lazer. Por favor, tente novamente.');
+        console.error('Erro ao alterar o área de lazer:', error);
       });
   }
 
@@ -164,25 +167,25 @@ const Funcao = () => {
     
     console.log("Excluindo", id);
 
-    fetch(`http://localhost:8080/funcao/excluir?id=${id}`, {
+    fetch(`http://localhost:8080/areaDeLazer/excluir?id=${id}`, {
     method: 'DELETE'
   })
     .then(response => {
       if (response.ok) {
         setAlertVariant('success');
-        setAlertMessage('Função excluída com sucesso!');
+        setAlertMessage('Área de lazer excluída com sucesso!');
         setShowAlert(true);
-        buscarFuncoes(); // Atualizar a lista após a exclusão
+        buscarAreas(); // Atualizar a lista após a exclusão
       } else {
         setAlertVariant('danger');
-        setAlertMessage('Erro ao excluir função. Por favor, tente novamente.');
+        setAlertMessage('Erro ao excluir área de lazer. Por favor, tente novamente.');
         setShowAlert(true);
       }
     })
     .catch(error => {
-      console.error('Erro ao excluir função:', error);
+      console.error('Erro ao excluir área de lazer:', error);
       setAlertVariant('danger');
-      setAlertMessage('Erro ao excluir função. Por favor, tente novamente.');
+      setAlertMessage('Erro ao excluir área de lazer. Por favor, tente novamente.');
       setShowAlert(true);
     })
     .finally(() => {
@@ -207,7 +210,7 @@ const Funcao = () => {
       sortable: true
     },
     {
-      name: 'Função',
+      name: 'Área de Lazer',
       selector: row => row.nome,
       sortable: true
     },
@@ -248,7 +251,7 @@ const Funcao = () => {
                 type="text" 
                 placeholder="1" 
                 name="areaDeLazer"
-                value={newFuncao.nome}
+                value={newAreaDeLazer.nome}
                 onChange={handleChange}
                 autoFocus 
               />
@@ -278,7 +281,7 @@ Cadastrar
                 type="text" 
                 placeholder="1" 
                 name="areaDeLazer"
-                value={editFuncao.nome}
+                value={editAreaDeLazer.nome}
                 onChange={handleChangeEdit}
                 autoFocus 
               />
@@ -314,4 +317,4 @@ Alterar
 );
 };
 
-export default Funcao;
+export default AreaDeLazer;
