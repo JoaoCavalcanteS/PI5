@@ -15,6 +15,8 @@ import Condominio from "./paginas/Condominio"
 import AreaDeLazer from "./paginas/AreaDeLazer";
 import ReservaAreaDeLazer from "./paginas/ReservaAreaDeLazer";
 import Login from "./paginas/Login";
+import DashboardMorador from "./paginas/DashboardMorador";
+import Planos from "./paginas/Planos";
 
 const App = () => {
   return (
@@ -35,6 +37,8 @@ const App = () => {
           <Route path="/condominio" element={<Condominio />} />
           <Route path="/entregas" element={<Condominio />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/dashboardMorador" element={<DashboardMorador />} />
+          <Route path="/planos" element={<Planos />} />
         </Routes>
       </Sidebar>
     </BrowserRouter >

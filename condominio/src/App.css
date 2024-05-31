@@ -118,3 +118,17 @@ body {
   }
 
 }
+
+.user-logado {
+  margin-right: 10px;
+}
+
+span {
+  font-size: 16px;
+  color: #000;
+  font-weight: bold;
+}
+
+.solicitation {
+  margin-right: 10px;
+}
