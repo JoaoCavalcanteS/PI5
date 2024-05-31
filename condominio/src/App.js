@@ -9,14 +9,14 @@ import Casa from "./paginas/Casa";
 import Estacionamento from "./paginas/Estacionamento";
 import Funcao from "./paginas/Funcao";
 import Morador from "./paginas/Morador";
-import SalaoDeFestas from "./paginas/SalaoDeFestas";
 import Visitas from "./paginas/Visitas";
 import Funcionario from "./paginas/Funcionario";
 import Condominio from "./paginas/Condominio"
-import Login from "./paginas/Login"
-import CadastrarProp from "./paginas/CadastrarProp"
-import EnderecoProp from "./paginas/EnderecoCondo";
-import EnderecoCondo from "./paginas/EnderecoCondo";
+import AreaDeLazer from "./paginas/AreaDeLazer";
+import ReservaAreaDeLazer from "./paginas/ReservaAreaDeLazer";
+import Login from "./paginas/Login";
+import DashboardMorador from "./paginas/DashboardMorador";
+import Planos from "./paginas/Planos";
 
 const App = () => {
   return (
@@ -30,17 +30,17 @@ const App = () => {
           <Route path="/estacionamento" element={<Estacionamento />} />
           <Route path="/funcao" element={<Funcao />} />
           <Route path="/morador" element={<Morador />} />
-          <Route path="/salao" element={<SalaoDeFestas />} />
+          <Route path="/areaDeLazer" element={<AreaDeLazer />} />
+          <Route path="/reserva" element={<ReservaAreaDeLazer />} />
           <Route path="/visita" element={<Visitas />} />
           <Route path="/funcionario" element={<Funcionario />} />
           <Route path="/condominio" element={<Condominio />} />
-          <Route path="/enderecoCondo" element={<EnderecoCondo />} />
+          <Route path="/entregas" element={<Condominio />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboardMorador" element={<DashboardMorador />} />
+          <Route path="/planos" element={<Planos />} />
         </Routes>
       </Sidebar>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/cadastrarProp" element={<CadastrarProp />} />
-        </Routes>
     </BrowserRouter >
   );
 };

@@ -7,8 +7,9 @@ import {
   CRow,
   
 } from '@coreui/react'
+import CIcon from '@coreui/icons-react';
+import { cilLockLocked, cilUser } from '@coreui/icons';
 import { CCardHeader } from '@coreui/react/dist/esm';
-
 
 export default () =>{
     return(
@@ -22,7 +23,7 @@ export default () =>{
                             </CButton>
                         </CCardHeader>
                         <CCardBody>
-                        Carousel
+                            ...
                         </CCardBody>
                     </CCard>
             </CCol>

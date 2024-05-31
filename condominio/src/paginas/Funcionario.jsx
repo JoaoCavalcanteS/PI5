@@ -280,6 +280,7 @@ const Funcionario = () => {
                     paginationComponentOptions={paginationComponentOptions}
                 />
             </div>
+            
         </div >
     );
 };

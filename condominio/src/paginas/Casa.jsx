@@ -1,9 +1,9 @@
 import React from "react";
 
-const Casa = ()=>{
-  return(
+const Casa = () => {
+  return (
     <div>
-        <h1>Hello</h1>
+      <h1>casa</h1>
     </div>
   );
 };

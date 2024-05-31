@@ -1,77 +1,46 @@
-import React, { useState } from "react";
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isResident, setIsResident] = useState(false);
-  const [isSyndic, setIsSyndic] = useState(false);
-
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
-  const handleResidentChange = () => setIsResident(!isResident);
-  const handleSyndicChange = () => setIsSyndic(!isSyndic);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Lógica de autenticação aqui
-    console.log({ email, password, isResident, isSyndic });
-  };
-
   return (
-    <Container>
-      <Row className="justify-content-md-center mt-5 col-12">
-        <Col md={6}>
-          <h1 className="text-center">Login</h1>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Digite seu email"
-                value={email}
-                onChange={handleEmailChange}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Senha</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Digite sua senha"
-                value={password}
-                onChange={handlePasswordChange}
-                required
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicCheckbox1">
-              <Form.Check
-                type="checkbox"
-                label="Sou morador"
-                checked={isResident}
-                onChange={handleResidentChange}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicCheckbox2">
-              <Form.Check
-                type="checkbox"
-                label="Sou síndico"
-                checked={isSyndic}
-                onChange={handleSyndicChange}
-              />
-            </Form.Group>
-
-            <Button variant="primary" type="submit" className="w-100">
-              Login
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      <div className="container d-flex justify-content-center align-items-center min-vh-100">
+        <div className="row border rounded-5 p-3 bg-white shadow box-area">
+          <div className="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style={{ background: "#103cbe" }}>
+            <div className="featured-image mb-3">
+              <img src=".\images\logoLogin.jpeg" className="img-fluid" style={{ width: "250px" }} alt="Anthill" />
+            </div>
+          </div>
+          <div className="col-md-6 right-box">
+            <div className="row align-items-center">
+              <div className="header-text mb-4">
+                <h2>Olá, novamente</h2>
+                <p>Estamos felizes por ter você de volta.</p>
+              </div>
+              <div className="input-group mb-3">
+                <input type="text" className="form-control form-control-lg bg-light fs-6" placeholder="Email" />
+              </div>
+              <div className="input-group mb-1">
+                <input type="password" className="form-control form-control-lg bg-light fs-6" placeholder="Senha" />
+              </div>
+              <div className="input-group mb-5 d-flex justify-content-between">
+                <div className="form-check">
+                  <input type="checkbox" className="form-check-input" id="formCheck" />
+                  <label htmlFor="formCheck" className="form-check-label text-secondary"><small>Sou adminstrador</small></label>
+                </div>
+                <div className="forgot">
+                  <small><a href="#">Esqueceu a senha?</a></small>
+                </div>
+              </div>
+              <div className="input-group mb-3">
+                <button className="btn btn-lg btn-primary w-100 fs-6">Login</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
