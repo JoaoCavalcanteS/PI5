@@ -12,12 +12,12 @@ const Funcao = () => {
   const [showAlterar, setShowAlterar] = useState(false);
 
   const [newFuncao, setNewFuncao] = useState({
-    nome:'',
+    descricao:'',
     condominioId:'',
   });
   const [editFuncao, setEditFuncao] = useState({
     id:'',
-    nome:'',
+    descricao:'',
     condominioId:'',
   });
 
@@ -51,7 +51,7 @@ const Funcao = () => {
 
   function handleFilter(event) {
     const newData = records.filter(row => {
-      return row.nome.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase());
+      return row.descricao.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase());
     });
     setRecords(newData);
   }
@@ -69,7 +69,7 @@ const Funcao = () => {
   const handleClose = () => {
     setShowCadastrar(false);
     setNewFuncao({
-      nome:'',
+      descricao:'',
       condominioId:'',
     });
     setAlertMessage('');
@@ -78,7 +78,7 @@ const Funcao = () => {
   const handleCloseAlterar = () => {
     setShowAlterar(false);
     setNewFuncao({
-      nome:'',
+      descricao:'',
       condominioId:'',
     });
     setAlertMessage('');
@@ -208,7 +208,7 @@ const Funcao = () => {
     },
     {
       name: 'Função',
-      selector: row => row.nome,
+      selector: row => row.descricao,
       sortable: true
     },
     
@@ -248,7 +248,7 @@ const Funcao = () => {
                 type="text" 
                 placeholder="1" 
                 name="areaDeLazer"
-                value={newFuncao.nome}
+                value={newFuncao.descricao}
                 onChange={handleChange}
                 autoFocus 
               />
@@ -278,7 +278,7 @@ Cadastrar
                 type="text" 
                 placeholder="1" 
                 name="areaDeLazer"
-                value={editFuncao.nome}
+                value={editFuncao.descricao}
                 onChange={handleChangeEdit}
                 autoFocus 
               />

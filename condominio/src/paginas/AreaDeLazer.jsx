@@ -14,11 +14,13 @@ const AreaDeLazer = () => {
   const [newAreaDeLazer, setNewAreaDeLazer] = useState({
     nome:'',
     condominioId:'',
+    bloco: '',
   });
   const [editAreaDeLazer, setEditAreaDeLazer] = useState({
     id:'',
     nome:'',
     condominioId:'',
+    bloco: '',
   });
 
   const [alertMessage, setAlertMessage] = useState('');
@@ -28,7 +30,12 @@ const AreaDeLazer = () => {
   const [areas, setAreas] = useState([]);
 
   const [blocos, setBlocos] = useState([]);
-
+  useEffect(() => {
+    fetch("http://localhost:8080/blocos/buscarBlocos")
+      .then(response => response.json())
+      .then(data => setBlocos(data))
+      .catch(error => console.error('Error fetching blocos:', error));
+  }, []);
 
   useEffect(() => {
     if (alertMessage) {
@@ -74,6 +81,7 @@ const AreaDeLazer = () => {
     setNewAreaDeLazer({
       nome:'',
       condominioId:'',
+      bloco: '',
     });
     setAlertMessage('');
   }
@@ -256,7 +264,22 @@ const AreaDeLazer = () => {
                 autoFocus 
               />
             </Form.Group>
-           
+            <Form.Group controlId="formBLoco">
+        <Form.Label>Bloco</Form.Label>
+        <Form.Control
+          as="select"
+          name="bloco"
+          value={newAreaDeLazer.bloco}
+          onChange={handleChangeEdit}
+        >
+          <option value="">Selecione um bloco</option>
+          {blocos.map(bloco => (
+            <option key={bloco.id} value={bloco.id}>
+              {bloco.descricao}
+            </option>
+          ))}
+        </Form.Control>
+      </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
