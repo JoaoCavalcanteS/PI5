@@ -132,3 +132,8 @@ span {
 .solicitation {
   margin-right: 10px;
 }
+
+.my-navbar {
+  margin-bottom: 0;
+  /* Removendo o margin-bottom padrão do Bootstrap */
+}
