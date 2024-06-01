@@ -12,14 +12,14 @@ const AreaDeLazer = () => {
   const [showAlterar, setShowAlterar] = useState(false);
 
   const [newAreaDeLazer, setNewAreaDeLazer] = useState({
-    nome:'',
-    condominioId:'',
+    nome: '',
+    condominioId: '',
     bloco: '',
   });
   const [editAreaDeLazer, setEditAreaDeLazer] = useState({
-    id:'',
-    nome:'',
-    condominioId:'',
+    id: '',
+    nome: '',
+    condominioId: '',
     bloco: '',
   });
 
@@ -43,7 +43,7 @@ const AreaDeLazer = () => {
       const timer = setTimeout(() => {
         setShowAlert(false);
         setAlertMessage('');
-      }, 3000); 
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [alertMessage]);
@@ -79,8 +79,8 @@ const AreaDeLazer = () => {
   const handleClose = () => {
     setShowCadastrar(false);
     setNewAreaDeLazer({
-      nome:'',
-      condominioId:'',
+      nome: '',
+      condominioId: '',
       bloco: '',
     });
     setAlertMessage('');
@@ -89,8 +89,8 @@ const AreaDeLazer = () => {
   const handleCloseAlterar = () => {
     setShowAlterar(false);
     setNewAreaDeLazer({
-      nome:'',
-      condominioId:'',
+      nome: '',
+      condominioId: '',
     });
     setAlertMessage('');
   }
@@ -112,7 +112,7 @@ const AreaDeLazer = () => {
     }));
   };
 
-  
+
 
   const salvar = () => {
     fetch(`http://localhost:8080/areaDeLazer/salvar?isAlterar=false`, {
@@ -169,40 +169,40 @@ const AreaDeLazer = () => {
       });
   }
 
-  
- 
+
+
   const excluir = (id) => {
-    
+
     console.log("Excluindo", id);
 
     fetch(`http://localhost:8080/areaDeLazer/excluir?id=${id}`, {
-    method: 'DELETE'
-  })
-    .then(response => {
-      if (response.ok) {
-        setAlertVariant('success');
-        setAlertMessage('Área de lazer excluída com sucesso!');
-        setShowAlert(true);
-        buscarAreas(); // Atualizar a lista após a exclusão
-      } else {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          setAlertVariant('success');
+          setAlertMessage('Área de lazer excluída com sucesso!');
+          setShowAlert(true);
+          buscarAreas(); // Atualizar a lista após a exclusão
+        } else {
+          setAlertVariant('danger');
+          setAlertMessage('Erro ao excluir área de lazer. Por favor, tente novamente.');
+          setShowAlert(true);
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao excluir área de lazer:', error);
         setAlertVariant('danger');
         setAlertMessage('Erro ao excluir área de lazer. Por favor, tente novamente.');
         setShowAlert(true);
-      }
-    })
-    .catch(error => {
-      console.error('Erro ao excluir área de lazer:', error);
-      setAlertVariant('danger');
-      setAlertMessage('Erro ao excluir área de lazer. Por favor, tente novamente.');
-      setShowAlert(true);
-    })
-    .finally(() => {
-      setShowCadastrar(false);
-    });
+      })
+      .finally(() => {
+        setShowCadastrar(false);
+      });
   }
-  
 
-  
+
+
 
   const paginationComponentOptions = {
     rowsPerPageText: 'Filas por página',
@@ -222,7 +222,7 @@ const AreaDeLazer = () => {
       selector: row => row.nome,
       sortable: true
     },
-    
+
     {
       name: 'Ações',
       cell: row => (
@@ -236,14 +236,14 @@ const AreaDeLazer = () => {
 
 
   return (
-    
+
     <div>
-    {alertMessage && (
-      <Alert variant={alertVariant} onClose={() => setAlertMessage('')} dismissible>
-        {alertMessage}
-      </Alert>
-    )}
-  <h1 style={{textAlign:'center'}} >Moradores</h1>
+      {alertMessage && (
+        <Alert variant={alertVariant} onClose={() => setAlertMessage('')} dismissible>
+          {alertMessage}
+        </Alert>
+      )}
+      <h1 style={{ textAlign: 'center' }} >Área de Lazer</h1>
       <Button variant="primary" onClick={handleNovaArea}>
         Cadastrar Morador(a)
       </Button>
@@ -255,89 +255,89 @@ const AreaDeLazer = () => {
           <Form>
             <Form.Group controlId="formIdCondominio">
               <Form.Label>Área de Lazer</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="1" 
+              <Form.Control
+                type="text"
+                placeholder="1"
                 name="areaDeLazer"
                 value={newAreaDeLazer.nome}
                 onChange={handleChange}
-                autoFocus 
+                autoFocus
               />
             </Form.Group>
             <Form.Group controlId="formBLoco">
-        <Form.Label>Bloco</Form.Label>
-        <Form.Control
-          as="select"
-          name="bloco"
-          value={newAreaDeLazer.bloco}
-          onChange={handleChangeEdit}
-        >
-          <option value="">Selecione um bloco</option>
-          {blocos.map(bloco => (
-            <option key={bloco.id} value={bloco.id}>
-              {bloco.descricao}
-            </option>
-          ))}
-        </Form.Control>
-      </Form.Group>
+              <Form.Label>Bloco</Form.Label>
+              <Form.Control
+                as="select"
+                name="bloco"
+                value={newAreaDeLazer.bloco}
+                onChange={handleChangeEdit}
+              >
+                <option value="">Selecione um bloco</option>
+                {blocos.map(bloco => (
+                  <option key={bloco.id} value={bloco.id}>
+                    {bloco.descricao}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-<Button variant="secondary" onClick={handleClose}>
-Cancelar
-</Button>
-<Button variant="primary" onClick={salvar}>
-Cadastrar
-</Button>
-</Modal.Footer>
-</Modal>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={salvar}>
+            Cadastrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-<Modal show={showAlterar} onHide={handleCloseAlterar}>
-<Modal.Header closeButton>
+      <Modal show={showAlterar} onHide={handleCloseAlterar}>
+        <Modal.Header closeButton>
           <Modal.Title>Preencha os dados</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group controlId="formIdCondominio">
               <Form.Label>Área de Lazer</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="1" 
+              <Form.Control
+                type="text"
+                placeholder="1"
                 name="areaDeLazer"
                 value={editAreaDeLazer.nome}
                 onChange={handleChangeEdit}
-                autoFocus 
+                autoFocus
               />
             </Form.Group>
-           
+
           </Form>
         </Modal.Body>
         <Modal.Footer>
-<Button variant="secondary" onClick={handleCloseAlterar}>
-Cancelar
-</Button>
-<Button variant="primary" onClick={alterar}>
-Alterar
-</Button>
-</Modal.Footer>
-</Modal>
-<input type="text" style={{marginLeft:'75%'}} placeholder="Pesquisar..." onChange={handleFilter} />
-<div className="mt-1">
-  {records.length === 0 ? (
-    <h6 className="row align-items-center mb-3">Não há dados disponíveis.</h6>
-  ) : (
-    <DataTable
-      columns={columns}
-      data={records}
-      selectableRows
-      fixedHeader
-      pagination
-      paginationComponentOptions={paginationComponentOptions}
-    />
-  )}
-</div>
-</div>
-);
+          <Button variant="secondary" onClick={handleCloseAlterar}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={alterar}>
+            Alterar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <input type="text" style={{ marginLeft: '75%' }} placeholder="Pesquisar..." onChange={handleFilter} />
+      <div className="mt-1">
+        {records.length === 0 ? (
+          <h6 className="row align-items-center mb-3">Não há dados disponíveis.</h6>
+        ) : (
+          <DataTable
+            columns={columns}
+            data={records}
+            selectableRows
+            fixedHeader
+            pagination
+            paginationComponentOptions={paginationComponentOptions}
+          />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default AreaDeLazer;

@@ -188,7 +188,7 @@ const Condominio = () => {
     const [records, setRecords] = useState(data);
     function handleFilter(event) {
         const newData = data.filter(row => {
-            return row.descricao.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase())
+            return row.nome.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase())
         })
         setRecords(newData)
     }
@@ -219,6 +219,7 @@ const Condominio = () => {
 
     return (
         <div>
+            <h1 style={{ textAlign: 'center' }} >Condomínio</h1>
             <Button variant="primary" onClick={handleShow}>
                 Cadastrar Condomínio
             </Button>

@@ -11,15 +11,28 @@
 main {
   width: 100%;
   padding: 20px;
+
 }
 
 .sidebar {
   background: #000;
   color: #fff;
-  height: 100vh;
+  flex: 0 0 auto;
+  /* Ajuste o comportamento da largura */
+  min-height: 100vh;
+  /* Defina a altura mínima como 100% da altura da janela */
   width: 200px;
   transition: all 0.5s;
+  display: flex;
+  flex-direction: column;
+  /* Ajuste a direção do flex para empilhar itens verticalmente */
 }
+
+.main-content {
+  flex: 1;
+  /* Faz com que o conteúdo principal ocupe o espaço restante */
+}
+
 
 .top_section {
   display: flex;
@@ -136,4 +149,20 @@ span {
 .my-navbar {
   margin-bottom: 0;
   /* Removendo o margin-bottom padrão do Bootstrap */
+}
+
+/* Parte do css da nav (label) */
+
+.section-label {
+  padding: 10px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.section-label {
+  padding: 10px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
 }

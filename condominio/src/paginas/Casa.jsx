@@ -13,22 +13,22 @@ const Casa = () => {
 
   const [newCasa, setNewCasa] = useState({
     idCondominio: '',
-    numeroCasa:'',
-    bloco:'',
-    vazia:'',
-    moradorId:'',
-    aluguel:'',
-    telefone:''
+    numeroCasa: '',
+    bloco: '',
+    vazia: '',
+    moradorId: '',
+    aluguel: '',
+    telefone: ''
 
   });
   const [editCasa, setEditCasa] = useState({
     idCondominio: '',
-    numeroCasa:'',
-    bloco:'',
-    vazia:'',
-    moradorId:'',
-    aluguel:'',
-    telefone:''
+    numeroCasa: '',
+    bloco: '',
+    vazia: '',
+    moradorId: '',
+    aluguel: '',
+    telefone: ''
 
   });
 
@@ -55,14 +55,14 @@ const Casa = () => {
       .then(data => setMoradores(data))
       .catch(error => console.error('Error fetching Moradores:', error));
   }, []);
-  
+
   useEffect(() => {
     if (alertMessage) {
       setShowAlert(true);
       const timer = setTimeout(() => {
         setShowAlert(false);
         setAlertMessage('');
-      }, 3000); 
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [alertMessage]);
@@ -85,7 +85,7 @@ const Casa = () => {
     setRecords(newData);
   }
 
-  const handleNovaCasa= () => {
+  const handleNovaCasa = () => {
     setShowCadastrar(true);
   }
 
@@ -99,12 +99,12 @@ const Casa = () => {
     setShowCadastrar(false);
     setNewCasa({
       idCondominio: '',
-      numeroCasa:'',
-      bloco:'',
-      vazia:'',
-      moradorId:'',
-      aluguel:'',
-      telefone:''
+      numeroCasa: '',
+      bloco: '',
+      vazia: '',
+      moradorId: '',
+      aluguel: '',
+      telefone: ''
     });
     setAlertMessage('');
   }
@@ -113,12 +113,12 @@ const Casa = () => {
     setShowAlterar(false);
     setNewCasa({
       idCondominio: '',
-      numeroCasa:'',
-      bloco:'',
-      vazia:'',
-      moradorId:'',
-      aluguel:'',
-      telefone:''
+      numeroCasa: '',
+      bloco: '',
+      vazia: '',
+      moradorId: '',
+      aluguel: '',
+      telefone: ''
     });
     setAlertMessage('');
   }
@@ -140,7 +140,7 @@ const Casa = () => {
     }));
   };
 
-  
+
 
   const salvar = () => {
     fetch(`http://localhost:8080/casa/salvar?isAlterar=false`, {
@@ -200,40 +200,40 @@ const Casa = () => {
       });
   }
 
-  
- 
+
+
   const excluir = (id) => {
-    
+
     console.log("Excluindo", id);
 
     fetch(`http://localhost:8080/casa/excluir?id=${id}`, {
-    method: 'DELETE'
-  })
-    .then(response => {
-      if (response.ok) {
-        setAlertVariant('success');
-        setAlertMessage('Casa excluída com sucesso!');
-        setShowAlert(true);
-        buscarCasas(); // Atualizar a lista após a exclusão
-      } else {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          setAlertVariant('success');
+          setAlertMessage('Casa excluída com sucesso!');
+          setShowAlert(true);
+          buscarCasas(); // Atualizar a lista após a exclusão
+        } else {
+          setAlertVariant('danger');
+          setAlertMessage('Erro ao excluir casa. Por favor, tente novamente.');
+          setShowAlert(true);
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao excluir casa:', error);
         setAlertVariant('danger');
         setAlertMessage('Erro ao excluir casa. Por favor, tente novamente.');
         setShowAlert(true);
-      }
-    })
-    .catch(error => {
-      console.error('Erro ao excluir casa:', error);
-      setAlertVariant('danger');
-      setAlertMessage('Erro ao excluir casa. Por favor, tente novamente.');
-      setShowAlert(true);
-    })
-    .finally(() => {
-      setShowCadastrar(false);
-    });
+      })
+      .finally(() => {
+        setShowCadastrar(false);
+      });
   }
-  
 
-  
+
+
 
   const paginationComponentOptions = {
     rowsPerPageText: 'Filas por página',
@@ -263,19 +263,19 @@ const Casa = () => {
       selector: row => row.aluguel,
       sortable: true
     },
-    
+
     {
       name: 'Ocupada?',
       selector: row => row.vazia,
       sortable: true
     },
-    
+
     {
       name: 'Telefone',
       selector: row => row.telefone,
       sortable: true
     },
-    
+
     {
       name: 'Ações',
       cell: row => (
@@ -289,14 +289,14 @@ const Casa = () => {
 
 
   return (
-    
+
     <div>
-    {alertMessage && (
-      <Alert variant={alertVariant} onClose={() => setAlertMessage('')} dismissible>
-        {alertMessage}
-      </Alert>
-    )}
-  <h1 style={{textAlign:'center'}} >Estacionamento</h1>
+      {alertMessage && (
+        <Alert variant={alertVariant} onClose={() => setAlertMessage('')} dismissible>
+          {alertMessage}
+        </Alert>
+      )}
+      <h1 style={{ textAlign: 'center' }} >Casa</h1>
       <Button variant="primary" onClick={handleNovaCasa}>
         Cadastrar Vaga
       </Button>
@@ -308,242 +308,242 @@ const Casa = () => {
           <Form>
             <Form.Group controlId="num">
               <Form.Label>Número da Casa</Form.Label>
-              <Form.Control 
-                type="number" 
+              <Form.Control
+                type="number"
                 name="num"
                 value={newCasa.numeroCasa}
                 onChange={handleChange}
-                autoFocus 
+                autoFocus
               />
             </Form.Group>
- 
+
             <Form.Group controlId="formBLoco">
-        <Form.Label>Bloco</Form.Label>
-        <Form.Control
-          as="select"
-          name="bloco"
-          value={newCasa.bloco}
-          onChange={handleChange}
-        >
-          <option value="">Selecione um bloco</option>
-          {blocos.map(bloco => (
-            <option key={bloco.descricao} value={bloco.descricao}>
-              {bloco.descricao}
-            </option>
-          ))}
-        </Form.Control>
-      </Form.Group>
-      <Form.Group controlId="formStatus">
-        <Form.Label>Vazia?</Form.Label>
-        <div>
-          <Form.Check
-            type="radio"
-            label="Não"
-            name="status"
-            value={0}
-            checked={newCasa.ocupado === 0}
-            onChange={handleChange}
-          />
-          <Form.Check
-            type="radio"
-            label="Sim"
-            name="ocupado"
-            value={1}
-            checked={newCasa.ocupado === 1}
-            onChange={handleChange}
-          />
-        </div>
-      </Form.Group>
-      <Form.Group controlId="formBLoco">
-        <Form.Label>Proprietário</Form.Label>
-        <Form.Control
-          as="select"
-          name="bloco"
-          value={newCasa.bloco}
-          onChange={handleChange}
-        >
-          <option value="">Selecione um morador</option>
-          {moradores.map(morador => (
-            <option key={morador.nome} value={morador.nome}>
-              {morador.nome}
-            </option>
-          ))}
-        </Form.Control>
-      </Form.Group>
-      <Form.Group controlId="tel">
+              <Form.Label>Bloco</Form.Label>
+              <Form.Control
+                as="select"
+                name="bloco"
+                value={newCasa.bloco}
+                onChange={handleChange}
+              >
+                <option value="">Selecione um bloco</option>
+                {blocos.map(bloco => (
+                  <option key={bloco.descricao} value={bloco.descricao}>
+                    {bloco.descricao}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="formStatus">
+              <Form.Label>Vazia?</Form.Label>
+              <div>
+                <Form.Check
+                  type="radio"
+                  label="Não"
+                  name="status"
+                  value={0}
+                  checked={newCasa.ocupado === 0}
+                  onChange={handleChange}
+                />
+                <Form.Check
+                  type="radio"
+                  label="Sim"
+                  name="ocupado"
+                  value={1}
+                  checked={newCasa.ocupado === 1}
+                  onChange={handleChange}
+                />
+              </div>
+            </Form.Group>
+            <Form.Group controlId="formBLoco">
+              <Form.Label>Proprietário</Form.Label>
+              <Form.Control
+                as="select"
+                name="bloco"
+                value={newCasa.bloco}
+                onChange={handleChange}
+              >
+                <option value="">Selecione um morador</option>
+                {moradores.map(morador => (
+                  <option key={morador.nome} value={morador.nome}>
+                    {morador.nome}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="tel">
               <Form.Label>Telefone</Form.Label>
-              <Form.Control 
-                type="text" 
+              <Form.Control
+                type="text"
                 name="tel"
                 value={newCasa.telefone}
                 onChange={handleChange}
-                autoFocus 
+                autoFocus
               />
             </Form.Group>
-      <Form.Group controlId="formaluguel">
-        <Form.Label>Aluguel?</Form.Label>
-        <div>
-          <Form.Check
-            type="radio"
-            label="Não"
-            name="aluguel"
-            value={0}
-            checked={newCasa.aluguel === 0}
-            onChange={handleChange}
-          />
-          <Form.Check
-            type="radio"
-            label="Sim"
-            name="aluguel"
-            value={1}
-            checked={newCasa.aluguel === 1}
-            onChange={handleChange}
-          />
-        </div>
-      </Form.Group>
-            
+            <Form.Group controlId="formaluguel">
+              <Form.Label>Aluguel?</Form.Label>
+              <div>
+                <Form.Check
+                  type="radio"
+                  label="Não"
+                  name="aluguel"
+                  value={0}
+                  checked={newCasa.aluguel === 0}
+                  onChange={handleChange}
+                />
+                <Form.Check
+                  type="radio"
+                  label="Sim"
+                  name="aluguel"
+                  value={1}
+                  checked={newCasa.aluguel === 1}
+                  onChange={handleChange}
+                />
+              </div>
+            </Form.Group>
+
           </Form>
         </Modal.Body>
         <Modal.Footer>
-<Button variant="secondary" onClick={handleClose}>
-Cancelar
-</Button>
-<Button variant="primary" onClick={salvar}>
-Cadastrar
-</Button>
-</Modal.Footer>
-</Modal>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={salvar}>
+            Cadastrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-<Modal show={showAlterar} onHide={handleCloseAlterar}>
+      <Modal show={showAlterar} onHide={handleCloseAlterar}>
         <Modal.Header closeButton>
           <Modal.Title>Alterar Vaga</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Form>
-        <Form.Group controlId="num">
+          <Form>
+            <Form.Group controlId="num">
               <Form.Label>Número da Casa</Form.Label>
-              <Form.Control 
-                type="number" 
+              <Form.Control
+                type="number"
                 name="num"
                 value={editCasa.numeroCasa}
                 onChange={handleChangeEdit}
-                autoFocus 
+                autoFocus
               />
             </Form.Group>
- 
+
             <Form.Group controlId="formBLoco">
-        <Form.Label>Bloco</Form.Label>
-        <Form.Control
-          as="select"
-          name="bloco"
-          value={editCasa.bloco}
-          onChange={handleChangeEdit}
-        >
-          <option value="">Selecione um bloco</option>
-          {blocos.map(bloco => (
-            <option key={bloco.descricao} value={bloco.descricao}>
-              {bloco.descricao}
-            </option>
-          ))}
-        </Form.Control>
-      </Form.Group>
-      <Form.Group controlId="formStatus">
-        <Form.Label>Vazia?</Form.Label>
-        <div>
-          <Form.Check
-            type="radio"
-            label="Não"
-            name="status"
-            value={0}
-            checked={editCasa.ocupado === 0}
-            onChange={handleChangeEdit}
-          />
-          <Form.Check
-            type="radio"
-            label="Sim"
-            name="ocupado"
-            value={1}
-            checked={editCasa.ocupado === 1}
-            onChange={handleChangeEdit}
-          />
-        </div>
-      </Form.Group>
-      <Form.Group controlId="formBLoco">
-        <Form.Label>Proprietário</Form.Label>
-        <Form.Control
-          as="select"
-          name="bloco"
-          value={editCasa.bloco}
-          onChange={handleChangeEdit}
-        >
-          <option value="">Selecione um morador</option>
-          {moradores.map(morador => (
-            <option key={morador.nome} value={morador.nome}>
-              {morador.nome}
-            </option>
-          ))}
-        </Form.Control>
-      </Form.Group>
-      <Form.Group controlId="tel">
+              <Form.Label>Bloco</Form.Label>
+              <Form.Control
+                as="select"
+                name="bloco"
+                value={editCasa.bloco}
+                onChange={handleChangeEdit}
+              >
+                <option value="">Selecione um bloco</option>
+                {blocos.map(bloco => (
+                  <option key={bloco.descricao} value={bloco.descricao}>
+                    {bloco.descricao}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="formStatus">
+              <Form.Label>Vazia?</Form.Label>
+              <div>
+                <Form.Check
+                  type="radio"
+                  label="Não"
+                  name="status"
+                  value={0}
+                  checked={editCasa.ocupado === 0}
+                  onChange={handleChangeEdit}
+                />
+                <Form.Check
+                  type="radio"
+                  label="Sim"
+                  name="ocupado"
+                  value={1}
+                  checked={editCasa.ocupado === 1}
+                  onChange={handleChangeEdit}
+                />
+              </div>
+            </Form.Group>
+            <Form.Group controlId="formBLoco">
+              <Form.Label>Proprietário</Form.Label>
+              <Form.Control
+                as="select"
+                name="bloco"
+                value={editCasa.bloco}
+                onChange={handleChangeEdit}
+              >
+                <option value="">Selecione um morador</option>
+                {moradores.map(morador => (
+                  <option key={morador.nome} value={morador.nome}>
+                    {morador.nome}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="tel">
               <Form.Label>Telefone</Form.Label>
-              <Form.Control 
-                type="text" 
+              <Form.Control
+                type="text"
                 name="tel"
                 value={editCasa.telefone}
                 onChange={handleChangeEdit}
-                autoFocus 
+                autoFocus
               />
             </Form.Group>
-      <Form.Group controlId="formaluguel">
-        <Form.Label>Aluguel?</Form.Label>
-        <div>
-          <Form.Check
-            type="radio"
-            label="Não"
-            name="aluguel"
-            value={0}
-            checked={editCasa.aluguel === 0}
-            onChange={handleChangeEdit}
-          />
-          <Form.Check
-            type="radio"
-            label="Sim"
-            name="aluguel"
-            value={1}
-            checked={editCasa.aluguel === 1}
-            onChange={handleChangeEdit}
-          />
-        </div>
-      </Form.Group>
-            
+            <Form.Group controlId="formaluguel">
+              <Form.Label>Aluguel?</Form.Label>
+              <div>
+                <Form.Check
+                  type="radio"
+                  label="Não"
+                  name="aluguel"
+                  value={0}
+                  checked={editCasa.aluguel === 0}
+                  onChange={handleChangeEdit}
+                />
+                <Form.Check
+                  type="radio"
+                  label="Sim"
+                  name="aluguel"
+                  value={1}
+                  checked={editCasa.aluguel === 1}
+                  onChange={handleChangeEdit}
+                />
+              </div>
+            </Form.Group>
+
           </Form>
         </Modal.Body>
         <Modal.Footer>
-<Button variant="secondary" onClick={handleCloseAlterar}>
-Cancelar
-</Button>
-<Button variant="primary" onClick={alterar}>
-Alterar
-</Button>
-</Modal.Footer>
-</Modal>
-<input type="text" style={{marginLeft:'75%'}} placeholder="Pesquisar..." onChange={handleFilter} />
-<div className="mt-1">
-  {records.length === 0 ? (
-    <h6 className="row align-items-center mb-3">Não há dados disponíveis.</h6>
-  ) : (
-    <DataTable
-      columns={columns}
-      data={records}
-      selectableRows
-      fixedHeader
-      pagination
-      paginationComponentOptions={paginationComponentOptions}
-    />
-  )}
-</div>
-</div>
-);
+          <Button variant="secondary" onClick={handleCloseAlterar}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={alterar}>
+            Alterar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <input type="text" style={{ marginLeft: '75%' }} placeholder="Pesquisar..." onChange={handleFilter} />
+      <div className="mt-1">
+        {records.length === 0 ? (
+          <h6 className="row align-items-center mb-3">Não há dados disponíveis.</h6>
+        ) : (
+          <DataTable
+            columns={columns}
+            data={records}
+            selectableRows
+            fixedHeader
+            pagination
+            paginationComponentOptions={paginationComponentOptions}
+          />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Casa;

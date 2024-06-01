@@ -46,7 +46,7 @@ const Blocos = () => {
       const timer = setTimeout(() => {
         setShowAlert(false);
         setAlertMessage('');
-      }, 3000); 
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [alertMessage]);
@@ -120,7 +120,7 @@ const Blocos = () => {
     }));
   };
 
-  
+
 
   const salvar = () => {
     fetch(`http://localhost:8080/blocos/salvar?isAlterar=false`, {
@@ -180,40 +180,40 @@ const Blocos = () => {
       });
   }
 
-  
- 
+
+
   const excluir = (id) => {
-    
+
     console.log("Excluindo", id);
 
     fetch(`http://localhost:8080/blocos/excluir?id=${id}`, {
-    method: 'DELETE'
-  })
-    .then(response => {
-      if (response.ok) {
-        setAlertVariant('success');
-        setAlertMessage('Bloco excluído com sucesso!');
-        setShowAlert(true);
-        buscarBlocos(); // Atualizar a lista após a exclusão
-      } else {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          setAlertVariant('success');
+          setAlertMessage('Bloco excluído com sucesso!');
+          setShowAlert(true);
+          buscarBlocos(); // Atualizar a lista após a exclusão
+        } else {
+          setAlertVariant('danger');
+          setAlertMessage('Erro ao excluir bloco. Por favor, tente novamente.');
+          setShowAlert(true);
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao excluir bloco:', error);
         setAlertVariant('danger');
         setAlertMessage('Erro ao excluir bloco. Por favor, tente novamente.');
         setShowAlert(true);
-      }
-    })
-    .catch(error => {
-      console.error('Erro ao excluir bloco:', error);
-      setAlertVariant('danger');
-      setAlertMessage('Erro ao excluir bloco. Por favor, tente novamente.');
-      setShowAlert(true);
-    })
-    .finally(() => {
-      setShowCadastrar(false);
-    });
+      })
+      .finally(() => {
+        setShowCadastrar(false);
+      });
   }
-  
 
-  
+
+
 
   const paginationComponentOptions = {
     rowsPerPageText: 'Filas por página',
@@ -266,14 +266,14 @@ const Blocos = () => {
 
 
   return (
-    
+
     <div>
-    {alertMessage && (
-      <Alert variant={alertVariant} onClose={() => setAlertMessage('')} dismissible>
-        {alertMessage}
-      </Alert>
-    )}
-  <h1 style={{textAlign:'center'}} >Blocos</h1>
+      {alertMessage && (
+        <Alert variant={alertVariant} onClose={() => setAlertMessage('')} dismissible>
+          {alertMessage}
+        </Alert>
+      )}
+      <h1 style={{ textAlign: 'center' }} >Bloco</h1>
       <Button variant="primary" onClick={handleNovoBloco}>
         Cadastrar Bloco
       </Button>
@@ -285,20 +285,20 @@ const Blocos = () => {
           <Form>
             <Form.Group controlId="formIdCondominio">
               <Form.Label>Id condomínio</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="1" 
+              <Form.Control
+                type="text"
+                placeholder="1"
                 name="idCondominio"
                 value={newBloco.idCondominio}
                 onChange={handleChange}
-                autoFocus 
+                autoFocus
               />
             </Form.Group>
             <Form.Group controlId="formDescricao">
               <Form.Label>Descrição</Form.Label>
-              <Form.Control 
-                as="textarea" 
-                placeholder="O Bloco C do Condomínio..." 
+              <Form.Control
+                as="textarea"
+                placeholder="O Bloco C do Condomínio..."
                 name="descricao"
                 value={newBloco.descricao}
                 onChange={handleChange}
@@ -306,9 +306,9 @@ const Blocos = () => {
             </Form.Group>
             <Form.Group controlId="formQtdCasas">
               <Form.Label>Quantas Casas</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="10" 
+              <Form.Control
+                type="text"
+                placeholder="10"
                 name="qtdCasas"
                 value={newBloco.qtdCasas}
                 onChange={handleChange}
@@ -316,9 +316,9 @@ const Blocos = () => {
             </Form.Group>
             <Form.Group controlId="formQtdAndares">
               <Form.Label>Quantos Andares</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="5" 
+              <Form.Control
+                type="text"
+                placeholder="5"
                 name="qtdAndares"
                 value={newBloco.qtdAndares}
                 onChange={handleChange}
@@ -326,9 +326,9 @@ const Blocos = () => {
             </Form.Group>
             <Form.Group controlId="formDivisao">
               <Form.Label>Divisão</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="Primeira divisão" 
+              <Form.Control
+                type="text"
+                placeholder="Primeira divisão"
                 name="divisao"
                 value={newBloco.divisao}
                 onChange={handleChange}
@@ -337,49 +337,49 @@ const Blocos = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-<Button variant="secondary" onClick={handleClose}>
-Cancelar
-</Button>
-<Button variant="primary" onClick={salvar}>
-Cadastrar
-</Button>
-</Modal.Footer>
-</Modal>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={salvar}>
+            Cadastrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-<Modal show={showAlterar} onHide={handleCloseAlterar}>
+      <Modal show={showAlterar} onHide={handleCloseAlterar}>
         <Modal.Header closeButton>
           <Modal.Title>Alterar bloco</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-          <Form.Group controlId="id">
+            <Form.Group controlId="id">
               <Form.Label>Id </Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="1" 
+              <Form.Control
+                type="text"
+                placeholder="1"
                 name="id"
                 value={editBloco.id}
                 onChange={handleChangeEdit}
                 disabled
-                autoFocus 
+                autoFocus
               />
             </Form.Group>
             <Form.Group controlId="formIdCondominio">
               <Form.Label>Id condomínio</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="1" 
+              <Form.Control
+                type="text"
+                placeholder="1"
                 name="idCondominio"
                 value={editBloco.idCondominio}
                 onChange={handleChangeEdit}
-                autoFocus 
+                autoFocus
               />
             </Form.Group>
             <Form.Group controlId="formDescricao">
               <Form.Label>Descrição</Form.Label>
-              <Form.Control 
-                as="textarea" 
-                placeholder="O Bloco C do Condomínio..." 
+              <Form.Control
+                as="textarea"
+                placeholder="O Bloco C do Condomínio..."
                 name="descricao"
                 value={editBloco.descricao}
                 onChange={handleChangeEdit}
@@ -387,9 +387,9 @@ Cadastrar
             </Form.Group>
             <Form.Group controlId="formQtdCasas">
               <Form.Label>Quantas Casas</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="10" 
+              <Form.Control
+                type="text"
+                placeholder="10"
                 name="qtdCasas"
                 value={editBloco.qtdCasas}
                 onChange={handleChangeEdit}
@@ -397,9 +397,9 @@ Cadastrar
             </Form.Group>
             <Form.Group controlId="formQtdAndares">
               <Form.Label>Quantos Andares</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="5" 
+              <Form.Control
+                type="text"
+                placeholder="5"
                 name="qtdAndares"
                 value={editBloco.qtdAndares}
                 onChange={handleChangeEdit}
@@ -407,9 +407,9 @@ Cadastrar
             </Form.Group>
             <Form.Group controlId="formDivisao">
               <Form.Label>Divisão</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="Primeira divisão" 
+              <Form.Control
+                type="text"
+                placeholder="Primeira divisão"
                 name="divisao"
                 value={editBloco.divisao}
                 onChange={handleChangeEdit}
@@ -418,31 +418,31 @@ Cadastrar
           </Form>
         </Modal.Body>
         <Modal.Footer>
-<Button variant="secondary" onClick={handleCloseAlterar}>
-Cancelar
-</Button>
-<Button variant="primary" onClick={alterar}>
-Alterar
-</Button>
-</Modal.Footer>
-</Modal>
-<input type="text" style={{marginLeft:'75%'}} placeholder="Pesquisar..." onChange={handleFilter} />
-<div className="mt-1">
-  {records.length === 0 ? (
-    <h6 className="row align-items-center mb-3">Não há dados disponíveis.</h6>
-  ) : (
-    <DataTable
-      columns={columns}
-      data={records}
-      selectableRows
-      fixedHeader
-      pagination
-      paginationComponentOptions={paginationComponentOptions}
-    />
-  )}
-</div>
-</div>
-);
+          <Button variant="secondary" onClick={handleCloseAlterar}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={alterar}>
+            Alterar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <input type="text" style={{ marginLeft: '75%' }} placeholder="Pesquisar..." onChange={handleFilter} />
+      <div className="mt-1">
+        {records.length === 0 ? (
+          <h6 className="row align-items-center mb-3">Não há dados disponíveis.</h6>
+        ) : (
+          <DataTable
+            columns={columns}
+            data={records}
+            selectableRows
+            fixedHeader
+            pagination
+            paginationComponentOptions={paginationComponentOptions}
+          />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Blocos;

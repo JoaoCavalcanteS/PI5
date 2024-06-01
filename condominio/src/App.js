@@ -19,6 +19,7 @@ import DashboardMorador from "./paginas/DashboardMorador";
 import Home from "./paginasHome/Home";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Entregas from "./paginas/Entregas";
 
 const App = () => {
   return (
@@ -37,7 +38,7 @@ const App = () => {
           <Route path="/visita" element={<Visitas />} />
           <Route path="/funcionario" element={<Funcionario />} />
           <Route path="/condominio" element={<Condominio />} />
-          <Route path="/entregas" element={<Condominio />} />
+          <Route path="/entregas" element={<Entregas />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboardMorador" element={<DashboardMorador />} />
           <Route path="/home" element={<Home />} />

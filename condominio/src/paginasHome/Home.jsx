@@ -12,10 +12,27 @@ import Row from 'react-bootstrap/Row';
 import CardGroup from 'react-bootstrap/CardGroup';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Accordion from 'react-bootstrap/Accordion';
+import banner1 from "../images/banner1.jpg";
+import banner2 from "../images/banner2.png";
+import banner3 from "../images/banner3.png";
+import cadastro from "../images/cadastro.png";
+import agendamento from "../images/agendamento.png";
+
+
 
 function Home() {
     const [modalShowBasic, setModalShowBasic] = useState(false);
     const [modalShowPremium, setModalShowPremium] = useState(false);
+
+    const [show, setShow] = useState(true);
+    const [accepted, setAccepted] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleAccept = () => {
+        setShow(false);
+        setAccepted(true);
+    };
+    const handleLaunch = () => setShow(true);
 
     function MyVerticallyCenteredModal(props) {
         return (
@@ -68,35 +85,23 @@ function Home() {
                 <Carousel.Item>
                     <img
                         className="d-block w-100"
-                        src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhUTEhMVFhUVGRgYFRgYGRkZGBcXFx4YFxYXFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLi0BCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAKgBLAMBIgACEQEDEQH/xAAYAAEBAQEBAAAAAAAAAAAAAAABAgADB//EACsQAAEDAwQCAgIDAQADAAAAAAEAESExQVFxgcHwYZECsaHRA+HxEiIyYv/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDx8mRJ6SpB/wDo2yMpNRHXKkUpjlBQ+UibecZQTH/sfybJBkR1lNqetEFkyZND9BT/ANQJN8+FjUxbhY6Z4QJNZ+8rA0n7yg3jrrC0dcoM9ZNsnKoGRPWUi8Y5WFRFuEGeKn8iyT8pM284yptT3okmTFj9IMTFc58JJrJv9qTSmeFRqY66DA0k9KwNf/LGRlAtHXWF4xygR8pE28/aP+oqfybLAyIwgUp1kFkzU04Un5RU3yMLHS3CDSmeEFH5SZ+8rPSfvKDUxn7WxHXQP/VZPSsDIk25RmFhURb9oMDH/sa+RYpPymtvOMqbUxXQpeaW4QYmKmpycKiZMm/Cg0pnhUamOwgz0k9Kz1/8vvKMR11sx10CPlInGfN0f9RU2ybFIMiMcqRSl7aFBTzW3CP+oqb5GFtrcINKe9kFH5SZznwsTSfvKxMmMoxHXQJNZP5yo/k+RiTT9qsx11HzNIeP2g6monrlTauK7pJDjtypBGMX1QUKif1RTavrRIqItxhDhqcWQUambb0QbTmuyxIc6H6QSGG/CCjefeqwtPXKC0x+fKwaI/PlBhecU3SKibb0UgiYxykEONvpAWr70VGpm21FLhqN+bJNTFs+MINauabJNTPXUkhqZ4SSHO/2g2J662ZxXdYGnbocTGOUFCon9XUilfWiRURar62Q4IpxZBRrW29EfKlc12WJDnThBIApnhBRvOdKoFp66xZzHXWiI/PlBhefWqRUTjW6kETHXSCHG3KAtX3oqOttqKHDUvrYqjpbPjCAtXNNlRqZypLNS54SSHO/2EGxPvVbM+9UOI7dMTH58oH42nGl1IpW9tCn41EfnWyAQ1MeLFA3rbeixpX3ss4fbhBZqZ84QUamc8IxPrVb5M5jsLREX5QbM+tVP8gpIpdU4nt1H8jRog6l3E9cqfi+cU3SWcV6SpDN6pugoO4pTemEF2r70WDOO2Uw370QWXmbcBDlq5pssWc1ptRBZhW9NkFS5ke/K0xI6UFp7dYERt9oM5mcV3SHiespDTW1d0iorTahQYO1fWiS7mlN6YUQ19tFRIc6cIN8naovU6JLzPXUlm912SWc16UCCYnroDzOKFYNFelAadqboKDuJHufSC7V96LAhxtyphr1vogsvm3CHLVzTZYtNabUQWa9TTZBRdzIv9omJHSsWc7/AGhxHboKczPtb4vE45RE1tVYM4rTa6DB2r60KSS9qb0woDNe1NCqJD7cIN8naovU6JJLmc8KSze67JLOa8WQIJieutMyNtVMRXpTE8aoEO4kW1vZDlq4roVgzjblAZr1voUFTm3CHLVzTZaPNNqILNettkFF3Mi+qC8SPflYs534REc6oKJMz71UfMmGNrKomu+qj5tFaW3QdS7jtypD/WBlJAcduVIbzau6Cg7jtkS2PRssKitNqKYa+2iCy7nTjCCC3vHhYgOdD9BBZhvXZBRef6ysHj+soLTXpWDRXpQIf6wcrB3HbKQ07U3SAHHbFBpbPoWSXnTxjKhg199FRZzWm1EGLt7x4SXnt1JZr3psks53+0DMdutM7YGUBo7dAaa2rugoPCJbHo2WDOK0Gl1MNfbRBZf8cILt7x4WIDnThBZvddkFF3O+LFaY/rKCzmvSsGivSgZn+srB42UxO1NUgBxtyg0tn0LJn8cZUQ1630Kot5ptRBi7e8HCS7nf8qSzXqabJLOd/sIFjH9ZWmf6ypiO3TE131QIdxtjygO2KYNit8WcVtpdSGa9qaFBc/jhBBb/AAYWh9uEFm912QUXc748XWmP6ygs5rfSyIiteUFTP9ZUfP4ktp4TE8aqP5QI0/aDsaiBzUqWOMV3SaieuVIAarU5QUHiI/FEMWp60WAkdspYNV/8QWRJgU3ogvgXrssambcZQQGE54QUXmPeqweI9aoIE9usBTt0GDzAtTdIqIHKkATOOUiom3GUGLtT3okvMW2ooYNVvzZUQHOnCDEFqZpsk1MDbVSQGrnhJEmeugcQOarMZjFUC09dAAmccoKDxGNEB2p60WAkbcqWDVedLILImgpvRBdqC9dljUzbjKCA1WrwgovMZrqsxiPWqCJM5+1mp26BDzHpYVEC2t0MJnFvK3xqJsOboMxanvQpL4ttRQwarU82KogPtwgxBamabJNTA5spIDVzwk1MoNiBvqljMe9UNSeus1Z66BDxGOUB2p60KwEjblAAarzpYoKbwKb0QXanvZa9bcZQQGq08BBRdzGUMYj1qsRJ34Q1J66CpmBtqo/kJiBS4VNWeuo/kaJaME5QdTUR1ypGmKbqjUT1ypGuKboMKiLcINKe9FQqJtwpNK+3wgomTFj9KTSmabKjUzY/QRYTmmyDG8ddYWjrlY3nrrYnroMLxiu6QZEY+kZnFd0ion9UKCbU9aJNTFt6ItX0+FRqZtwgDSma7JN4z9oNK5rsk3nP2gBaOusLxim6wtPXWF5xR0CKiLb3U2p70VComwU2r70QUTNLcKTSmabKjWttqKTSuabIKNTHXRiOuk1M9dGJ66DZjFdUiojHKMz71SKicaXQSKU9aJ2tvRApW9nwUmtbcIA0pmuyo1MZUmlc12VGpnPCAxHXWzHrVbE9dbM+tUGFRHZQKUxXQp+NRONbotXFXwUFPNLcKTSmabKt7cKbVzTZBRqYzwjEddJqZzwjE9dBsx71UfyCkWVm8+9VH8lptbdB0NRHXKkGKY8ZVl3EjmpUuWrip1QYEOO2Q7CnNlQeJ/VEB2r6PhBjUxbjCC0RnhUXcyKb0R8nyL1OiDE17dYGnblJeZ96rAmJ66CQRMY85SKiLZ8YW+LzOKHVIdxI5ogl4pxZJIc6H6WLtX2fCS8zbaiCSYpnhJqY66zlq5psmXMjpQAtHXQDWMKpiR7mqzmZxXdAAhxtyphqX1srDxP6ugO1fR8IMamLZ8YQWameFRdzIpvRHydq5qdEGJDnf7WcR26S8zn7WDxPXQETCwqIsL62WDzPopDuJFtUE2pjxYpJD7cLS1feiS+bbUQSSGpnzhJqYWctXNNkl3Mi+qAiI/PlZ6x11i8T7PlJJmfeqABkbcoDNS+tiq+LxONLoDtX1oUG2txhBIal9LBVL1FN6I+TtX2dEGJk78IekddUXcznSyzmJ9aoCJj8+VHzIiHjLZXSZn0fKj+QUkUuUFlnHblSG82rurLv3JUh/rBygwZxWm1FLhv1orDuO2wiWz6FkGJDnQ/SCzDfhUXc6eMIlvePCDFpr0rBor0pLz26weO3QSGnam6QQ42+kh52wMrB47ZBENvfRUWc1pwtLf4bJLudOMIJLNe9Nkkhzv8AaxdvePCS89oUA4jt0RNbV3VB47dYPO2EAGcVptdTDfrRWHcbdZEt/gsgxIc6cILN7rsqL/jhBdvePCDFnNekLBor0pLud/taY/rKCXE8apBDjblMz/QWDx3KCYa9b6FJbzTaiwdsejYpn8cYQSWbc02SWc7/AGsXb3gYSXc78IJcR26Ymu+qZj+srTP9ZQHxZxW2l1IZvVNCrDuNubIlv8Figzh9uEFm912VT+OEF2/w4Qb5M5rT9IiK15VF3O/WRMf1lBnE9uuf8hEaLrM/1lR8yY08ILLOK8VKkM3qm6su4jrlSHxim6DBnHbKYa++isCRA5ogu1PeiDFnNabUQWit6bKi8xbhDFqZpsgxaeNVg0duUl5gbarB4gdKCQ01tXdIqK02osxxiu6Q8RH9IIhr1toqLOdD9LAFqetEl3MCm9EElm912SWc16Vi+BeuySDMddABor0oDTtyqDxHXWDzGKboAM425Uw1630Viogc3QxanvRBizmtNqILNe9NlRfFuEEFqZpsgxZzv9oiO3VF3MDmq0xA6UExNbV1SGcVoNLpYzHvVYPEYQRDXtTRUWfbhYO1PWiW8Cm9EElm912SWc14ssXama7JLzGUExFelaJ41VMYj1qtMx61QAZxtypDNet9CrFRA5uiWpiuhQb3TaiCzXrbQKpxDcIYtTNNkGLOd+ERHbqi7mM62RMQN9UGia76qPm0VpZvK6TMe9VHz+JhhayCyJHblSAGq9OVRqI65QNMV3QYVE24ypYNVvzZWDIj9UU2p60QJAc6H6QQGG/Co1MW3oEHTNdkGIrPXWFp65Sbx71QLR1ygABM45SAHHbLC8YpukVEW3QQwar/AIsqNTNuMotT3oqJkxbhBJAaueEkCd/tBpTNNlRqY66AAp26ABM45SLR11sxiqDCom2NbqWDV5srFowptT1ogSA504QQG98JOlt6LGlM12QYiTPXWYRP48pNTGftGI66AYTt9lIAcaDlbMekioj93QQwarzpYqjrbjKLUxXQpfxbaiAIDVaTwkgOd/sINKZpsqNTGdbIJYR26WEz11sR71WzHvVBvjUTi2t1IAarU+irFRGNLqRSnrQoFg+3CCA1c8J2tvRBpT3sgTUznhDCJ/HlUamM8IxHrVBmE9uuf8oEaftdMx61U/M0gUvug6GonrlRauOVlkFASJ6ym1fsWWWQUambcINpzwhZAm89dYWnrlZZBhecZ8rCom3nCyyAtX25sqNTNuELIC1c8KjUz10LINieutmccrLIEVE45Uilb2cWWWQJqZtwg0rnPhZZBRqZz9oFp66yyDC8/eVhUTYcrLIC1fb4Kre3CFkAaVzTZJqZzwssg2J+8rG89dZZA/GonHKkUrez4KyyBvW3CDSt/OAssgo1M54Rieussg2Z66j+S028+UrIP//Z"
+                        src={banner1}
                         alt="First slide"
                     />
-                    <Carousel.Caption>
-                        <h3>First slide label</h3>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                    </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
                         className="d-block w-100"
-                        src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhUTEhMVFhUVGRgYFRgYGRkZGBcXFx4YFxYXFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLi0BCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAKgBLAMBIgACEQEDEQH/xAAYAAEBAQEBAAAAAAAAAAAAAAABAgADB//EACsQAAEDAwQCAgIDAQADAAAAAAEAESExQVFxgcHwYZECsaHRA+HxEiIyYv/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDx8mRJ6SpB/wDo2yMpNRHXKkUpjlBQ+UibecZQTH/sfybJBkR1lNqetEFkyZND9BT/ANQJN8+FjUxbhY6Z4QJNZ+8rA0n7yg3jrrC0dcoM9ZNsnKoGRPWUi8Y5WFRFuEGeKn8iyT8pM284yptT3okmTFj9IMTFc58JJrJv9qTSmeFRqY66DA0k9KwNf/LGRlAtHXWF4xygR8pE28/aP+oqfybLAyIwgUp1kFkzU04Un5RU3yMLHS3CDSmeEFH5SZ+8rPSfvKDUxn7WxHXQP/VZPSsDIk25RmFhURb9oMDH/sa+RYpPymtvOMqbUxXQpeaW4QYmKmpycKiZMm/Cg0pnhUamOwgz0k9Kz1/8vvKMR11sx10CPlInGfN0f9RU2ybFIMiMcqRSl7aFBTzW3CP+oqb5GFtrcINKe9kFH5SZznwsTSfvKxMmMoxHXQJNZP5yo/k+RiTT9qsx11HzNIeP2g6monrlTauK7pJDjtypBGMX1QUKif1RTavrRIqItxhDhqcWQUambb0QbTmuyxIc6H6QSGG/CCjefeqwtPXKC0x+fKwaI/PlBhecU3SKibb0UgiYxykEONvpAWr70VGpm21FLhqN+bJNTFs+MINauabJNTPXUkhqZ4SSHO/2g2J662ZxXdYGnbocTGOUFCon9XUilfWiRURar62Q4IpxZBRrW29EfKlc12WJDnThBIApnhBRvOdKoFp66xZzHXWiI/PlBhefWqRUTjW6kETHXSCHG3KAtX3oqOttqKHDUvrYqjpbPjCAtXNNlRqZypLNS54SSHO/2EGxPvVbM+9UOI7dMTH58oH42nGl1IpW9tCn41EfnWyAQ1MeLFA3rbeixpX3ss4fbhBZqZ84QUamc8IxPrVb5M5jsLREX5QbM+tVP8gpIpdU4nt1H8jRog6l3E9cqfi+cU3SWcV6SpDN6pugoO4pTemEF2r70WDOO2Uw370QWXmbcBDlq5pssWc1ptRBZhW9NkFS5ke/K0xI6UFp7dYERt9oM5mcV3SHiespDTW1d0iorTahQYO1fWiS7mlN6YUQ19tFRIc6cIN8naovU6JLzPXUlm912SWc16UCCYnroDzOKFYNFelAadqboKDuJHufSC7V96LAhxtyphr1vogsvm3CHLVzTZYtNabUQWa9TTZBRdzIv9omJHSsWc7/AGhxHboKczPtb4vE45RE1tVYM4rTa6DB2r60KSS9qb0woDNe1NCqJD7cIN8naovU6JJLmc8KSze67JLOa8WQIJieutMyNtVMRXpTE8aoEO4kW1vZDlq4roVgzjblAZr1voUFTm3CHLVzTZaPNNqILNettkFF3Mi+qC8SPflYs534REc6oKJMz71UfMmGNrKomu+qj5tFaW3QdS7jtypD/WBlJAcduVIbzau6Cg7jtkS2PRssKitNqKYa+2iCy7nTjCCC3vHhYgOdD9BBZhvXZBRef6ysHj+soLTXpWDRXpQIf6wcrB3HbKQ07U3SAHHbFBpbPoWSXnTxjKhg199FRZzWm1EGLt7x4SXnt1JZr3psks53+0DMdutM7YGUBo7dAaa2rugoPCJbHo2WDOK0Gl1MNfbRBZf8cILt7x4WIDnThBZvddkFF3O+LFaY/rKCzmvSsGivSgZn+srB42UxO1NUgBxtyg0tn0LJn8cZUQ1630Kot5ptRBi7e8HCS7nf8qSzXqabJLOd/sIFjH9ZWmf6ypiO3TE131QIdxtjygO2KYNit8WcVtpdSGa9qaFBc/jhBBb/AAYWh9uEFm912QUXc748XWmP6ygs5rfSyIiteUFTP9ZUfP4ktp4TE8aqP5QI0/aDsaiBzUqWOMV3SaieuVIAarU5QUHiI/FEMWp60WAkdspYNV/8QWRJgU3ogvgXrssambcZQQGE54QUXmPeqweI9aoIE9usBTt0GDzAtTdIqIHKkATOOUiom3GUGLtT3okvMW2ooYNVvzZUQHOnCDEFqZpsk1MDbVSQGrnhJEmeugcQOarMZjFUC09dAAmccoKDxGNEB2p60WAkbcqWDVedLILImgpvRBdqC9dljUzbjKCA1WrwgovMZrqsxiPWqCJM5+1mp26BDzHpYVEC2t0MJnFvK3xqJsOboMxanvQpL4ttRQwarU82KogPtwgxBamabJNTA5spIDVzwk1MoNiBvqljMe9UNSeus1Z66BDxGOUB2p60KwEjblAAarzpYoKbwKb0QXanvZa9bcZQQGq08BBRdzGUMYj1qsRJ34Q1J66CpmBtqo/kJiBS4VNWeuo/kaJaME5QdTUR1ypGmKbqjUT1ypGuKboMKiLcINKe9FQqJtwpNK+3wgomTFj9KTSmabKjUzY/QRYTmmyDG8ddYWjrlY3nrrYnroMLxiu6QZEY+kZnFd0ion9UKCbU9aJNTFt6ItX0+FRqZtwgDSma7JN4z9oNK5rsk3nP2gBaOusLxim6wtPXWF5xR0CKiLb3U2p70VComwU2r70QUTNLcKTSmabKjWttqKTSuabIKNTHXRiOuk1M9dGJ66DZjFdUiojHKMz71SKicaXQSKU9aJ2tvRApW9nwUmtbcIA0pmuyo1MZUmlc12VGpnPCAxHXWzHrVbE9dbM+tUGFRHZQKUxXQp+NRONbotXFXwUFPNLcKTSmabKt7cKbVzTZBRqYzwjEddJqZzwjE9dBsx71UfyCkWVm8+9VH8lptbdB0NRHXKkGKY8ZVl3EjmpUuWrip1QYEOO2Q7CnNlQeJ/VEB2r6PhBjUxbjCC0RnhUXcyKb0R8nyL1OiDE17dYGnblJeZ96rAmJ66CQRMY85SKiLZ8YW+LzOKHVIdxI5ogl4pxZJIc6H6WLtX2fCS8zbaiCSYpnhJqY66zlq5psmXMjpQAtHXQDWMKpiR7mqzmZxXdAAhxtyphqX1srDxP6ugO1fR8IMamLZ8YQWameFRdzIpvRHydq5qdEGJDnf7WcR26S8zn7WDxPXQETCwqIsL62WDzPopDuJFtUE2pjxYpJD7cLS1feiS+bbUQSSGpnzhJqYWctXNNkl3Mi+qAiI/PlZ6x11i8T7PlJJmfeqABkbcoDNS+tiq+LxONLoDtX1oUG2txhBIal9LBVL1FN6I+TtX2dEGJk78IekddUXcznSyzmJ9aoCJj8+VHzIiHjLZXSZn0fKj+QUkUuUFlnHblSG82rurLv3JUh/rBygwZxWm1FLhv1orDuO2wiWz6FkGJDnQ/SCzDfhUXc6eMIlvePCDFpr0rBor0pLz26weO3QSGnam6QQ42+kh52wMrB47ZBENvfRUWc1pwtLf4bJLudOMIJLNe9Nkkhzv8AaxdvePCS89oUA4jt0RNbV3VB47dYPO2EAGcVptdTDfrRWHcbdZEt/gsgxIc6cILN7rsqL/jhBdvePCDFnNekLBor0pLud/taY/rKCXE8apBDjblMz/QWDx3KCYa9b6FJbzTaiwdsejYpn8cYQSWbc02SWc7/AGsXb3gYSXc78IJcR26Ymu+qZj+srTP9ZQHxZxW2l1IZvVNCrDuNubIlv8Figzh9uEFm912VT+OEF2/w4Qb5M5rT9IiK15VF3O/WRMf1lBnE9uuf8hEaLrM/1lR8yY08ILLOK8VKkM3qm6su4jrlSHxim6DBnHbKYa++isCRA5ogu1PeiDFnNabUQWit6bKi8xbhDFqZpsgxaeNVg0duUl5gbarB4gdKCQ01tXdIqK02osxxiu6Q8RH9IIhr1toqLOdD9LAFqetEl3MCm9EElm912SWc16Vi+BeuySDMddABor0oDTtyqDxHXWDzGKboAM425Uw1630Viogc3QxanvRBizmtNqILNe9NlRfFuEEFqZpsgxZzv9oiO3VF3MDmq0xA6UExNbV1SGcVoNLpYzHvVYPEYQRDXtTRUWfbhYO1PWiW8Cm9EElm912SWc14ssXama7JLzGUExFelaJ41VMYj1qtMx61QAZxtypDNet9CrFRA5uiWpiuhQb3TaiCzXrbQKpxDcIYtTNNkGLOd+ERHbqi7mM62RMQN9UGia76qPm0VpZvK6TMe9VHz+JhhayCyJHblSAGq9OVRqI65QNMV3QYVE24ypYNVvzZWDIj9UU2p60QJAc6H6QQGG/Co1MW3oEHTNdkGIrPXWFp65Sbx71QLR1ygABM45SAHHbLC8YpukVEW3QQwar/AIsqNTNuMotT3oqJkxbhBJAaueEkCd/tBpTNNlRqY66AAp26ABM45SLR11sxiqDCom2NbqWDV5srFowptT1ogSA504QQG98JOlt6LGlM12QYiTPXWYRP48pNTGftGI66AYTt9lIAcaDlbMekioj93QQwarzpYqjrbjKLUxXQpfxbaiAIDVaTwkgOd/sINKZpsqNTGdbIJYR26WEz11sR71WzHvVBvjUTi2t1IAarU+irFRGNLqRSnrQoFg+3CCA1c8J2tvRBpT3sgTUznhDCJ/HlUamM8IxHrVBmE9uuf8oEaftdMx61U/M0gUvug6GonrlRauOVlkFASJ6ym1fsWWWQUambcINpzwhZAm89dYWnrlZZBhecZ8rCom3nCyyAtX25sqNTNuELIC1c8KjUz10LINieutmccrLIEVE45Uilb2cWWWQJqZtwg0rnPhZZBRqZz9oFp66yyDC8/eVhUTYcrLIC1fb4Kre3CFkAaVzTZJqZzwssg2J+8rG89dZZA/GonHKkUrez4KyyBvW3CDSt/OAssgo1M54Rieussg2Z66j+S028+UrIP//Z"
+                        src={banner2}
                         alt="Second slide"
                     />
-                    <Carousel.Caption>
-                        <h3>Second slide label</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
                         className="d-block w-100"
-                        src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhUTEhMVFhUVGRgYFRgYGRkZGBcXFx4YFxYXFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLi0BCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAKgBLAMBIgACEQEDEQH/xAAYAAEBAQEBAAAAAAAAAAAAAAABAgADB//EACsQAAEDAwQCAgIDAQADAAAAAAEAESExQVFxgcHwYZECsaHRA+HxEiIyYv/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDx8mRJ6SpB/wDo2yMpNRHXKkUpjlBQ+UibecZQTH/sfybJBkR1lNqetEFkyZND9BT/ANQJN8+FjUxbhY6Z4QJNZ+8rA0n7yg3jrrC0dcoM9ZNsnKoGRPWUi8Y5WFRFuEGeKn8iyT8pM284yptT3okmTFj9IMTFc58JJrJv9qTSmeFRqY66DA0k9KwNf/LGRlAtHXWF4xygR8pE28/aP+oqfybLAyIwgUp1kFkzU04Un5RU3yMLHS3CDSmeEFH5SZ+8rPSfvKDUxn7WxHXQP/VZPSsDIk25RmFhURb9oMDH/sa+RYpPymtvOMqbUxXQpeaW4QYmKmpycKiZMm/Cg0pnhUamOwgz0k9Kz1/8vvKMR11sx10CPlInGfN0f9RU2ybFIMiMcqRSl7aFBTzW3CP+oqb5GFtrcINKe9kFH5SZznwsTSfvKxMmMoxHXQJNZP5yo/k+RiTT9qsx11HzNIeP2g6monrlTauK7pJDjtypBGMX1QUKif1RTavrRIqItxhDhqcWQUambb0QbTmuyxIc6H6QSGG/CCjefeqwtPXKC0x+fKwaI/PlBhecU3SKibb0UgiYxykEONvpAWr70VGpm21FLhqN+bJNTFs+MINauabJNTPXUkhqZ4SSHO/2g2J662ZxXdYGnbocTGOUFCon9XUilfWiRURar62Q4IpxZBRrW29EfKlc12WJDnThBIApnhBRvOdKoFp66xZzHXWiI/PlBhefWqRUTjW6kETHXSCHG3KAtX3oqOttqKHDUvrYqjpbPjCAtXNNlRqZypLNS54SSHO/2EGxPvVbM+9UOI7dMTH58oH42nGl1IpW9tCn41EfnWyAQ1MeLFA3rbeixpX3ss4fbhBZqZ84QUamc8IxPrVb5M5jsLREX5QbM+tVP8gpIpdU4nt1H8jRog6l3E9cqfi+cU3SWcV6SpDN6pugoO4pTemEF2r70WDOO2Uw370QWXmbcBDlq5pssWc1ptRBZhW9NkFS5ke/K0xI6UFp7dYERt9oM5mcV3SHiespDTW1d0iorTahQYO1fWiS7mlN6YUQ19tFRIc6cIN8naovU6JLzPXUlm912SWc16UCCYnroDzOKFYNFelAadqboKDuJHufSC7V96LAhxtyphr1vogsvm3CHLVzTZYtNabUQWa9TTZBRdzIv9omJHSsWc7/AGhxHboKczPtb4vE45RE1tVYM4rTa6DB2r60KSS9qb0woDNe1NCqJD7cIN8naovU6JJLmc8KSze67JLOa8WQIJieutMyNtVMRXpTE8aoEO4kW1vZDlq4roVgzjblAZr1voUFTm3CHLVzTZaPNNqILNettkFF3Mi+qC8SPflYs534REc6oKJMz71UfMmGNrKomu+qj5tFaW3QdS7jtypD/WBlJAcduVIbzau6Cg7jtkS2PRssKitNqKYa+2iCy7nTjCCC3vHhYgOdD9BBZhvXZBRef6ysHj+soLTXpWDRXpQIf6wcrB3HbKQ07U3SAHHbFBpbPoWSXnTxjKhg199FRZzWm1EGLt7x4SXnt1JZr3psks53+0DMdutM7YGUBo7dAaa2rugoPCJbHo2WDOK0Gl1MNfbRBZf8cILt7x4WIDnThBZvddkFF3O+LFaY/rKCzmvSsGivSgZn+srB42UxO1NUgBxtyg0tn0LJn8cZUQ1630Kot5ptRBi7e8HCS7nf8qSzXqabJLOd/sIFjH9ZWmf6ypiO3TE131QIdxtjygO2KYNit8WcVtpdSGa9qaFBc/jhBBb/AAYWh9uEFm912QUXc748XWmP6ygs5rfSyIiteUFTP9ZUfP4ktp4TE8aqP5QI0/aDsaiBzUqWOMV3SaieuVIAarU5QUHiI/FEMWp60WAkdspYNV/8QWRJgU3ogvgXrssambcZQQGE54QUXmPeqweI9aoIE9usBTt0GDzAtTdIqIHKkATOOUiom3GUGLtT3okvMW2ooYNVvzZUQHOnCDEFqZpsk1MDbVSQGrnhJEmeugcQOarMZjFUC09dAAmccoKDxGNEB2p60WAkbcqWDVedLILImgpvRBdqC9dljUzbjKCA1WrwgovMZrqsxiPWqCJM5+1mp26BDzHpYVEC2t0MJnFvK3xqJsOboMxanvQpL4ttRQwarU82KogPtwgxBamabJNTA5spIDVzwk1MoNiBvqljMe9UNSeus1Z66BDxGOUB2p60KwEjblAAarzpYoKbwKb0QXanvZa9bcZQQGq08BBRdzGUMYj1qsRJ34Q1J66CpmBtqo/kJiBS4VNWeuo/kaJaME5QdTUR1ypGmKbqjUT1ypGuKboMKiLcINKe9FQqJtwpNK+3wgomTFj9KTSmabKjUzY/QRYTmmyDG8ddYWjrlY3nrrYnroMLxiu6QZEY+kZnFd0ion9UKCbU9aJNTFt6ItX0+FRqZtwgDSma7JN4z9oNK5rsk3nP2gBaOusLxim6wtPXWF5xR0CKiLb3U2p70VComwU2r70QUTNLcKTSmabKjWttqKTSuabIKNTHXRiOuk1M9dGJ66DZjFdUiojHKMz71SKicaXQSKU9aJ2tvRApW9nwUmtbcIA0pmuyo1MZUmlc12VGpnPCAxHXWzHrVbE9dbM+tUGFRHZQKUxXQp+NRONbotXFXwUFPNLcKTSmabKt7cKbVzTZBRqYzwjEddJqZzwjE9dBsx71UfyCkWVm8+9VH8lptbdB0NRHXKkGKY8ZVl3EjmpUuWrip1QYEOO2Q7CnNlQeJ/VEB2r6PhBjUxbjCC0RnhUXcyKb0R8nyL1OiDE17dYGnblJeZ96rAmJ66CQRMY85SKiLZ8YW+LzOKHVIdxI5ogl4pxZJIc6H6WLtX2fCS8zbaiCSYpnhJqY66zlq5psmXMjpQAtHXQDWMKpiR7mqzmZxXdAAhxtyphqX1srDxP6ugO1fR8IMamLZ8YQWameFRdzIpvRHydq5qdEGJDnf7WcR26S8zn7WDxPXQETCwqIsL62WDzPopDuJFtUE2pjxYpJD7cLS1feiS+bbUQSSGpnzhJqYWctXNNkl3Mi+qAiI/PlZ6x11i8T7PlJJmfeqABkbcoDNS+tiq+LxONLoDtX1oUG2txhBIal9LBVL1FN6I+TtX2dEGJk78IekddUXcznSyzmJ9aoCJj8+VHzIiHjLZXSZn0fKj+QUkUuUFlnHblSG82rurLv3JUh/rBygwZxWm1FLhv1orDuO2wiWz6FkGJDnQ/SCzDfhUXc6eMIlvePCDFpr0rBor0pLz26weO3QSGnam6QQ42+kh52wMrB47ZBENvfRUWc1pwtLf4bJLudOMIJLNe9Nkkhzv8AaxdvePCS89oUA4jt0RNbV3VB47dYPO2EAGcVptdTDfrRWHcbdZEt/gsgxIc6cILN7rsqL/jhBdvePCDFnNekLBor0pLud/taY/rKCXE8apBDjblMz/QWDx3KCYa9b6FJbzTaiwdsejYpn8cYQSWbc02SWc7/AGsXb3gYSXc78IJcR26Ymu+qZj+srTP9ZQHxZxW2l1IZvVNCrDuNubIlv8Figzh9uEFm912VT+OEF2/w4Qb5M5rT9IiK15VF3O/WRMf1lBnE9uuf8hEaLrM/1lR8yY08ILLOK8VKkM3qm6su4jrlSHxim6DBnHbKYa++isCRA5ogu1PeiDFnNabUQWit6bKi8xbhDFqZpsgxaeNVg0duUl5gbarB4gdKCQ01tXdIqK02osxxiu6Q8RH9IIhr1toqLOdD9LAFqetEl3MCm9EElm912SWc16Vi+BeuySDMddABor0oDTtyqDxHXWDzGKboAM425Uw1630Viogc3QxanvRBizmtNqILNe9NlRfFuEEFqZpsgxZzv9oiO3VF3MDmq0xA6UExNbV1SGcVoNLpYzHvVYPEYQRDXtTRUWfbhYO1PWiW8Cm9EElm912SWc14ssXama7JLzGUExFelaJ41VMYj1qtMx61QAZxtypDNet9CrFRA5uiWpiuhQb3TaiCzXrbQKpxDcIYtTNNkGLOd+ERHbqi7mM62RMQN9UGia76qPm0VpZvK6TMe9VHz+JhhayCyJHblSAGq9OVRqI65QNMV3QYVE24ypYNVvzZWDIj9UU2p60QJAc6H6QQGG/Co1MW3oEHTNdkGIrPXWFp65Sbx71QLR1ygABM45SAHHbLC8YpukVEW3QQwar/AIsqNTNuMotT3oqJkxbhBJAaueEkCd/tBpTNNlRqY66AAp26ABM45SLR11sxiqDCom2NbqWDV5srFowptT1ogSA504QQG98JOlt6LGlM12QYiTPXWYRP48pNTGftGI66AYTt9lIAcaDlbMekioj93QQwarzpYqjrbjKLUxXQpfxbaiAIDVaTwkgOd/sINKZpsqNTGdbIJYR26WEz11sR71WzHvVBvjUTi2t1IAarU+irFRGNLqRSnrQoFg+3CCA1c8J2tvRBpT3sgTUznhDCJ/HlUamM8IxHrVBmE9uuf8oEaftdMx61U/M0gUvug6GonrlRauOVlkFASJ6ym1fsWWWQUambcINpzwhZAm89dYWnrlZZBhecZ8rCom3nCyyAtX25sqNTNuELIC1c8KjUz10LINieutmccrLIEVE45Uilb2cWWWQJqZtwg0rnPhZZBRqZz9oFp66yyDC8/eVhUTYcrLIC1fb4Kre3CFkAaVzTZJqZzwssg2J+8rG89dZZA/GonHKkUrez4KyyBvW3CDSt/OAssgo1M54Rieussg2Z66j+S028+UrIP//Z"
+                        src={banner3}
                         alt="Third slide"
                     />
-                    <Carousel.Caption>
-                        <h3>Third slide label</h3>
-                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                    </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>
             {/* fim carousel */}
@@ -146,7 +151,7 @@ function Home() {
             <Row xs={1} md={3} className="g-4">
                 <Col>
                     <Card>
-                        <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
+                        <Card.Img variant="top" src={cadastro} />
                         <Card.Body>
                             <Card.Title>Cadastro e gerenciamento de moradores</Card.Title>
                             <Card.Text>
@@ -157,7 +162,7 @@ function Home() {
                 </Col>
                 <Col>
                     <Card>
-                        <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
+                        <Card.Img variant="top" src={agendamento} />
                         <Card.Body>
                             <Card.Title>Agendamento e reserva de espaços comuns</Card.Title>
                             <Card.Text>
@@ -183,7 +188,7 @@ function Home() {
                         <Card.Body>
                             <Card.Title>Controle de visitas e entregas</Card.Title>
                             <Card.Text>
-                                Contribui para a segurança e o controle de acesso no condomínio, registrando e monitorando as entradas de visitantes e entregadores. Ajuda a prevenir intrusões não autorizadas e a garantir que apenas pessoas permitidas tenham acesso às instalações.
+                                Contribui para a segurança e o controle de acesso no condomínio, registrando e monitorando as entradas de visitantes e entregadores. Ajuda a prevenir intrusões e a garantir que apenas pessoas permitidas tenham acesso às instalações.
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -194,7 +199,7 @@ function Home() {
                         <Card.Body>
                             <Card.Title>Cadastro de funcionários</Card.Title>
                             <Card.Text>
-                                Permite à administração manter um registro completo dos funcionários do condomínio, incluindo dados pessoais, horários de trabalho e funções desempenhadas. Facilita a gestão de recursos humanos e o cumprimento das obrigações trabalhistas.
+                                Permite à administração manter um registro completo dos funcionários do condomínio, incluindo dados pessoais e funções desempenhadas. Facilita a gestão de recursos humanos e o cumprimento das obrigações trabalhistas.
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -205,15 +210,13 @@ function Home() {
                         <Card.Body>
                             <Card.Title>Cadastro de apartamentos e blocos</Card.Title>
                             <Card.Text>
-                                Simplifica o gerenciamento das unidades habitacionais e dos blocos dentro do condomínio. Mantém um registro organizado da estrutura física do empreendimento, facilitando a identificação de proprietários, inquilinos e áreas comuns associadas a cada unidade.
+                                Simplifica o gerenciamento das unidades habitacionais e dos blocos dentro do condomínio. Mantém um registro organizado da estrutura física do empreendimento, facilitando a identificação de proprietários, inquilinos e áreas comuns.
                             </Card.Text>
                         </Card.Body>
                     </Card>
                 </Col>
             </Row>
-
-
-
+            {/* final funcionalidades */}
             <br />
             <br />
             <h1 style={{ textAlign: 'center' }}>Escolha seu plano</h1>
@@ -257,9 +260,6 @@ function Home() {
                             title="Detalhes do Plano Premium"
                             description="Aqui estão os detalhes do Plano Premium..."
                         />
-
-
-
                     </Card.Body>
                 </Card>
             </div>
@@ -293,7 +293,7 @@ function Home() {
 
                         <Form.Group className="mb-3" controlId="formGridAddress2">
                             <Form.Label>Logradouro</Form.Label>
-                            <Form.Control placeholder="Apartment, studio, or floor" />
+                            <Form.Control placeholder="Av. Eng. Eusébio Stevaux, 823" />
                         </Form.Group>
 
                         <Row className="mb-3">
@@ -381,7 +381,7 @@ function Home() {
                                     <p>
                                         Adorei a facilidade de uso e a organização que o sistema de
                                         condomínio proporciona. É uma ferramenta indispensável para a
-                                        gestão eficiente do nosso condomínio!
+                                        gestão eficiente das pessoas e do condomínio!
                                     </p>
                                     <footer className="blockquote-footer">
                                         Joana Silva <cite title="Condomino">Condomino</cite>
@@ -427,7 +427,6 @@ function Home() {
                     </Col>
                 </Row>
             </Container>
-
             {/* fim de comentários */}
             <br />
             <br />
@@ -455,15 +454,62 @@ function Home() {
                     </Card.Text>
                     <Card.Text>
                         <a href="/">Página inicial</a> |{' '}
-                        <a href="/termos">Termos de serviço</a> |{' '}
+                        <a href="/termos" variant="primary" onClick={handleLaunch} disabled={accepted} >Termos de serviço</a> |{' '}
+                        <Modal
+                            show={show}
+                            onHide={handleClose}
+                            backdrop="static"
+                            keyboard={false}
+                            size="lg"
+                            centered
+                        >
+                            <Modal.Header closeButton>
+                                <Modal.Title>Termos de Uso e Política de Privacidade</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <p>Bem-vindo ao nosso sistema de gestão de condomínios. Ao acessar ou utilizar nosso sistema, você concorda com estes Termos de Uso e com nossa Política de Privacidade, em conformidade com a Lei Geral de Proteção de Dados (LGPD).</p>
+                                <p>1. Cadastro e Consentimento</p>
+                                <p>1.1 Para utilizar nosso sistema, você precisa se cadastrar e criar uma conta. Ao se cadastrar, você concorda com a coleta e o processamento de seus dados pessoais de acordo com nossa Política de Privacidade.</p>
+                                <p>2. Uso do Sistema e Dados Pessoais</p>
+                                <p>2.1 Você concorda em usar nosso sistema apenas para as finalidades especificadas e consentidas. Os dados pessoais coletados serão utilizados para fornecer e melhorar nossos serviços, conforme descrito em nossa Política de Privacidade.</p>
+                                <p>3. Direitos do Titular dos Dados</p>
+                                <p>3.1 Você tem o direito de acessar, corrigir, atualizar e solicitar a exclusão de seus dados pessoais. Você pode exercer esses direitos entrando em contato conosco.</p>
+                                <p>4. Compartilhamento de Dados</p>
+                                <p>4.1 Podemos compartilhar seus dados pessoais com terceiros apenas quando necessário para fornecer nossos serviços ou quando exigido por lei.</p>
+                                <p>5. Segurança dos Dados</p>
+                                <p>5.1 Implementamos medidas de segurança adequadas para proteger seus dados pessoais contra acesso não autorizado, alteração, divulgação ou destruição.</p>
+                                <p>6. Retenção de Dados</p>
+                                <p>6.1 Manteremos seus dados pessoais apenas pelo tempo necessário para cumprir as finalidades para as quais foram coletados ou conforme exigido por lei.</p>
+                                <p>7. Modificações</p>
+                                <p>7.1 Podemos atualizar ou modificar estes Termos de Uso e nossa Política de Privacidade periodicamente. Quaisquer alterações serão publicadas em nosso sistema.</p>
+                                <p>7.2 O uso contínuo de nosso sistema após tais modificações constitui sua aceitação dos novos Termos de Uso e Política de Privacidade.</p>
+                                <p>8. Rescisão</p>
+                                <p>8.1 Podemos encerrar ou suspender sua conta e acesso ao sistema, a nosso critério, sem aviso prévio ou responsabilidade.</p>
+                                <p>9. Disposições Gerais</p>
+                                <p>9.1 Estes Termos de Uso e Política de Privacidade constituem o acordo completo entre você e nós em relação ao uso de nosso sistema.</p>
+                                <p>9.2 Estes Termos de Uso e Política de Privacidade serão regidos e interpretados de acordo com as leis do Brasil.</p>
+                                <p>Este modelo está em conformidade com a LGPD, mas é importante adaptá-lo às especificidades do seu sistema e buscar orientação legal para garantir total conformidade com a legislação.</p>
+                                <Form.Check
+                                    type="checkbox"
+                                    label="Eu li e concordo com os Termos de Uso e Política de Privacidade"
+                                    onChange={(e) => setAccepted(e.target.checked)}
+                                />
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Recusar tudo
+                                </Button>
+                                <Button variant="primary" onClick={handleAccept} disabled={!accepted}>
+                                    Aceitar tudo
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                         <a href="/privacidade">Política de privacidade</a>
                     </Card.Text>
                 </Card.Body>
                 <Card.Footer className="text-muted">Copyright © 2024 Anthill. Todos os direitos reservados.</Card.Footer>
             </Card>
-
         </>
     );
 }
-
 export default Home;

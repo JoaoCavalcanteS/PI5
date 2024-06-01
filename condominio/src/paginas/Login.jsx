@@ -1,15 +1,19 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import logoLogin from "../images/logoLogin.jpeg";
 
 const Login = () => {
   return (
     <div>
       <div className="container d-flex justify-content-center align-items-center min-vh-100">
         <div className="row border rounded-5 p-3 bg-white shadow box-area">
-          <div className="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style={{ background: "#103cbe" }}>
+          <div className="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" >
             <div className="featured-image mb-3">
-              <img src=".\images\logoLogin.jpeg" className="img-fluid" style={{ width: "250px" }} alt="Anthill" />
+              <img
+                src={logoLogin}
+                style={{ width: "350px", borderRadius: "10px" }}
+                alt="Anthill"
+              />
             </div>
           </div>
           <div className="col-md-6 right-box">

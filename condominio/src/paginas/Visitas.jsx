@@ -12,24 +12,24 @@ const Visitas = () => {
   const [showAlterar, setShowAlterar] = useState(false);
 
   const [newVisita, setNewVisita] = useState({
-    id: '', 
+    id: '',
     idCondominio: 0,
     moradorId: 0,
     documentoVisita: '',
-    nomeVisita:'',
+    nomeVisita: '',
     dataVisita: '',
-    motivo:'',
-    telefone:''
+    motivo: '',
+    telefone: ''
   });
   const [editVisita, setEditVisita] = useState({
-    id: '', 
+    id: '',
     idCondominio: 0,
     moradorId: 0,
     documentoVisita: '',
-    nomeVisita:'',
+    nomeVisita: '',
     dataVisita: '',
-    motivo:'',
-    telefone:''
+    motivo: '',
+    telefone: ''
   });
 
   const [alertMessage, setAlertMessage] = useState('');
@@ -42,7 +42,7 @@ const Visitas = () => {
       const timer = setTimeout(() => {
         setShowAlert(false);
         setAlertMessage('');
-      }, 3000); 
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [alertMessage]);
@@ -78,14 +78,14 @@ const Visitas = () => {
   const handleClose = () => {
     setShowCadastrar(false);
     setNewVisita({
-      id: '', 
+      id: '',
       idCondominio: 0,
       moradorId: 0,
       documentoVisita: '',
-      nomeVisita:'',
+      nomeVisita: '',
       dataVisita: '',
-      motivo:'',
-      telefone:''
+      motivo: '',
+      telefone: ''
     });
     setAlertMessage('');
   }
@@ -93,14 +93,14 @@ const Visitas = () => {
   const handleCloseAlterar = () => {
     setShowAlterar(false);
     setNewVisita({
-      id: '', 
+      id: '',
       idCondominio: 0,
       moradorId: 0,
       documentoVisita: '',
-      nomeVisita:'',
+      nomeVisita: '',
       dataVisita: '',
-      motivo:'',
-      telefone:''
+      motivo: '',
+      telefone: ''
     });
     setAlertMessage('');
   }
@@ -122,7 +122,7 @@ const Visitas = () => {
     }));
   };
 
-  
+
 
   const salvar = () => {
     fetch(`http://localhost:8080/visitas/salvar?isAlterar=false`, {
@@ -182,40 +182,40 @@ const Visitas = () => {
       });
   }
 
-  
- 
+
+
   const excluir = (id) => {
-    
+
     console.log("Excluindo", id);
 
     fetch(`http://localhost:8080/Visitas/excluir?id=${id}`, {
-    method: 'DELETE'
-  })
-    .then(response => {
-      if (response.ok) {
-        setAlertVariant('success');
-        setAlertMessage('Visitante excluído com sucesso!');
-        setShowAlert(true);
-        buscarVisitas(); // Atualizar a lista após a exclusão
-      } else {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          setAlertVariant('success');
+          setAlertMessage('Visitante excluído com sucesso!');
+          setShowAlert(true);
+          buscarVisitas(); // Atualizar a lista após a exclusão
+        } else {
+          setAlertVariant('danger');
+          setAlertMessage('Erro ao excluir visitante. Por favor, tente novamente.');
+          setShowAlert(true);
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao excluir visitante:', error);
         setAlertVariant('danger');
         setAlertMessage('Erro ao excluir visitante. Por favor, tente novamente.');
         setShowAlert(true);
-      }
-    })
-    .catch(error => {
-      console.error('Erro ao excluir visitante:', error);
-      setAlertVariant('danger');
-      setAlertMessage('Erro ao excluir visitante. Por favor, tente novamente.');
-      setShowAlert(true);
-    })
-    .finally(() => {
-      setShowCadastrar(false);
-    });
+      })
+      .finally(() => {
+        setShowCadastrar(false);
+      });
   }
-  
 
-  
+
+
 
   const paginationComponentOptions = {
     rowsPerPageText: 'Filas por página',
@@ -278,14 +278,14 @@ const Visitas = () => {
 
 
   return (
-    
+
     <div>
-    {alertMessage && (
-      <Alert variant={alertVariant} onClose={() => setAlertMessage('')} dismissible>
-        {alertMessage}
-      </Alert>
-    )}
-  <h1>Visitas</h1>
+      {alertMessage && (
+        <Alert variant={alertVariant} onClose={() => setAlertMessage('')} dismissible>
+          {alertMessage}
+        </Alert>
+      )}
+      <h1 style={{ textAlign: 'center' }} >Visita</h1>
       <Button variant="primary" onClick={handleNovoBloco}>
         Cadastrar Visita
       </Button>
@@ -297,19 +297,19 @@ const Visitas = () => {
           <Form>
             <Form.Group controlId="formIdCondominio">
               <Form.Label>Id condomínio</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="1" 
+              <Form.Control
+                type="text"
+                placeholder="1"
                 name="idCondominio"
                 value={newVisita.idCondominio}
                 onChange={handleChange}
-                autoFocus 
+                autoFocus
               />
             </Form.Group>
             <Form.Group controlId="formCpfMorador">
               <Form.Label>CPF do morador</Form.Label>
-              <Form.Control 
-                as="text"  
+              <Form.Control
+                as="text"
                 name="cpfMorador"
                 value={newVisita.moradorId}
                 onChange={handleChange}
@@ -317,8 +317,8 @@ const Visitas = () => {
             </Form.Group>
             <Form.Group controlId="formCpfVisitante">
               <Form.Label>CPF do visitante</Form.Label>
-              <Form.Control 
-                type="text"  
+              <Form.Control
+                type="text"
                 name="cpfVisitante"
                 value={newVisita.documentoVisita}
                 onChange={handleChange}
@@ -326,8 +326,8 @@ const Visitas = () => {
             </Form.Group>
             <Form.Group controlId="formNomeVisitante">
               <Form.Label>NOme do visitante</Form.Label>
-              <Form.Control 
-                type="text"  
+              <Form.Control
+                type="text"
                 name="nomeVisitante"
                 value={newVisita.nomeVisita}
                 onChange={handleChange}
@@ -335,8 +335,8 @@ const Visitas = () => {
             </Form.Group>
             <Form.Group controlId="formDataVisita">
               <Form.Label>Data da visita</Form.Label>
-              <Form.Control 
-                type="date" 
+              <Form.Control
+                type="date"
                 name="dataVisita"
                 value={newVisita.dataVisita}
                 onChange={handleChange}
@@ -344,8 +344,8 @@ const Visitas = () => {
             </Form.Group>
             <Form.Group controlId="formMotivo">
               <Form.Label>Motivo</Form.Label>
-              <Form.Control 
-                type="area"  
+              <Form.Control
+                type="area"
                 name="motivo"
                 value={newVisita.motivo}
                 onChange={handleChange}
@@ -353,8 +353,8 @@ const Visitas = () => {
             </Form.Group>
             <Form.Group controlId="formTelefone">
               <Form.Label>Telefone</Form.Label>
-              <Form.Control 
-                type="area"  
+              <Form.Control
+                type="area"
                 name="telefone"
                 value={newVisita.telefone}
                 onChange={handleChange}
@@ -363,36 +363,36 @@ const Visitas = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-<Button variant="secondary" onClick={handleClose}>
-Cancelar
-</Button>
-<Button variant="primary" onClick={salvar}>
-Cadastrar
-</Button>
-</Modal.Footer>
-</Modal>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={salvar}>
+            Cadastrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-<Modal show={showAlterar} onHide={handleCloseAlterar}>
+      <Modal show={showAlterar} onHide={handleCloseAlterar}>
         <Modal.Header closeButton>
           <Modal.Title>Alterar Visita</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Form>
+          <Form>
             <Form.Group controlId="formIdCondominio">
               <Form.Label>Id condomínio</Form.Label>
-              <Form.Control 
-                type="text" 
-                placeholder="1" 
+              <Form.Control
+                type="text"
+                placeholder="1"
                 name="idCondominio"
                 value={editVisita.idCondominio}
                 onChange={handleChangeEdit}
-                autoFocus 
+                autoFocus
               />
             </Form.Group>
             <Form.Group controlId="formCpfMorador">
               <Form.Label>CPF do morador</Form.Label>
-              <Form.Control 
-                as="text"  
+              <Form.Control
+                as="text"
                 name="cpfMorador"
                 value={editVisita.moradorId}
                 onChange={handleChangeEdit}
@@ -400,8 +400,8 @@ Cadastrar
             </Form.Group>
             <Form.Group controlId="formCpfVisitante">
               <Form.Label>CPF do visitante</Form.Label>
-              <Form.Control 
-                type="text"  
+              <Form.Control
+                type="text"
                 name="cpfVisitante"
                 value={editVisita.documentoVisita}
                 onChange={handleChangeEdit}
@@ -409,8 +409,8 @@ Cadastrar
             </Form.Group>
             <Form.Group controlId="formNomeVisitante">
               <Form.Label>Nome do visitante</Form.Label>
-              <Form.Control 
-                type="text"  
+              <Form.Control
+                type="text"
                 name="nomeVisitante"
                 value={editVisita.nomeVisita}
                 onChange={handleChangeEdit}
@@ -418,8 +418,8 @@ Cadastrar
             </Form.Group>
             <Form.Group controlId="formDataVisita">
               <Form.Label>Data da visita</Form.Label>
-              <Form.Control 
-                type="date" 
+              <Form.Control
+                type="date"
                 name="dataVisita"
                 value={editVisita.dataVisita}
                 onChange={handleChangeEdit}
@@ -427,8 +427,8 @@ Cadastrar
             </Form.Group>
             <Form.Group controlId="formMotivo">
               <Form.Label>Motivo</Form.Label>
-              <Form.Control 
-                type="area"  
+              <Form.Control
+                type="area"
                 name="motivo"
                 value={editVisita.motivo}
                 onChange={handleChangeEdit}
@@ -436,8 +436,8 @@ Cadastrar
             </Form.Group>
             <Form.Group controlId="formTelefone">
               <Form.Label>Telefone</Form.Label>
-              <Form.Control 
-                type="area"  
+              <Form.Control
+                type="area"
                 name="telefone"
                 value={editVisita.telefone}
                 onChange={handleChangeEdit}
@@ -446,31 +446,31 @@ Cadastrar
           </Form>
         </Modal.Body>
         <Modal.Footer>
-<Button variant="secondary" onClick={handleCloseAlterar}>
-Cancelar
-</Button>
-<Button variant="primary" onClick={alterar}>
-Alterar
-</Button>
-</Modal.Footer>
-</Modal>
-<input type="text" style={{marginLeft:'75%'}} placeholder="Pesquisar..." onChange={handleFilter} />
-<div className="mt-1">
-  {records.length === 0 ? (
-    <h6  style={{marginLeft:'40%'}}>Não há dados disponíveis.</h6>
-  ) : (
-    <DataTable
-      columns={columns}
-      data={records}
-      selectableRows
-      fixedHeader
-      pagination
-      paginationComponentOptions={paginationComponentOptions}
-    />
-  )}
-</div>
-</div>
-);
+          <Button variant="secondary" onClick={handleCloseAlterar}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={alterar}>
+            Alterar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <input type="text" style={{ marginLeft: '75%' }} placeholder="Pesquisar..." onChange={handleFilter} />
+      <div className="mt-1">
+        {records.length === 0 ? (
+          <h6 style={{ marginLeft: '40%' }}>Não há dados disponíveis.</h6>
+        ) : (
+          <DataTable
+            columns={columns}
+            data={records}
+            selectableRows
+            fixedHeader
+            pagination
+            paginationComponentOptions={paginationComponentOptions}
+          />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Visitas;
