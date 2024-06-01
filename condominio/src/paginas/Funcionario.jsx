@@ -209,6 +209,7 @@ const Funcionario = () => {
 
     return (
         <div>
+            <h1 style={{ textAlign: 'center' }} >Funcionário</h1>
             <Button variant="primary" onClick={handleShow}>
                 Cadastrar Funcionário
             </Button>
@@ -280,7 +281,7 @@ const Funcionario = () => {
                     paginationComponentOptions={paginationComponentOptions}
                 />
             </div>
-            
+
         </div >
     );
 };
