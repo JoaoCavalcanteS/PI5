@@ -2,4 +2,4 @@ runtime: nodejs
 
 network:
   forwarded_ports:
-    - 2222/tcp
+    - 8080/tcp
