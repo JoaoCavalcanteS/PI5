@@ -20,6 +20,7 @@ import Home from "./paginasHome/Home";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Entregas from "./paginas/Entregas";
+import SolicitacoesGerais from "./paginas/SolicitacoesGerais";
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboardMorador" element={<DashboardMorador />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/solicitacoesGerais" element={<SolicitacoesGerais />} />
         </Routes>
       </Sidebar>
     </BrowserRouter >

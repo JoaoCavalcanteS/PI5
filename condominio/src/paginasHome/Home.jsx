@@ -9,7 +9,6 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Accordion from 'react-bootstrap/Accordion';
 import banner1 from "../images/banner1.jpg";
 import banner2 from "../images/banner2.png";
@@ -20,6 +19,13 @@ import comunicacao from "../images/comunicacao.png";
 import funcionario from "../images/funcionario.png";
 import visita from "../images/visita.png";
 import apartamento from "../images/apartamento.png";
+import basico from "../images/basico.png";
+import premium from "../images/premium.png";
+import gestao from "../images/gestao.png";
+import simples from "../images/simples.png";
+import pessoas from "../images/gestao.png";
+import logoHome from "../images/logo.svg";
+
 
 function Home() {
 
@@ -35,33 +41,6 @@ function Home() {
         setAccepted(true);
     };
     const handleLaunch = () => setShow(true);
-
-
-    function MyVerticallyCenteredModal(props) {
-        return (
-            <Modal
-                {...props}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        {props.title}
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <h4>As funcionalidades são:</h4>
-                    <p>
-                        {props.description}
-                    </p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={props.onHide}>Close</Button>
-                </Modal.Footer>
-            </Modal>
-        );
-    }
 
     function MyVerticallyCenteredModal(props) {
         return (
@@ -85,18 +64,50 @@ function Home() {
                     </ul>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={props.onHide}>Fechar</Button>
+                    <Button variant="outline-primary" onClick={props.onHide}>Fechar</Button>
                 </Modal.Footer>
             </Modal>
         );
     }
+
+    //cep
+    const [endereco, setEndereco] = useState({
+        logradouro: '',
+        cidade: '',
+        estado: '',
+    });
+
+    const handleCEPChange = async (event) => {
+        const cep = event.target.value;
+        if (cep.length === 8) {
+            try {
+                const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = await response.json();
+                if (!data.erro) {
+                    setEndereco({
+                        logradouro: data.logradouro,
+                        cidade: data.localidade,
+                        estado: data.uf,
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao buscar o CEP:', error);
+            }
+        }
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Aqui você pode enviar os dados do formulário, incluindo o endereço, para onde precisar
+    };
+
 
     return (
         <>
             {/* Começo navbar */}
             <Navbar expand="lg" className="bg-body-tertiary my-navbar navbar-lg">
                 <Container className="px-0">
-                    <Navbar.Brand href="#home" id="home">Anthill</Navbar.Brand>
+                    <Card.Img variant="top" src={logoHome} style={{ width: "50px", height: "auto" }} />
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
@@ -144,7 +155,7 @@ function Home() {
             <br />
             <div style={{ display: 'flex', gap: '1rem' }}>
                 <Card style={{ border: '1px solid #dee2e6' }}>
-                    <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
+                    <Card.Img variant="top" src={gestao} />
                     <Card.Body>
                         <Card.Title>Gestão Simplificada com Tecnologia Moderna</Card.Title>
                         <Card.Text>
@@ -153,7 +164,7 @@ function Home() {
                     </Card.Body>
                 </Card>
                 <Card style={{ border: '1px solid #dee2e6' }}>
-                    <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
+                    <Card.Img variant="top" src={pessoas} />
                     <Card.Body>
                         <Card.Title>Feito para as Pessoas</Card.Title>
                         <Card.Text>
@@ -163,7 +174,7 @@ function Home() {
                     </Card.Body>
                 </Card>
                 <Card style={{ border: '1px solid #dee2e6' }}>
-                    <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
+                    <Card.Img variant="top" src={simples} />
                     <Card.Body>
                         <Card.Title>Simples e Flexível</Card.Title>
                         <Card.Text>
@@ -220,7 +231,7 @@ function Home() {
                         <Card.Body>
                             <Card.Title>Controle de visitas e entregas</Card.Title>
                             <Card.Text>
-                                Contribui para a segurança e o controle de acesso no condomínio, registrando e monitorando as entradas de visitantes e entregadores. Ajuda a prevenir intrusões e a garantir que apenas pessoas permitidas tenham acesso às instalações.
+                                Contribui para a segurança e o controle de acesso no condomínio, registrando e monitorando as entradas de visitantes e entregadores. Ajuda a prevenir intrusões e a garantir que apenas pessoas permitidas tenham acesso às instalações do condomínio.
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -242,7 +253,7 @@ function Home() {
                         <Card.Body>
                             <Card.Title>Cadastro de apartamentos e blocos</Card.Title>
                             <Card.Text>
-                                Simplifica o gerenciamento das unidades habitacionais e dos blocos dentro do condomínio. Mantém um registro organizado da estrutura física do empreendimento, facilitando a identificação de proprietários, inquilinos e áreas comuns.
+                                Simplifica o gerenciamento das unidades habitacionais e dos blocos dentro do condomínio. Mantém um registro organizado da estrutura física do empreendimento, facilitando a identificação de proprietários, inquilinos e áreas comuns e a administração do condomínio.
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -256,13 +267,13 @@ function Home() {
             <br />
             <div className="d-flex justify-content-around">
                 <Card style={{ width: '26rem' }}>
-                    <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
+                    <Card.Img variant="top" src={basico} />
                     <Card.Body>
                         <Card.Title>Plano Básico</Card.Title>
                         <Card.Text>
                             No plano básico você terá acesso somente a funcionalidades básicas.
                         </Card.Text>
-                        <Button variant="primary" onClick={() => setModalShowBasic(true)}>
+                        <Button variant="outline-primary" onClick={() => setModalShowBasic(true)}>
                             Ver Detalhes
                         </Button>
                         <div style={{ marginBottom: '10px' }}></div>
@@ -284,13 +295,13 @@ function Home() {
                 </Card>
 
                 <Card style={{ width: '26rem' }}>
-                    <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
+                    <Card.Img variant="top" src={premium} />
                     <Card.Body>
                         <Card.Title>Plano Premium</Card.Title>
                         <Card.Text>
                             No plano Premium você terá acesso somente a todas as funcionalidades.
                         </Card.Text>
-                        <Button variant="primary" onClick={() => setModalShowPremium(true)}>
+                        <Button variant="outline-primary" onClick={() => setModalShowPremium(true)}>
                             Ver Detalhes
                         </Button>
                         <div style={{ marginBottom: '10px' }}></div>
@@ -323,7 +334,7 @@ function Home() {
                     <h1><p>Dê o passo definitivo </p><p>rumo ao futuro do </p>mercado condominial</h1>
                 </div>
                 <div style={{ width: '600px' }}>
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <Row className="mb-3">
                             <Form.Label><h2>Preencha com seus dados!</h2></Form.Label>
                             <Form.Group as={Col} controlId="formGridEmail">
@@ -344,29 +355,55 @@ function Home() {
 
                         <Form.Group className="mb-3" controlId="formGridAddress2">
                             <Form.Label>Logradouro</Form.Label>
-                            <Form.Control placeholder="Av. Eng. Eusébio Stevaux, 823" />
+                            <Form.Control value={endereco.logradouro} onChange={(event) => setEndereco({ ...endereco, logradouro: event.target.value })} placeholder="Av. Eng. Eusébio Stevaux, 823" />
                         </Form.Group>
 
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="formGridCity">
                                 <Form.Label> Cidade</Form.Label>
-                                <Form.Control placeholder="São Paulo" />
+                                <Form.Control value={endereco.cidade} onChange={(event) => setEndereco({ ...endereco, cidade: event.target.value })} placeholder="São Paulo" />
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridState">
                                 <Form.Label>Estado</Form.Label>
-                                <Form.Select defaultValue="Choose...">
+                                <Form.Control value={endereco.estado} onChange={(event) => setEndereco({ ...endereco, estado: event.target.value })} as="select">
                                     <option>Escolha...</option>
-                                    <option>...</option>
-                                </Form.Select>
+                                    <option value="AC">Acre</option>
+                                    <option value="AL">Alagoas</option>
+                                    <option value="AP">Amapá</option>
+                                    <option value="AM">Amazonas</option>
+                                    <option value="BA">Bahia</option>
+                                    <option value="CE">Ceará</option>
+                                    <option value="DF">Distrito Federal</option>
+                                    <option value="ES">Espírito Santo</option>
+                                    <option value="GO">Goiás</option>
+                                    <option value="MA">Maranhão</option>
+                                    <option value="MT">Mato Grosso</option>
+                                    <option value="MS">Mato Grosso do Sul</option>
+                                    <option value="MG">Minas Gerais</option>
+                                    <option value="PA">Pará</option>
+                                    <option value="PB">Paraíba</option>
+                                    <option value="PR">Paraná</option>
+                                    <option value="PE">Pernambuco</option>
+                                    <option value="PI">Piauí</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="RN">Rio Grande do Norte</option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="RO">Rondônia</option>
+                                    <option value="RR">Roraima</option>
+                                    <option value="SC">Santa Catarina</option>
+                                    <option value="SP">São Paulo</option>
+                                    <option value="SE">Sergipe</option>
+                                    <option value="TO">Tocantins</option>
+                                </Form.Control>
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridZip">
                                 <Form.Label>CEP</Form.Label>
-                                <Form.Control placeholder="12345-67" />
+                                <Form.Control onChange={handleCEPChange} placeholder="12345-67" />
                             </Form.Group>
                         </Row>
-                        <Button variant="primary" type="submit">
+                        <Button variant="outline-primary" type="submit">
                             Solicitar Contato
                         </Button>
                     </Form>
@@ -425,16 +462,16 @@ function Home() {
             <Container>
                 <Row>
                     <Col>
-                        <Card>
-                            <Card.Header>Feedback</Card.Header>
+                        <Card bg="primary" text="white">
+                            <Card.Header className="text-white">Feedback</Card.Header>
                             <Card.Body>
-                                <blockquote className="blockquote mb-0">
+                                <blockquote className="blockquote mb-0 text-white">
                                     <p>
                                         Adorei a facilidade de uso e a organização que o sistema de
                                         condomínio proporciona. É uma ferramenta indispensável para a
                                         gestão eficiente das pessoas e do condomínio!
                                     </p>
-                                    <footer className="blockquote-footer">
+                                    <footer className="blockquote-footer text-white">
                                         Joana Silva <cite title="Condomino">Condomino</cite>
                                     </footer>
                                 </blockquote>
@@ -442,16 +479,16 @@ function Home() {
                         </Card>
                     </Col>
                     <Col>
-                        <Card>
-                            <Card.Header>Feedback</Card.Header>
+                        <Card bg="primary" text="white">
+                            <Card.Header className="text-white">Feedback</Card.Header>
                             <Card.Body>
-                                <blockquote className="blockquote mb-0">
+                                <blockquote className="blockquote mb-0 text-white">
                                     <p>
                                         Estou muito satisfeito com a forma como o sistema de condomínio
                                         facilitou a comunicação entre os moradores e a administração.
                                         Nunca foi tão fácil ficar atualizado o nosso prédio!
                                     </p>
-                                    <footer className="blockquote-footer">
+                                    <footer className="blockquote-footer text-white">
                                         Pedro Oliveira <cite title="Morador">Morador</cite>
                                     </footer>
                                 </blockquote>
@@ -459,17 +496,16 @@ function Home() {
                         </Card>
                     </Col>
                     <Col>
-                        <Card>
-                            <Card.Header>Feedback</Card.Header>
+                        <Card bg="primary" text="white">
+                            <Card.Header className="text-white">Feedback</Card.Header>
                             <Card.Body>
-                                <blockquote className="blockquote mb-0">
+                                <blockquote className="blockquote mb-0 text-white">
                                     <p>
                                         O sistema de condomínio tornou a vida no prédio muito mais
                                         tranquila e organizada. Agora, podemos reservar os espaços
-                                        comuns de forma
-                                        simples e eficaz. Recomendo a todos os condomínios!
+                                        comuns de forma simples e eficaz. Recomendo a todos os condomínios!
                                     </p>
-                                    <footer className="blockquote-footer">
+                                    <footer className="blockquote-footer text-white">
                                         Luiz Carlos <cite title="Proprietário">Proprietário</cite>
                                     </footer>
                                 </blockquote>
@@ -478,6 +514,8 @@ function Home() {
                     </Col>
                 </Row>
             </Container>
+
+
             {/* fim de comentários */}
             <br />
             <br />
@@ -504,8 +542,8 @@ function Home() {
                         <a href="https://www.instagram.com/anthill" target="_blank" rel="noopener noreferrer">Instagram</a>
                     </Card.Text>
                     <Card.Text>
-                        <a href="/">Página inicial</a> |{' '}
-                        <a href="/termos" variant="primary" onClick={handleLaunch} disabled={accepted} >Termos de serviço</a> |{' '}
+                        <a href="">Página inicial</a> |{' '}
+                        <a href="" variant="primary" onClick={handleLaunch} disabled={accepted} >Termos de serviço</a> |{' '}
                         <Modal
                             show={show}
                             onHide={handleClose}

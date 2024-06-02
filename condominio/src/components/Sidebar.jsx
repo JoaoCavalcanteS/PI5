@@ -10,7 +10,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BsFillHousesFill } from "react-icons/bs";
 import { TbPackages } from "react-icons/tb";
 import { RiFunctionAddFill } from "react-icons/ri";
+import { LuGitPullRequestDraft } from "react-icons/lu";
 import logo from "../images/logo.svg";
+
+//icons
+//https://react-icons.github.io/react-icons/
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,6 +46,7 @@ const Sidebar = ({ children }) => {
         { path: "/condominio", name: "Condomínio", icon: <BsFillHousesFill /> },
         { path: "/entregas", name: "Entrega", icon: <TbPackages /> },
         { path: "/funcao", name: "Função", icon: <RiFunctionAddFill /> },
+        { path: "/solicitacoesGerais", name: "Solicitação Geral", icon: <LuGitPullRequestDraft /> },
       ],
     },
   ];

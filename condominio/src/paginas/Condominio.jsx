@@ -219,26 +219,35 @@ const Condominio = () => {
         selectAllRowsItemText: 'Todos',
     };
 
-    ;
-    const [cep, setCep] = useState(""); // Adicionando estado para o CEP
+    //cep
     const [endereco, setEndereco] = useState({
-        logradouro: "",
-        bairro: "",
-        cidade: "",
-        estado: ""
+        logradouro: '',
+        cidade: '',
+        estado: '',
+        bairro: '',
     });
 
-
-    async function consultarCEP() {
-        try {
-            const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-            const { logradouro, bairro, localidade, uf } = response.data;
-            // Aqui você pode fazer o que quiser com os dados retornados
-            console.log("Endereço:", logradouro, bairro, localidade, uf);
-        } catch (error) {
-            console.error("Erro ao consultar CEP:", error);
+    const handleCEPChange = async (event) => {
+        const cep = event.target.value;
+        if (cep.length === 8) {
+            try {
+                const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = response.data;
+                if (!data.erro) {
+                    setEndereco({
+                        logradouro: data.logradouro,
+                        cidade: data.localidade,
+                        estado: data.uf,
+                        bairro: data.bairro, // Adicionamos o campo de bairro aqui
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao buscar o CEP:', error);
+            }
         }
-    }
+    };
+
+
     return (
         <div>
             <h1 style={{ textAlign: 'center' }} >Condomínio</h1>
@@ -296,9 +305,7 @@ const Condominio = () => {
                             <Form.Control
                                 type="text"
                                 placeholder="5437643"
-                                value={cep}
-                                onChange={(e) => setCep(e.target.value)}
-                                onBlur={consultarCEP} // Chama a função consultarCEP quando o campo de CEP perde o foco
+                                onChange={handleCEPChange}
                             />
                         </Form.Group>
                     </Form>
