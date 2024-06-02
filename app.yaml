@@ -1,0 +1,5 @@
+runtime: nodejs
+
+network:
+  forwarded_ports:
+    - 8080/tcp
