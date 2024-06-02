@@ -309,7 +309,7 @@ const Visitas = () => {
             <Form.Group controlId="formCpfMorador">
               <Form.Label>CPF do morador</Form.Label>
               <Form.Control
-                as="text"
+                type="text"
                 name="cpfMorador"
                 value={newVisita.moradorId}
                 onChange={handleChange}

@@ -11,7 +11,7 @@ const Login = () => {
             <div className="featured-image mb-3">
               <img
                 src={logoLogin}
-                style={{ width: "350px", borderRadius: "10px" }}
+                style={{ width: "350px", height: "600px", borderRadius: "10px" }}
                 alt="Anthill"
               />
             </div>

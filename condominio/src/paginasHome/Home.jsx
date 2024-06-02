@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -9,7 +9,6 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import CardGroup from 'react-bootstrap/CardGroup';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Accordion from 'react-bootstrap/Accordion';
 import banner1 from "../images/banner1.jpg";
@@ -17,10 +16,13 @@ import banner2 from "../images/banner2.png";
 import banner3 from "../images/banner3.png";
 import cadastro from "../images/cadastro.png";
 import agendamento from "../images/agendamento.png";
-
-
+import comunicacao from "../images/comunicacao.png";
+import funcionario from "../images/funcionario.png";
+import visita from "../images/visita.png";
+import apartamento from "../images/apartamento.png";
 
 function Home() {
+
     const [modalShowBasic, setModalShowBasic] = useState(false);
     const [modalShowPremium, setModalShowPremium] = useState(false);
 
@@ -33,6 +35,7 @@ function Home() {
         setAccepted(true);
     };
     const handleLaunch = () => setShow(true);
+
 
     function MyVerticallyCenteredModal(props) {
         return (
@@ -60,24 +63,52 @@ function Home() {
         );
     }
 
+    function MyVerticallyCenteredModal(props) {
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        {props.title}
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h4>Funcionalidades:</h4>
+                    <ul style={{ listStyleType: 'none', padding: 0 }}>
+                        {props.features.map((feature, index) => (
+                            <li key={index}>{feature}</li>
+                        ))}
+                    </ul>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={props.onHide}>Fechar</Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+
     return (
         <>
             {/* Começo navbar */}
-            <Navbar expand="lg" className="bg-body-tertiary my-navbar">
+            <Navbar expand="lg" className="bg-body-tertiary my-navbar navbar-lg">
                 <Container className="px-0">
-                    <Navbar.Brand href="#home">Anthill</Navbar.Brand>
+                    <Navbar.Brand href="#home" id="home">Anthill</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#link">Sobre</Nav.Link>
-                            <Nav.Link href="#link">Contato</Nav.Link>
-                            <NavDropdown title="Ações" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.2">Login</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            </NavDropdown>
+                            <Nav.Link href="#sobre" className="nav-link-big">Sobre</Nav.Link>
+                            <Nav.Link href="#funcionalidades" className="nav-link-big">Funcionalidades</Nav.Link>
+                            <Nav.Link href="#planos" className="nav-link-big">Planos</Nav.Link>
+                            <Nav.Link href="#contato" className="nav-link-big">Contato</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
+                    <Nav className="ml-auto">
+                        <Nav.Link href="/login" className="nav-link-big">Login</Nav.Link>
+                    </Nav>
                 </Container>
             </Navbar>
             {/* Fim navbar */}
@@ -108,34 +139,35 @@ function Home() {
             <br />
             <br />
             <br />
-            <h1 style={{ textAlign: 'center' }}>Sobre nosso sistema</h1>
+            <h1 id="sobre" style={{ textAlign: 'center' }}>Sobre nosso sistema</h1>
             <br />
             <br />
             <div style={{ display: 'flex', gap: '1rem' }}>
                 <Card style={{ border: '1px solid #dee2e6' }}>
                     <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
                     <Card.Body>
-                        <Card.Title>Plataforma Centralizada de Gestão</Card.Title>
+                        <Card.Title>Gestão Simplificada com Tecnologia Moderna</Card.Title>
                         <Card.Text>
-                            O sistema oferece uma plataforma única e intuitiva para simplificar a gestão de condomínios, centralizando operações administrativas como cadastro de moradores, reservas de espaços comuns e comunicação interna.
+                            Nosso sistema de gestão de condomínios é construído com tecnologias atuais para garantir eficiência e praticidade. Utilizamos ferramentas modernas que tornam a experiência do usuário mais intuitiva e fluida, garantindo que a administração do condomínio seja simplificada e acessível a todos.
                         </Card.Text>
                     </Card.Body>
                 </Card>
                 <Card style={{ border: '1px solid #dee2e6' }}>
                     <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
                     <Card.Body>
-                        <Card.Title>Comunicação Transparente e Eficiente</Card.Title>
+                        <Card.Title>Feito para as Pessoas</Card.Title>
                         <Card.Text>
-                            Facilita a comunicação entre moradores e administração por meio de murais de avisos e notificações, promovendo uma interação transparente e eficaz para compartilhar informações importantes e coordenar eventos.
+                            Nosso jeito de criar o sistema é baseado no que as pessoas realmente precisam. Conversamos com moradores e administradores de condomínios para entender o que é importante para eles. Isso garante que o sistema seja fácil de usar e atenda às necessidades reais das pessoas que o utilizam.
+
                         </Card.Text>
                     </Card.Body>
                 </Card>
                 <Card style={{ border: '1px solid #dee2e6' }}>
                     <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
                     <Card.Body>
-                        <Card.Title>Comunicação Transparente e Eficiente</Card.Title>
+                        <Card.Title>Simples e Flexível</Card.Title>
                         <Card.Text>
-                            Facilita a comunicação entre moradores e administração por meio de murais de avisos e notificações, promovendo uma interação transparente e eficaz para compartilhar informações importantes e coordenar eventos.
+                            Organizamos o sistema de forma que seja fácil de mexer e de mudar quando necessário. Isso significa que, se precisarmos adicionar ou modificar algo, conseguimos fazer isso sem mexer em todo o sistema. Isso é importante para acompanhar as mudanças que podem ocorrer nos condomínios.
                         </Card.Text>
                     </Card.Body>
                 </Card>
@@ -144,7 +176,7 @@ function Home() {
             <br />
             <br />
             <br />
-            <h1 style={{ textAlign: 'center' }}>Funcionalidades disponíveis na plataforma</h1>
+            <h1 id="funcionalidades" style={{ textAlign: 'center' }}>Funcionalidades disponíveis na plataforma</h1>
             <br />
             <br />
             <br />
@@ -173,7 +205,7 @@ function Home() {
                 </Col>
                 <Col>
                     <Card>
-                        <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
+                        <Card.Img variant="top" src={comunicacao} />
                         <Card.Body>
                             <Card.Title>Comunicação entre moradores e administração</Card.Title>
                             <Card.Text>
@@ -184,7 +216,7 @@ function Home() {
                 </Col>
                 <Col>
                     <Card>
-                        <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
+                        <Card.Img variant="top" src={visita} />
                         <Card.Body>
                             <Card.Title>Controle de visitas e entregas</Card.Title>
                             <Card.Text>
@@ -195,7 +227,7 @@ function Home() {
                 </Col>
                 <Col>
                     <Card>
-                        <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
+                        <Card.Img variant="top" src={funcionario} />
                         <Card.Body>
                             <Card.Title>Cadastro de funcionários</Card.Title>
                             <Card.Text>
@@ -206,7 +238,7 @@ function Home() {
                 </Col>
                 <Col>
                     <Card>
-                        <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
+                        <Card.Img variant="top" src={apartamento} />
                         <Card.Body>
                             <Card.Title>Cadastro de apartamentos e blocos</Card.Title>
                             <Card.Text>
@@ -219,7 +251,7 @@ function Home() {
             {/* final funcionalidades */}
             <br />
             <br />
-            <h1 style={{ textAlign: 'center' }}>Escolha seu plano</h1>
+            <h1 id="planos" style={{ textAlign: 'center' }}>Escolha seu plano</h1>
             <br />
             <br />
             <div className="d-flex justify-content-around">
@@ -228,7 +260,7 @@ function Home() {
                     <Card.Body>
                         <Card.Title>Plano Básico</Card.Title>
                         <Card.Text>
-                            No plano básico você terá acesso somente a funcionalidade básicas.
+                            No plano básico você terá acesso somente a funcionalidades básicas.
                         </Card.Text>
                         <Button variant="primary" onClick={() => setModalShowBasic(true)}>
                             Ver Detalhes
@@ -238,11 +270,19 @@ function Home() {
                             show={modalShowBasic}
                             onHide={() => setModalShowBasic(false)}
                             title="Detalhes do Plano Básico"
-                            description="Aqui estão os detalhes do Plano Básico..."
+                            features={[
+                                '• Gestão de Moradores e Unidades:',
+                                '- Cadastro e gerenciamento de moradores, incluindo informações pessoais, contatos e unidades.',
+                                '- Cadastro de apartamentos e blocos para uma organização eficiente.',
+                                '• Agendamento de Espaços Comuns:',
+                                '- Agendamento e reserva de espaços comuns, como salão de festas, churrasqueira e piscina.',
+                                '• Controle de Acesso:',
+                                '- Controle de visitas de pessoas e entregas de mercadorias.'
+                            ]}
                         />
-
                     </Card.Body>
                 </Card>
+
                 <Card style={{ width: '26rem' }}>
                     <Card.Img variant="top" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDcaiAAFXD1ujAAAAAElFTkSuQmCC" />
                     <Card.Body>
@@ -258,7 +298,18 @@ function Home() {
                             show={modalShowPremium}
                             onHide={() => setModalShowPremium(false)}
                             title="Detalhes do Plano Premium"
-                            description="Aqui estão os detalhes do Plano Premium..."
+                            features={[
+                                '• Interação com Moradores:',
+                                '- Os moradores podem acessar o sistema para visualizar avisos, fazer solicitações, e reservar espaços comuns.',
+                                '- Canal de comunicação bidirecional entre moradores e administração para uma maior transparência e eficiência na resolução de questões condominiais.',
+                                '• Gestão de Moradores e Unidades:',
+                                '- Cadastro e gerenciamento de moradores, incluindo informações pessoais, contatos e unidades.',
+                                '- Cadastro de apartamentos e blocos para uma organização eficiente.',
+                                '• Agendamento de Espaços Comuns:',
+                                '- Agendamento e reserva de espaços comuns, como salão de festas, churrasqueira e piscina.',
+                                '• Controle de Acesso:',
+                                '- Controle de visitas de pessoas e entregas de mercadorias.'
+                            ]}
                         />
                     </Card.Body>
                 </Card>
@@ -267,7 +318,7 @@ function Home() {
             <br />
             <br />
             <br />
-            <Container className="d-flex justify-content-between align-items-center" style={{ border: '1px solid black', padding: '20px', borderRadius: '30px' }}>
+            <Container id="contato" className="d-flex justify-content-between align-items-center" style={{ border: '1px solid black', padding: '20px', borderRadius: '30px' }}>
                 <div>
                     <h1><p>Dê o passo definitivo </p><p>rumo ao futuro do </p>mercado condominial</h1>
                 </div>
