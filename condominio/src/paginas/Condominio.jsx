@@ -7,6 +7,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Col";
+import axios from 'axios';
+
 
 const Condominio = () => {
     const columns = [
@@ -217,6 +219,35 @@ const Condominio = () => {
         selectAllRowsItemText: 'Todos',
     };
 
+    //cep
+    const [endereco, setEndereco] = useState({
+        logradouro: '',
+        cidade: '',
+        estado: '',
+        bairro: '',
+    });
+
+    const handleCEPChange = async (event) => {
+        const cep = event.target.value;
+        if (cep.length === 8) {
+            try {
+                const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+                const data = response.data;
+                if (!data.erro) {
+                    setEndereco({
+                        logradouro: data.logradouro,
+                        cidade: data.localidade,
+                        estado: data.uf,
+                        bairro: data.bairro, // Adicionamos o campo de bairro aqui
+                    });
+                }
+            } catch (error) {
+                console.error('Erro ao buscar o CEP:', error);
+            }
+        }
+    };
+
+
     return (
         <div>
             <h1 style={{ textAlign: 'center' }} >Condomínio</h1>
@@ -241,37 +272,40 @@ const Condominio = () => {
                             <Form.Control
                                 type="text"
                                 placeholder="Rua Avenida Brasil"
-                                autoFocus
+                                value={endereco.logradouro}
+                                onChange={(e) => setEndereco({ ...endereco, logradouro: e.target.value })}
                             />
                             <Form.Label>Bairro</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Centro"
-                                autoFocus
+                                value={endereco.bairro}
+                                onChange={(e) => setEndereco({ ...endereco, bairro: e.target.value })}
                             />
                             <Form.Label>Cidade</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Rio de Janeiro"
-                                autoFocus
+                                value={endereco.cidade}
+                                onChange={(e) => setEndereco({ ...endereco, cidade: e.target.value })}
                             />
                             <Form.Label>Estado</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Rio de Janeiro"
-                                autoFocus
+                                value={endereco.estado}
+                                onChange={(e) => setEndereco({ ...endereco, estado: e.target.value })}
                             />
                             <Form.Label>Número</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="100"
-                                autoFocus
                             />
                             <Form.Label>CEP</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="5437643"
-                                autoFocus
+                                onChange={handleCEPChange}
                             />
                         </Form.Group>
                     </Form>
