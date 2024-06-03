@@ -5,14 +5,28 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from "react-router-dom";
+import LogoutButton from '../components/LogoutButton';  // Importando o botão de logout
 
 const Blocos = () => {
   const [records, setRecords] = useState([]);
   const [showCadastrar, setShowCadastrar] = useState(false);
   const [showAlterar, setShowAlterar] = useState(false);
 
+  const condominioId = localStorage.getItem('condominioId');
+  const token = localStorage.getItem('token');
+  const flag = localStorage.getItem('flag');
+  const navigate = useNavigate();
+
+  // Verificação de autenticação e autorização
+  useEffect(() => {
+    if (!token || flag !== '1') {
+      navigate('/login');
+    }
+  }, [token, flag, navigate]);
+
   const [newBloco, setNewBloco] = useState({
-    idCondominio: '',
+    condominioId, // Use condominioId from localStorage
     descricao: '',
     qtdCasas: '',
     qtdAndares: '',
@@ -20,7 +34,7 @@ const Blocos = () => {
   });
   const [editBloco, setEditBloco] = useState({
     id: '',
-    idCondominio: '',
+    condominioId, // Use condominioId from localStorage
     descricao: '',
     qtdCasas: '',
     qtdAndares: '',
@@ -56,7 +70,7 @@ const Blocos = () => {
   }, []);
 
   const buscarBlocos = () => {
-    fetch("http://localhost:8080/blocos/buscarBlocos")
+    fetch(`http://localhost:8080/blocos/listarBlocos?condominioId=${condominioId}`)
       .then(response => response.json())
       .then(data => setRecords(data))
       .catch(error => console.error('Erro ao buscar blocos:', error));
@@ -78,11 +92,10 @@ const Blocos = () => {
     setShowAlterar(true);
   }
 
-
   const handleClose = () => {
     setShowCadastrar(false);
     setNewBloco({
-      idCondominio: '',
+      condominioId,
       descricao: '',
       qtdCasas: '',
       qtdAndares: '',
@@ -93,8 +106,9 @@ const Blocos = () => {
 
   const handleCloseAlterar = () => {
     setShowAlterar(false);
-    setNewBloco({
-      idCondominio: '',
+    setEditBloco({
+      id: '',
+      condominioId,
       descricao: '',
       qtdCasas: '',
       qtdAndares: '',
@@ -111,7 +125,6 @@ const Blocos = () => {
     }));
   }
 
-
   const handleChangeEdit = (e) => {
     const { name, value } = e.target;
     setEditBloco(prevState => ({
@@ -119,8 +132,6 @@ const Blocos = () => {
       [name]: value
     }));
   };
-
-
 
   const salvar = () => {
     fetch(`http://localhost:8080/blocos/salvar?isAlterar=false`, {
@@ -180,12 +191,7 @@ const Blocos = () => {
       });
   }
 
-
-
   const excluir = (id) => {
-
-    console.log("Excluindo", id);
-
     fetch(`http://localhost:8080/blocos/excluir?id=${id}`, {
       method: 'DELETE'
     })
@@ -212,9 +218,6 @@ const Blocos = () => {
       });
   }
 
-
-
-
   const paginationComponentOptions = {
     rowsPerPageText: 'Filas por página',
     rangeSeparatorText: 'de',
@@ -230,7 +233,7 @@ const Blocos = () => {
     },
     {
       name: 'Id Condominio',
-      selector: row => row.idCondominio,
+      selector: row => row.condominioId,
       sortable: true
     },
     {
@@ -264,185 +267,95 @@ const Blocos = () => {
     }
   ];
 
-
   return (
-
     <div>
-      {alertMessage && (
-        <Alert variant={alertVariant} onClose={() => setAlertMessage('')} dismissible>
+      <LogoutButton /> {/* Botão de logout */}
+      {showAlert && (
+        <Alert variant={alertVariant} onClose={() => setShowAlert(false)} dismissible>
           {alertMessage}
         </Alert>
       )}
-      <h1 style={{ textAlign: 'center' }} >Bloco</h1>
       <Button variant="primary" onClick={handleNovoBloco}>
-        Cadastrar Bloco
+        Novo Bloco
       </Button>
       <Modal show={showCadastrar} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Preencha os dados</Modal.Title>
+          <Modal.Title>Cadastro de Bloco</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formIdCondominio">
-              <Form.Label>Id condomínio</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="1"
-                name="idCondominio"
-                value={newBloco.idCondominio}
-                onChange={handleChange}
-                autoFocus
-              />
+            <Form.Group controlId="formcondominioId">
+              <Form.Label>Condomínio Id</Form.Label>
+              <Form.Control type="text" value={newBloco.condominioId} readOnly />
             </Form.Group>
             <Form.Group controlId="formDescricao">
               <Form.Label>Descrição</Form.Label>
-              <Form.Control
-                as="textarea"
-                placeholder="O Bloco C do Condomínio..."
-                name="descricao"
-                value={newBloco.descricao}
-                onChange={handleChange}
-              />
+              <Form.Control type="text" name="descricao" value={newBloco.descricao} onChange={handleChange} />
             </Form.Group>
             <Form.Group controlId="formQtdCasas">
-              <Form.Label>Quantas Casas</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="10"
-                name="qtdCasas"
-                value={newBloco.qtdCasas}
-                onChange={handleChange}
-              />
+              <Form.Label>Quantidade de Casas</Form.Label>
+              <Form.Control type="text" name="qtdCasas" value={newBloco.qtdCasas} onChange={handleChange} />
             </Form.Group>
             <Form.Group controlId="formQtdAndares">
-              <Form.Label>Quantos Andares</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="5"
-                name="qtdAndares"
-                value={newBloco.qtdAndares}
-                onChange={handleChange}
-              />
+              <Form.Label>Quantidade de Andares</Form.Label>
+              <Form.Control type="text" name="qtdAndares" value={newBloco.qtdAndares} onChange={handleChange} />
             </Form.Group>
             <Form.Group controlId="formDivisao">
               <Form.Label>Divisão</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Primeira divisão"
-                name="divisao"
-                value={newBloco.divisao}
-                onChange={handleChange}
-              />
+              <Form.Control type="text" name="divisao" value={newBloco.divisao} onChange={handleChange} />
             </Form.Group>
+            <Button variant="primary" onClick={salvar}>
+              Salvar
+            </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={salvar}>
-            Cadastrar
-          </Button>
-        </Modal.Footer>
       </Modal>
-
       <Modal show={showAlterar} onHide={handleCloseAlterar}>
         <Modal.Header closeButton>
-          <Modal.Title>Alterar bloco</Modal.Title>
+          <Modal.Title>Altere os dados</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="id">
-              <Form.Label>Id </Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="1"
-                name="id"
-                value={editBloco.id}
-                onChange={handleChangeEdit}
-                disabled
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group controlId="formIdCondominio">
-              <Form.Label>Id condomínio</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="1"
-                name="idCondominio"
-                value={editBloco.idCondominio}
-                onChange={handleChangeEdit}
-                autoFocus
-              />
+            <Form.Group controlId="formcondominioId">
+              <Form.Label>Condomínio Id</Form.Label>
+              <Form.Control type="text" value={editBloco.condominioId} readOnly />
             </Form.Group>
             <Form.Group controlId="formDescricao">
               <Form.Label>Descrição</Form.Label>
-              <Form.Control
-                as="textarea"
-                placeholder="O Bloco C do Condomínio..."
-                name="descricao"
-                value={editBloco.descricao}
-                onChange={handleChangeEdit}
-              />
+              <Form.Control type="text" name="descricao" value={editBloco.descricao} onChange={handleChangeEdit} />
             </Form.Group>
             <Form.Group controlId="formQtdCasas">
-              <Form.Label>Quantas Casas</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="10"
-                name="qtdCasas"
-                value={editBloco.qtdCasas}
-                onChange={handleChangeEdit}
-              />
+              <Form.Label>Quantidade de Casas</Form.Label>
+              <Form.Control type="text" name="qtdCasas" value={editBloco.qtdCasas} onChange={handleChangeEdit} />
             </Form.Group>
             <Form.Group controlId="formQtdAndares">
-              <Form.Label>Quantos Andares</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="5"
-                name="qtdAndares"
-                value={editBloco.qtdAndares}
-                onChange={handleChangeEdit}
-              />
+              <Form.Label>Quantidade de Andares</Form.Label>
+              <Form.Control type="text" name="qtdAndares" value={editBloco.qtdAndares} onChange={handleChangeEdit} />
             </Form.Group>
             <Form.Group controlId="formDivisao">
               <Form.Label>Divisão</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Primeira divisão"
-                name="divisao"
-                value={editBloco.divisao}
-                onChange={handleChangeEdit}
-              />
+              <Form.Control type="text" name="divisao" value={editBloco.divisao} onChange={handleChangeEdit} />
             </Form.Group>
+            <Button variant="primary" onClick={alterar}>
+              Alterar
+            </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseAlterar}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={alterar}>
-            Alterar
-          </Button>
-        </Modal.Footer>
       </Modal>
-      <input type="text" style={{ marginLeft: '75%' }} placeholder="Pesquisar..." onChange={handleFilter} />
-      <div className="mt-1">
-        {records.length === 0 ? (
-          <h6 className="row align-items-center mb-3">Não há dados disponíveis.</h6>
-        ) : (
-          <DataTable
-            columns={columns}
-            data={records}
-            selectableRows
-            fixedHeader
-            pagination
-            paginationComponentOptions={paginationComponentOptions}
-          />
-        )}
+      <div style={{ paddingTop: "10px" }}>
+        <Form.Group controlId="formPesquisar">
+          <Form.Label>Pesquisar</Form.Label>
+          <Form.Control type="text" placeholder="Pesquisar" onChange={handleFilter} />
+        </Form.Group>
+        <DataTable
+          columns={columns}
+          data={records}
+          pagination
+          paginationComponentOptions={paginationComponentOptions}
+        />
       </div>
     </div>
   );
-};
+}
 
 export default Blocos;

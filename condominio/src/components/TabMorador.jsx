@@ -11,10 +11,10 @@ function TabMorador() {
       fill
     >
       <Tab eventKey="home" title="Alertas/Avisos gerais">
-          <CardAlertaMorador />
+
       </Tab>
       <Tab eventKey="profile" title="Alertas/Avisos pessoais">
-
+          <CardAlertaMorador />
       </Tab>
 
     </Tabs>

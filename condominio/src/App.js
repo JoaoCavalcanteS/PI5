@@ -21,6 +21,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Entregas from "./paginas/Entregas";
 import SolicitacoesGerais from "./paginas/SolicitacoesGerais";
+import CadastroCondominio from "./paginasHome/CadastroCondominio";
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboardMorador" element={<DashboardMorador />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/cadastro" element={<CadastroCondominio />} />
           <Route path="/solicitacoesGerais" element={<SolicitacoesGerais />} />
         </Routes>
       </Sidebar>

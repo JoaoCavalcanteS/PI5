@@ -104,7 +104,7 @@ const Funcao = () => {
 
 
   const salvar = () => {
-    fetch(`http://localhost:8080/areaDeLazer/salvar?isAlterar=false`, {
+    fetch(`http://localhost:8080/funcao/salvar?isAlterar=false`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -5,56 +5,66 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from "react-router-dom";
+import LogoutButton from '../components/LogoutButton';  // Importando o botão de logout
 
 const Casa = () => {
   const [records, setRecords] = useState([]);
   const [showCadastrar, setShowCadastrar] = useState(false);
   const [showAlterar, setShowAlterar] = useState(false);
+  const [blocos, setBlocos] = useState([]);
+  const [moradores, setMoradores] = useState([]);
+
+  const condominioId = localStorage.getItem('condominioId');
+  const token = localStorage.getItem('token');
+  const flag = localStorage.getItem('flag');
+  const navigate = useNavigate();
+
+  // Verificação de autenticação e autorização
+  useEffect(() => {
+    if (!token || flag !== '1') {
+      navigate('/login');
+    }
+  }, [token, flag, navigate]);
 
   const [newCasa, setNewCasa] = useState({
-    condominioId: '',
+    condominioId,
     numeroCasa: '',
     bloco: '',
     vazia: '',
     moradorId: '',
     aluguel: '',
     telefone: ''
-
   });
+
   const [editCasa, setEditCasa] = useState({
-    condominioId: '',
+    id: '',
+    condominioId,
     numeroCasa: '',
     bloco: '',
     vazia: '',
     moradorId: '',
     aluguel: '',
     telefone: ''
-
   });
 
   const [alertMessage, setAlertMessage] = useState('');
   const [alertVariant, setAlertVariant] = useState('success');
   const [showAlert, setShowAlert] = useState(false);
 
-  const [blocos, setBlocos] = useState([]);
-
-  const [moradores, setMoradores] = useState([]);
-
-  const [casas, setCasas] = useState([]);
-
   useEffect(() => {
-    fetch("http://localhost:8080/blocos/buscarBlocos")
+    fetch(`http://localhost:8080/blocos/listarBlocos?condominioId=${condominioId}`)
       .then(response => response.json())
       .then(data => setBlocos(data))
       .catch(error => console.error('Error fetching blocos:', error));
-  }, []);
+  }, [condominioId]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/Moradores/buscarMoradores")
+    fetch(`http://localhost:8080/morador/moradores?condominioId=${condominioId}`)
       .then(response => response.json())
       .then(data => setMoradores(data))
       .catch(error => console.error('Error fetching Moradores:', error));
-  }, []);
+  }, [condominioId]);
 
   useEffect(() => {
     if (alertMessage) {
@@ -72,7 +82,7 @@ const Casa = () => {
   }, []);
 
   const buscarCasas = () => {
-    fetch("http://localhost:8080/casa/buscarCasas")
+    fetch(`http://localhost:8080/casa/casas?condominioId=${condominioId}`)
       .then(response => response.json())
       .then(data => setRecords(data))
       .catch(error => console.error('Erro ao buscar casas:', error));
@@ -80,7 +90,7 @@ const Casa = () => {
 
   function handleFilter(event) {
     const newData = records.filter(row => {
-      return row.bloco.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase());
+      return row.numeroCasa.toLocaleLowerCase().includes(event.target.value.toLocaleLowerCase());
     });
     setRecords(newData);
   }
@@ -94,11 +104,10 @@ const Casa = () => {
     setShowAlterar(true);
   }
 
-
   const handleClose = () => {
     setShowCadastrar(false);
     setNewCasa({
-      condominioId: '',
+      condominioId,
       numeroCasa: '',
       bloco: '',
       vazia: '',
@@ -111,8 +120,9 @@ const Casa = () => {
 
   const handleCloseAlterar = () => {
     setShowAlterar(false);
-    setNewCasa({
-      condominioId: '',
+    setEditCasa({
+      id: '',
+      condominioId,
       numeroCasa: '',
       bloco: '',
       vazia: '',
@@ -131,7 +141,6 @@ const Casa = () => {
     }));
   }
 
-
   const handleChangeEdit = (e) => {
     const { name, value } = e.target;
     setEditCasa(prevState => ({
@@ -139,8 +148,6 @@ const Casa = () => {
       [name]: value
     }));
   };
-
-
 
   const salvar = () => {
     fetch(`http://localhost:8080/casa/salvar?isAlterar=false`, {
@@ -160,13 +167,13 @@ const Casa = () => {
           setAlertVariant('danger');
           setAlertMessage('Erro ao cadastrar casa. Por favor, tente novamente.');
           setShowCadastrar(false); // Fechar modal após o erro
-          console.error('Erro ao salvar o casa. Status:', response.status);
+          console.error('Erro ao salvar a casa. Status:', response.status);
         }
       })
       .catch(error => {
         setAlertVariant('danger');
         setAlertMessage('Erro ao cadastrar casa. Por favor, tente novamente.');
-        console.error('Erro ao salvar casa:', error);
+        console.error('Erro ao salvar a casa:', error);
         setShowCadastrar(false); // Fechar modal após o erro
       });
   }
@@ -189,23 +196,19 @@ const Casa = () => {
           setAlertVariant('danger');
           setAlertMessage('Erro ao alterar casa. Por favor, tente novamente.');
           setShowAlterar(false); // Fechar modal após o erro
-          console.error('Erro ao alterar o casa. Status:', response.status);
+          console.error('Erro ao alterar a casa. Status:', response.status);
         }
       })
       .catch(error => {
         setAlertVariant('danger');
         setAlertMessage('Erro ao alterar casa. Por favor, tente novamente.');
-        console.error('Erro ao alterar casa:', error);
+        console.error('Erro ao alterar a casa:', error);
         setShowAlterar(false); // Fechar modal após o erro
       });
   }
 
-
-
   const excluir = (id) => {
-
     console.log("Excluindo", id);
-
     fetch(`http://localhost:8080/casa/excluir?id=${id}`, {
       method: 'DELETE'
     })
@@ -232,9 +235,6 @@ const Casa = () => {
       });
   }
 
-
-
-
   const paginationComponentOptions = {
     rowsPerPageText: 'Filas por página',
     rangeSeparatorText: 'de',
@@ -243,6 +243,16 @@ const Casa = () => {
   };
 
   const columns = [
+    {
+      name: 'Código',
+      selector: row => row.id,
+      sortable: true
+    },
+    {
+      name: 'Id Condominio',
+      selector: row => row.condominioId,
+      sortable: true
+    },
     {
       name: 'Número da Casa',
       selector: row => row.numeroCasa,
@@ -254,28 +264,29 @@ const Casa = () => {
       sortable: true
     },
     {
-      name: 'Proprietário(a)',
-      selector: row => row.proprietario,
-      sortable: true
-    },
-    {
-      name: 'Aluguel?',
-      selector: row => row.aluguel,
-      sortable: true
-    },
-
-    {
-      name: 'Ocupada?',
+      name: 'Vazia',
       selector: row => row.vazia,
       sortable: true
     },
-
+    {
+      name: 'Morador',
+      selector: row => row.moradorId,
+      sortable: true,
+      cell: row => {
+        const morador = moradores.find(m => m.id === row.moradorId);
+        return morador ? morador.nome : 'Desconhecido';
+      }
+    },
+    {
+      name: 'Aluguel',
+      selector: row => row.aluguel,
+      sortable: true
+    },
     {
       name: 'Telefone',
       selector: row => row.telefone,
       sortable: true
     },
-
     {
       name: 'Ações',
       cell: row => (
@@ -283,267 +294,145 @@ const Casa = () => {
           <Button variant="primary" size="sm" onClick={() => handleEdit(row)}>Editar</Button>{' '}
           <Button variant="danger" size="sm" onClick={() => excluir(row.id)}>Excluir</Button>
         </div>
-      )
+      ),
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
     }
   ];
 
-
   return (
-
-    <div>
-      {alertMessage && (
-        <Alert variant={alertVariant} onClose={() => setAlertMessage('')} dismissible>
+    <div className="App">
+      <header className="App-header">
+        <h1>Casas</h1>
+      </header>
+      <LogoutButton />
+      {showAlert && (
+        <Alert variant={alertVariant} onClose={() => setShowAlert(false)} dismissible>
           {alertMessage}
         </Alert>
       )}
-      <h1 style={{ textAlign: 'center' }} >Casa</h1>
-      <Button variant="primary" onClick={handleNovaCasa}>
-        Cadastrar Vaga
-      </Button>
+      <div>
+        <input type="text" onChange={handleFilter} placeholder="Filtrar por Número da Casa" />
+        <Button variant="success" onClick={handleNovaCasa}>Nova Casa</Button>
+        <DataTable
+          columns={columns}
+          data={records}
+          pagination
+          paginationComponentOptions={paginationComponentOptions}
+          highlightOnHover
+          pointerOnHover
+          selectableRowsHighlight
+        />
+      </div>
+
+      {/* Modal para cadastrar nova casa */}
       <Modal show={showCadastrar} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Preencha os dados</Modal.Title>
+          <Modal.Title>Cadastrar Nova Casa</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="num">
+            <Form.Group controlId="numeroCasa">
               <Form.Label>Número da Casa</Form.Label>
-              <Form.Control
-                type="number"
-                name="num"
-                value={newCasa.numeroCasa}
-                onChange={handleChange}
-                autoFocus
-              />
+              <Form.Control type="text" name="numeroCasa" value={newCasa.numeroCasa} onChange={handleChange} />
             </Form.Group>
-
-            <Form.Group controlId="formBLoco">
+            <Form.Group controlId="bloco">
               <Form.Label>Bloco</Form.Label>
-              <Form.Control
-                as="select"
-                name="bloco"
-                value={newCasa.bloco}
-                onChange={handleChange}
-              >
-                <option value="">Selecione um bloco</option>
+              <Form.Control as="select" name="bloco" value={newCasa.bloco} onChange={handleChange}>
+                <option value="">Selecione o Bloco</option>
                 {blocos.map(bloco => (
-                  <option key={bloco.descricao} value={bloco.descricao}>
-                    {bloco.descricao}
-                  </option>
+                  <option key={bloco.id} value={bloco.nome}>{bloco.nome}</option>
                 ))}
               </Form.Control>
             </Form.Group>
-            <Form.Group controlId="formStatus">
-              <Form.Label>Vazia?</Form.Label>
-              <div>
-                <Form.Check
-                  type="radio"
-                  label="Não"
-                  name="status"
-                  value={0}
-                  checked={newCasa.ocupado === 0}
-                  onChange={handleChange}
-                />
-                <Form.Check
-                  type="radio"
-                  label="Sim"
-                  name="ocupado"
-                  value={1}
-                  checked={newCasa.ocupado === 1}
-                  onChange={handleChange}
-                />
-              </div>
+            <Form.Group controlId="vazia">
+              <Form.Label>Vazia</Form.Label>
+              <Form.Control as="select" name="vazia" value={newCasa.vazia} onChange={handleChange}>
+                <option value="">Selecione</option>
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+              </Form.Control>
             </Form.Group>
-            <Form.Group controlId="formBLoco">
-              <Form.Label>Proprietário</Form.Label>
-              <Form.Control
-                as="select"
-                name="bloco"
-                value={newCasa.bloco}
-                onChange={handleChange}
-              >
-                <option value="">Selecione um morador</option>
+            <Form.Group controlId="moradorId">
+              <Form.Label>Morador</Form.Label>
+              <Form.Control as="select" name="moradorId" value={newCasa.moradorId} onChange={handleChange}>
+                <option value="">Selecione o Morador</option>
                 {moradores.map(morador => (
-                  <option key={morador.nome} value={morador.nome}>
-                    {morador.nome}
-                  </option>
+                  <option key={morador.id} value={morador.id}>{morador.nome}</option>
                 ))}
               </Form.Control>
             </Form.Group>
-            <Form.Group controlId="tel">
+            <Form.Group controlId="aluguel">
+              <Form.Label>Aluguel</Form.Label>
+              <Form.Control type="text" name="aluguel" value={newCasa.aluguel} onChange={handleChange} />
+            </Form.Group>
+            <Form.Group controlId="telefone">
               <Form.Label>Telefone</Form.Label>
-              <Form.Control
-                type="text"
-                name="tel"
-                value={newCasa.telefone}
-                onChange={handleChange}
-                autoFocus
-              />
+              <Form.Control type="text" name="telefone" value={newCasa.telefone} onChange={handleChange} />
             </Form.Group>
-            <Form.Group controlId="formaluguel">
-              <Form.Label>Aluguel?</Form.Label>
-              <div>
-                <Form.Check
-                  type="radio"
-                  label="Não"
-                  name="aluguel"
-                  value={0}
-                  checked={newCasa.aluguel === 0}
-                  onChange={handleChange}
-                />
-                <Form.Check
-                  type="radio"
-                  label="Sim"
-                  name="aluguel"
-                  value={1}
-                  checked={newCasa.aluguel === 1}
-                  onChange={handleChange}
-                />
-              </div>
-            </Form.Group>
-
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={salvar}>
-            Cadastrar
-          </Button>
+          <Button variant="secondary" onClick={handleClose}>Cancelar</Button>
+          <Button variant="primary" onClick={salvar}>Salvar</Button>
         </Modal.Footer>
       </Modal>
 
+      {/* Modal para editar casa */}
       <Modal show={showAlterar} onHide={handleCloseAlterar}>
         <Modal.Header closeButton>
-          <Modal.Title>Alterar Vaga</Modal.Title>
+          <Modal.Title>Alterar Casa</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="num">
+            <Form.Group controlId="numeroCasa">
               <Form.Label>Número da Casa</Form.Label>
-              <Form.Control
-                type="number"
-                name="num"
-                value={editCasa.numeroCasa}
-                onChange={handleChangeEdit}
-                autoFocus
-              />
+              <Form.Control type="text" name="numeroCasa" value={editCasa.numeroCasa} onChange={handleChangeEdit} />
             </Form.Group>
-
-            <Form.Group controlId="formBLoco">
+            <Form.Group controlId="bloco">
               <Form.Label>Bloco</Form.Label>
-              <Form.Control
-                as="select"
-                name="bloco"
-                value={editCasa.bloco}
-                onChange={handleChangeEdit}
-              >
-                <option value="">Selecione um bloco</option>
+              <Form.Control as="select" name="bloco" value={editCasa.bloco} onChange={handleChangeEdit}>
+                <option value="">Selecione o Bloco</option>
                 {blocos.map(bloco => (
-                  <option key={bloco.descricao} value={bloco.descricao}>
-                    {bloco.descricao}
-                  </option>
+                  <option key={bloco.id} value={bloco.nome}>{bloco.nome}</option>
                 ))}
               </Form.Control>
             </Form.Group>
-            <Form.Group controlId="formStatus">
-              <Form.Label>Vazia?</Form.Label>
-              <div>
-                <Form.Check
-                  type="radio"
-                  label="Não"
-                  name="status"
-                  value={0}
-                  checked={editCasa.ocupado === 0}
-                  onChange={handleChangeEdit}
-                />
-                <Form.Check
-                  type="radio"
-                  label="Sim"
-                  name="ocupado"
-                  value={1}
-                  checked={editCasa.ocupado === 1}
-                  onChange={handleChangeEdit}
-                />
-              </div>
+            <Form.Group controlId="vazia">
+              <Form.Label>Vazia</Form.Label>
+              <Form.Control as="select" name="vazia" value={editCasa.vazia} onChange={handleChangeEdit}>
+                <option value="">Selecione</option>
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+              </Form.Control>
             </Form.Group>
-            <Form.Group controlId="formBLoco">
-              <Form.Label>Proprietário</Form.Label>
-              <Form.Control
-                as="select"
-                name="bloco"
-                value={editCasa.bloco}
-                onChange={handleChangeEdit}
-              >
-                <option value="">Selecione um morador</option>
+            <Form.Group controlId="moradorId">
+              <Form.Label>Morador</Form.Label>
+              <Form.Control as="select" name="moradorId" value={editCasa.moradorId} onChange={handleChangeEdit}>
+                <option value="">Selecione o Morador</option>
                 {moradores.map(morador => (
-                  <option key={morador.nome} value={morador.nome}>
-                    {morador.nome}
-                  </option>
+                  <option key={morador.id} value={morador.id}>{morador.nome}</option>
                 ))}
               </Form.Control>
             </Form.Group>
-            <Form.Group controlId="tel">
+            <Form.Group controlId="aluguel">
+              <Form.Label>Aluguel</Form.Label>
+              <Form.Control type="text" name="aluguel" value={editCasa.aluguel} onChange={handleChangeEdit} />
+            </Form.Group>
+            <Form.Group controlId="telefone">
               <Form.Label>Telefone</Form.Label>
-              <Form.Control
-                type="text"
-                name="tel"
-                value={editCasa.telefone}
-                onChange={handleChangeEdit}
-                autoFocus
-              />
+              <Form.Control type="text" name="telefone" value={editCasa.telefone} onChange={handleChangeEdit} />
             </Form.Group>
-            <Form.Group controlId="formaluguel">
-              <Form.Label>Aluguel?</Form.Label>
-              <div>
-                <Form.Check
-                  type="radio"
-                  label="Não"
-                  name="aluguel"
-                  value={0}
-                  checked={editCasa.aluguel === 0}
-                  onChange={handleChangeEdit}
-                />
-                <Form.Check
-                  type="radio"
-                  label="Sim"
-                  name="aluguel"
-                  value={1}
-                  checked={editCasa.aluguel === 1}
-                  onChange={handleChangeEdit}
-                />
-              </div>
-            </Form.Group>
-
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseAlterar}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={alterar}>
-            Alterar
-          </Button>
+          <Button variant="secondary" onClick={handleCloseAlterar}>Cancelar</Button>
+          <Button variant="primary" onClick={alterar}>Salvar</Button>
         </Modal.Footer>
       </Modal>
-      <input type="text" style={{ marginLeft: '75%' }} placeholder="Pesquisar..." onChange={handleFilter} />
-      <div className="mt-1">
-        {records.length === 0 ? (
-          <h6 className="row align-items-center mb-3">Não há dados disponíveis.</h6>
-        ) : (
-          <DataTable
-            columns={columns}
-            data={records}
-            selectableRows
-            fixedHeader
-            pagination
-            paginationComponentOptions={paginationComponentOptions}
-          />
-        )}
-      </div>
     </div>
   );
-};
+}
 
 export default Casa;

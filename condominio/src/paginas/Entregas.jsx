@@ -590,7 +590,7 @@ const Entregas = () => {
             <Form.Group controlId="formNome">
               <Form.Label>Horário da retirada</Form.Label>
               <Form.Control
-                type="text"
+                type="time"
                 name="horaRetirada"
                 value={editEntrega.horaRetirada}
                 onChange={handleChangeEdit}
