@@ -19,7 +19,7 @@ const Estacionamento = () => {
     ocupado:'',
   });
   const [editEstacionamento, setEditEstacionamento] = useState({
-      idCondominio: '',
+    idCondominio: '',
     vaga:'',
     bloco: '',
     numeroCasa:'',

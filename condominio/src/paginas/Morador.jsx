@@ -11,6 +11,19 @@ const Morador = () => {
   const [showCadastrar, setShowCadastrar] = useState(false);
   const [showAlterar, setShowAlterar] = useState(false);
 
+  const InputPersonalizado = ({ suffix, value, onChange, ...props }) => {
+    const handleChange = (e) => {
+      const inputValue = e.target.value;
+
+      // Se o valor não termina com o sufixo, adicione-o
+      if (!inputValue.endsWith(suffix)) {
+        onChange(inputValue + suffix);
+      } else {
+        onChange(inputValue);
+      }
+    }
+  }
+
   const [newMorador, setNewMorador] = useState({
     id: '',
     condominioId: '',
@@ -315,8 +328,10 @@ const Morador = () => {
               <Form.Control
                 type="email"
                 name="email"
-                value={newMorador.email}
-              />
+            value={newMorador.email}
+            onChange={handleChange}
+            autoFocus
+          />
             </Form.Group>
             <Form.Group controlId="formNome">
               <Form.Label>Nome</Form.Label>

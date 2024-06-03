@@ -230,7 +230,6 @@ const Funcionario = () => {
                             <Form.Label>Email</Form.Label>
                             <Form.Control
                                 type="email"
-                                placeholder="jose@example.com"
                                 autoFocus
                             />
                             <Form.Label>Senha</Form.Label>

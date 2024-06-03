@@ -12,7 +12,7 @@ const Casa = () => {
   const [showAlterar, setShowAlterar] = useState(false);
 
   const [newCasa, setNewCasa] = useState({
-    idCondominio: '',
+    condominioId: '',
     numeroCasa: '',
     bloco: '',
     vazia: '',
@@ -22,7 +22,7 @@ const Casa = () => {
 
   });
   const [editCasa, setEditCasa] = useState({
-    idCondominio: '',
+    condominioId: '',
     numeroCasa: '',
     bloco: '',
     vazia: '',
@@ -98,7 +98,7 @@ const Casa = () => {
   const handleClose = () => {
     setShowCadastrar(false);
     setNewCasa({
-      idCondominio: '',
+      condominioId: '',
       numeroCasa: '',
       bloco: '',
       vazia: '',
@@ -112,7 +112,7 @@ const Casa = () => {
   const handleCloseAlterar = () => {
     setShowAlterar(false);
     setNewCasa({
-      idCondominio: '',
+      condominioId: '',
       numeroCasa: '',
       bloco: '',
       vazia: '',

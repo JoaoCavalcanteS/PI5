@@ -12,8 +12,7 @@ const Visitas = () => {
   const [showAlterar, setShowAlterar] = useState(false);
 
   const [newVisita, setNewVisita] = useState({
-    id: '',
-    idCondominio: 0,
+    condominioId: 0,
     moradorId: 0,
     documentoVisita: '',
     nomeVisita: '',
@@ -23,7 +22,7 @@ const Visitas = () => {
   });
   const [editVisita, setEditVisita] = useState({
     id: '',
-    idCondominio: 0,
+    condominioId: 0,
     moradorId: 0,
     documentoVisita: '',
     nomeVisita: '',
@@ -79,7 +78,7 @@ const Visitas = () => {
     setShowCadastrar(false);
     setNewVisita({
       id: '',
-      idCondominio: 0,
+      condominioId: 0,
       moradorId: 0,
       documentoVisita: '',
       nomeVisita: '',
@@ -94,7 +93,7 @@ const Visitas = () => {
     setShowAlterar(false);
     setNewVisita({
       id: '',
-      idCondominio: 0,
+      condominioId: 0,
       moradorId: 0,
       documentoVisita: '',
       nomeVisita: '',
@@ -232,7 +231,7 @@ const Visitas = () => {
     },
     {
       name: 'Id Condominio',
-      selector: row => row.idCondominio,
+      selector: row => row.condominioId,
       sortable: true
     },
     {
@@ -295,13 +294,13 @@ const Visitas = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formIdCondominio">
+            <Form.Group controlId="formcondominioId">
               <Form.Label>Id condomínio</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="1"
-                name="idCondominio"
-                value={newVisita.idCondominio}
+                name="condominioId"
+                value={newVisita.condominioId}
                 onChange={handleChange}
                 autoFocus
               />
@@ -378,13 +377,13 @@ const Visitas = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group controlId="formIdCondominio">
+            <Form.Group controlId="formcondominioId">
               <Form.Label>Id condomínio</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="1"
-                name="idCondominio"
-                value={editVisita.idCondominio}
+                name="condominioId"
+                value={editVisita.condominioId}
                 onChange={handleChangeEdit}
                 autoFocus
               />

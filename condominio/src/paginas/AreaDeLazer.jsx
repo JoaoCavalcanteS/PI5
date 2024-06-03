@@ -15,12 +15,14 @@ const AreaDeLazer = () => {
     nome: '',
     condominioId: '',
     bloco: '',
+    descricao:''
   });
   const [editAreaDeLazer, setEditAreaDeLazer] = useState({
     id: '',
     nome: '',
     condominioId: '',
     bloco: '',
+    descricao:''
   });
 
   const [alertMessage, setAlertMessage] = useState('');
@@ -82,6 +84,7 @@ const AreaDeLazer = () => {
       nome: '',
       condominioId: '',
       bloco: '',
+      descricao:''
     });
     setAlertMessage('');
   }
@@ -91,6 +94,8 @@ const AreaDeLazer = () => {
     setNewAreaDeLazer({
       nome: '',
       condominioId: '',
+      bloco: '',
+      descricao:''
     });
     setAlertMessage('');
   }
@@ -222,6 +227,18 @@ const AreaDeLazer = () => {
       selector: row => row.nome,
       sortable: true
     },
+    {
+      name: 'Bloco',
+      selector: row => row.bloco,
+      sortable: true
+    },
+
+    {
+      name: 'Descrição',
+      selector: row => row.descricao,
+      sortable: true
+    },
+
 
     {
       name: 'Ações',
@@ -270,7 +287,7 @@ const AreaDeLazer = () => {
                 as="select"
                 name="bloco"
                 value={newAreaDeLazer.bloco}
-                onChange={handleChangeEdit}
+                onChange={handleChange}
               >
                 <option value="">Selecione um bloco</option>
                 {blocos.map(bloco => (
@@ -279,6 +296,16 @@ const AreaDeLazer = () => {
                   </option>
                 ))}
               </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="formDesc">
+              <Form.Label>Descrição</Form.Label>
+              <Form.Control
+                type="text"
+                name="descrição"
+                value={newAreaDeLazer.descricao}
+                onChange={handleChange}
+                autoFocus
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -309,7 +336,32 @@ const AreaDeLazer = () => {
                 autoFocus
               />
             </Form.Group>
-
+            <Form.Group controlId="formBLoco">
+              <Form.Label>Bloco</Form.Label>
+              <Form.Control
+                as="select"
+                name="bloco"
+                value={editAreaDeLazer.bloco}
+                onChange={handleChangeEdit}
+              >
+                <option value="">Selecione um bloco</option>
+                {blocos.map(bloco => (
+                  <option key={bloco.id} value={bloco.id}>
+                    {bloco.descricao}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="formDesc">
+              <Form.Label>Descrição</Form.Label>
+              <Form.Control
+                type="text"
+                name="descrição"
+                value={editAreaDeLazer.descricao}
+                onChange={handleChangeEdit}
+                autoFocus
+              />
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
